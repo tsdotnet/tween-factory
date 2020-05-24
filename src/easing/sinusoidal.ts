@@ -1,0 +1,25 @@
+/*! Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/ */
+/**
+ * @packageDocumentation
+ * @module easing
+ */
+
+namespace sinusoidal
+{
+	export function easeIn (k: number): number
+	{
+		return 1 - Math.cos(k*Math.PI/2);
+	}
+
+	export function easeOut (k: number): number
+	{
+		return Math.sin(k*Math.PI/2);
+	}
+
+	export function easeInOut (k: number): number
+	{
+		return 0.5*(1 - Math.cos(Math.PI*k));
+	}
+
+}
+export default Object.freeze(sinusoidal);

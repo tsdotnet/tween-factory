@@ -1,0 +1,30 @@
+/**
+ * @packageDocumentation
+ * @module interpolation
+ */
+
+export default function(v: number[], k: number): number {
+	const n = v.length - 1, pw = Math.pow;
+	let b = 0;
+	for(let i = 0; i<=n; i++)
+	{
+		b += pw(1 - k, n - i)*pw(k, i)*v[i]*bn(n, i);
+	}
+	return b;
+}
+
+function bn (n: number, i: number): number
+{
+	return fc(n)/fc(i)/fc(n - i);
+}
+
+// factorial cache
+const a = [1];
+
+function fc (n: number)
+{
+	let s = 1, i;
+	if(a[n]) return a[n];
+	for(i = n; i>1; i--) s *= i;
+	return a[n] = s;
+}

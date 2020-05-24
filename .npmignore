@@ -1,0 +1,16 @@
+node_modules
+*.log
+.*
+bin
+obj
+*.user
+/tests
+/spec
+/src
+/docs
+/archive
+/examples
+typedoc.json
+tsconfig.*
+pnpm-lock.yaml
+package-lock.json
