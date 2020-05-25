@@ -3,6 +3,8 @@
  * @license MIT
  */
 
+import ArgumentNullException from '@tsdotnet/exceptions/dist/ArgumentNullException';
+
 export type StringKeyOf<T> = string & keyof T;
 export type NumericValues<T extends object = object> = Record<StringKeyOf<T>, number>;
 
@@ -18,8 +20,8 @@ export default class PropertyRange<T extends object = object>
 
 	constructor (item: T, endValues: NumericValues<T>)
 	{
-		assertNotNull(ITEM, item);
-		assertNotNull(END_VALUES, endValues);
+		if(item==null) throw new ArgumentNullException(ITEM);
+		if(endValues==null) throw new ArgumentNullException(END_VALUES);
 		const keys = Object.keys(endValues) as StringKeyOf<T>[];
 		const values = {} as NumericValues<T>;
 
@@ -66,8 +68,8 @@ export default class PropertyRange<T extends object = object>
 		if(!keys) return; // disposed.
 		const
 			item        = this._item,
-			startValues = {} as NumericValues<T>,
-			deltaValues = {} as NumericValues<T>;
+			startValues = this._startValues,
+			deltaValues = this._deltaValues;
 
 		if(!startValues || !deltaValues)
 			throw 'PropertyRange was not initialized.  Call .init() before updating.';
@@ -79,12 +81,6 @@ export default class PropertyRange<T extends object = object>
 			item[key] = value;
 		}
 	}
-}
-
-function assertNotNull<T extends object> (name: string, o: T): T | never
-{
-	if(!o) throw `'${name}' cannot be null or undefined.`;
-	return o;
 }
 
 function assertNumber (name: string, item: any, property: string | number): number | never
