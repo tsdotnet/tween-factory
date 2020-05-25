@@ -2,11 +2,14 @@
  * @author electricessence / https://github.com/electricessence/
  * @license MIT
  */
+import ArgumentNullException from '@tsdotnet/exceptions/dist/ArgumentNullException';
 const ITEM = 'item', END_VALUES = 'endValues';
 export default class PropertyRange {
     constructor(item, endValues) {
-        assertNotNull(ITEM, item);
-        assertNotNull(END_VALUES, endValues);
+        if (item == null)
+            throw new ArgumentNullException(ITEM);
+        if (endValues == null)
+            throw new ArgumentNullException(END_VALUES);
         const keys = Object.keys(endValues);
         const values = {};
         for (const key of keys)
@@ -39,7 +42,7 @@ export default class PropertyRange {
         const keys = this._keys;
         if (!keys)
             return; // disposed.
-        const item = this._item, startValues = {}, deltaValues = {};
+        const item = this._item, startValues = this._startValues, deltaValues = this._deltaValues;
         if (!startValues || !deltaValues)
             throw 'PropertyRange was not initialized.  Call .init() before updating.';
         for (const key of keys) {
@@ -48,11 +51,6 @@ export default class PropertyRange {
             item[key] = value;
         }
     }
-}
-function assertNotNull(name, o) {
-    if (!o)
-        throw `'${name}' cannot be null or undefined.`;
-    return o;
 }
 function assertNumber(name, item, property) {
     const value = item[property];

@@ -4,11 +4,15 @@
  * @license MIT
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const ArgumentNullException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
 const ITEM = 'item', END_VALUES = 'endValues';
 class PropertyRange {
     constructor(item, endValues) {
-        assertNotNull(ITEM, item);
-        assertNotNull(END_VALUES, endValues);
+        if (item == null)
+            throw new ArgumentNullException_1.default(ITEM);
+        if (endValues == null)
+            throw new ArgumentNullException_1.default(END_VALUES);
         const keys = Object.keys(endValues);
         const values = {};
         for (const key of keys)
@@ -41,7 +45,7 @@ class PropertyRange {
         const keys = this._keys;
         if (!keys)
             return; // disposed.
-        const item = this._item, startValues = {}, deltaValues = {};
+        const item = this._item, startValues = this._startValues, deltaValues = this._deltaValues;
         if (!startValues || !deltaValues)
             throw 'PropertyRange was not initialized.  Call .init() before updating.';
         for (const key of keys) {
@@ -52,11 +56,6 @@ class PropertyRange {
     }
 }
 exports.default = PropertyRange;
-function assertNotNull(name, o) {
-    if (!o)
-        throw `'${name}' cannot be null or undefined.`;
-    return o;
-}
 function assertNumber(name, item, property) {
     const value = item[property];
     if (typeof value != 'number' || isNaN(value))
