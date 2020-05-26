@@ -3,6 +3,8 @@
  * @license MIT
  */
 
+import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
+
 export default class TimeFrame
 {
 	readonly startTime: number;
@@ -11,7 +13,7 @@ export default class TimeFrame
 	constructor (readonly duration: number)
 	{
 		if(isNaN(duration))
-			throw 'Duration is not a number value. Should be the number of desired milliseconds.';
+			throw new ArgumentException('duration', 'Is not a number value. Should be the number of desired milliseconds.');
 
 		const now = Date.now();
 		this.startTime = now;
