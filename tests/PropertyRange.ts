@@ -26,6 +26,10 @@ describe('PropertyRange', () => {
 		}).to.throw();
 
 		expect(() => {
+			new PropertyRange({x: 0, y: 0}, {x: NaN});
+		}).not.to.throw();
+
+		expect(() => {
 			const a = {x: 0, y: 0} as any;
 			const pr = new PropertyRange(a, {x: 10});
 			a.x = 'hello';

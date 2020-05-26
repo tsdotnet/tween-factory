@@ -4,7 +4,7 @@
  * @module easing
  */
 
-namespace quartic
+export namespace quartic
 {
 	export function easeIn (k: number): number
 	{
@@ -22,4 +22,5 @@ namespace quartic
 		return -0.5*((k -= 2)*k*k*k - 2);
 	}
 }
-export default Object.freeze(quartic);
+Object.freeze(quartic);
+export default quartic;

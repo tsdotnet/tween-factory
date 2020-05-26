@@ -5,6 +5,7 @@
  * @module easing
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.circular = void 0;
 var circular;
 (function (circular) {
     function easeIn(k) {
@@ -21,6 +22,7 @@ var circular;
         return 0.5 * (Math.sqrt(1 - (k -= 2) * k) + 1);
     }
     circular.easeInOut = easeInOut;
-})(circular || (circular = {}));
-exports.default = Object.freeze(circular);
+})(circular = exports.circular || (exports.circular = {}));
+Object.freeze(circular);
+exports.default = circular;
 //# sourceMappingURL=circular.js.map

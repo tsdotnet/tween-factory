@@ -26,4 +26,5 @@ namespace back
 	}
 }
 
-export default Object.freeze(back);
+Object.freeze(back);
+export default back;

@@ -10,22 +10,30 @@ export type NumericValues<T extends object = object> = Record<StringKeyOf<T>, nu
 
 const ITEM = 'item', END_VALUES = 'endValues';
 
+/**
+ * A class for modifying a set of properties across a range.
+ */
 export default class PropertyRange<T extends object = object>
 {
-	protected _item: NumericValues<T>;
-	protected _keys?: Readonly<StringKeyOf<T>[]>;
-	protected _startValues?: Readonly<NumericValues<T>>;
-	protected _deltaValues?: Readonly<NumericValues<T>>;
-	protected _endValues: Readonly<NumericValues<T>>;
+	private _item: NumericValues<T>;
+	private _keys?: Readonly<StringKeyOf<T>[]>;
+	private _startValues?: Readonly<NumericValues<T>>;
+	private _deltaValues?: Readonly<NumericValues<T>>;
+	private _endValues: Readonly<NumericValues<T>>;
 
-	constructor (item: T, endValues: NumericValues<T>)
+	constructor (item: T, endValues: Partial<NumericValues<T>>)
 	{
 		if(item==null) throw new ArgumentNullException(ITEM);
 		if(endValues==null) throw new ArgumentNullException(END_VALUES);
 		const keys = Object.keys(endValues) as StringKeyOf<T>[];
 		const values = {} as NumericValues<T>;
 
-		for(const key of keys) values[key] = assertNumber(END_VALUES, endValues, key);
+		for(const key of keys)
+		{
+			const value = assertNumber(END_VALUES, endValues, key);
+			if(isNaN(value)) continue; // NaN = ignore.
+			values[key] = value;
+		}
 
 		this._item = item as NumericValues<T>;
 		this._keys = Object.freeze(keys);
@@ -40,6 +48,10 @@ export default class PropertyRange<T extends object = object>
 		this._deltaValues = undefined;
 	}
 
+	/**
+	 * Snapshots the start values.
+	 * Must be called before calling update.
+	 */
 	init (): void
 	{
 		const keys = this._keys;
@@ -62,6 +74,10 @@ export default class PropertyRange<T extends object = object>
 		this._deltaValues = Object.freeze(deltaValues);
 	}
 
+	/**
+	 * Updates the properties of the item interpolated by the range value.
+	 * @param {number} range Any decimal value from 0 to 1.
+	 */
 	update (range: number): void
 	{
 		const keys = this._keys;
@@ -86,6 +102,6 @@ export default class PropertyRange<T extends object = object>
 function assertNumber (name: string, item: any, property: string | number): number | never
 {
 	const value = item[property];
-	if(typeof value!='number' || isNaN(value)) throw `'${name}.${property}' must be a number value.`;
+	if(typeof value!='number') throw `'${name}.${property}' must be a number value.`;
 	return value;
 }

@@ -3,7 +3,7 @@
  * @module interpolation
  */
 
-export default function(v: number[], k: number): number {
+export default function linear (v: number[], k: number): number {
 	const m = v.length - 1, f = m*k, i = Math.floor(f);
 
 	if(k<0) return fn(v[0], v[1], f);

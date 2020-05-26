@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module interpolation
  */
-export default function (v, k) {
+export default function linear(v, k) {
     const m = v.length - 1, f = m * k, i = Math.floor(f);
     if (k < 0)
         return fn(v[0], v[1], f);

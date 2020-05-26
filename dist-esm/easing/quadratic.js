@@ -3,7 +3,7 @@
  * @packageDocumentation
  * @module easing
  */
-var quadratic;
+export var quadratic;
 (function (quadratic) {
     function easeIn(k) {
         return k * k;
@@ -20,5 +20,6 @@ var quadratic;
     }
     quadratic.easeInOut = easeInOut;
 })(quadratic || (quadratic = {}));
-export default Object.freeze(quadratic);
+Object.freeze(quadratic);
+export default quadratic;
 //# sourceMappingURL=quadratic.js.map

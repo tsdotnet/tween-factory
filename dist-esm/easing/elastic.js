@@ -11,7 +11,7 @@ if (!a || a < 1) {
 }
 else
     s = p * Math.asin(1 / a) / (2 * Math.PI);
-var elastic;
+export var elastic;
 (function (elastic) {
     function easeIn(k) {
         if (k === 0 || k === 1)
@@ -34,5 +34,6 @@ var elastic;
     }
     elastic.easeInOut = easeInOut;
 })(elastic || (elastic = {}));
-export default Object.freeze(elastic);
+Object.freeze(elastic);
+export default elastic;
 //# sourceMappingURL=elastic.js.map

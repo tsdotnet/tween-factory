@@ -22,5 +22,6 @@ var back;
     }
     back.easeInOut = easeInOut;
 })(back || (back = {}));
-export default Object.freeze(back);
+Object.freeze(back);
+export default back;
 //# sourceMappingURL=back.js.map

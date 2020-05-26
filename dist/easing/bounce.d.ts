@@ -3,10 +3,9 @@
  * @packageDocumentation
  * @module easing
  */
-declare namespace bounce {
+export declare namespace bounce {
     function easeIn(k: number): number;
     function easeOut(k: number): number;
     function easeInOut(k: number): number;
 }
-declare const _default: Readonly<typeof bounce>;
-export default _default;
+export default bounce;

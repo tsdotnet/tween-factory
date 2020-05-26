@@ -4,7 +4,7 @@
  * @module interpolation
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-function default_1(v, k) {
+function bezier(v, k) {
     const n = v.length - 1, pw = Math.pow;
     let b = 0;
     for (let i = 0; i <= n; i++) {
@@ -12,7 +12,7 @@ function default_1(v, k) {
     }
     return b;
 }
-exports.default = default_1;
+exports.default = bezier;
 function bn(n, i) {
     return fc(n) / fc(i) / fc(n - i);
 }

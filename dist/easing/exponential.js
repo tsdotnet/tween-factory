@@ -5,6 +5,7 @@
  * @module easing
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.exponential = void 0;
 var exponential;
 (function (exponential) {
     function easeIn(k) {
@@ -23,6 +24,7 @@ var exponential;
         return 0.5 * (-Math.pow(2, -10 * (k - 1)) + 2);
     }
     exponential.easeInOut = easeInOut;
-})(exponential || (exponential = {}));
-exports.default = Object.freeze(exponential);
+})(exponential = exports.exponential || (exports.exponential = {}));
+Object.freeze(exponential);
+exports.default = exponential;
 //# sourceMappingURL=exponential.js.map

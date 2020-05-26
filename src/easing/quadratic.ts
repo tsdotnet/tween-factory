@@ -4,7 +4,7 @@
  * @module easing
  */
 
-namespace quadratic
+export namespace quadratic
 {
 	export function easeIn (k: number): number
 	{
@@ -23,4 +23,5 @@ namespace quadratic
 	}
 }
 
-export default Object.freeze(quadratic);
+Object.freeze(quadratic);
+export default quadratic;

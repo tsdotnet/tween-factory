@@ -4,7 +4,7 @@
  * @module easing
  */
 
-namespace bounce
+export namespace bounce
 {
 	export function easeIn (k: number): number
 	{
@@ -39,4 +39,5 @@ namespace bounce
 
 }
 
-export default Object.freeze(bounce);
+Object.freeze(bounce);
+export default bounce;

@@ -3,7 +3,7 @@
  * @module interpolation
  */
 
-export default function(v: number[], k: number): number {
+export default function bezier (v: number[], k: number): number {
 	const n = v.length - 1, pw = Math.pow;
 	let b = 0;
 	for(let i = 0; i<=n; i++)

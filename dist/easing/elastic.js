@@ -5,6 +5,7 @@
  * @module easing
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.elastic = void 0;
 const p = 0.4;
 let s, a = 0.1;
 if (!a || a < 1) {
@@ -35,6 +36,7 @@ var elastic;
         return a * Math.pow(2, -10 * (k -= 1)) * Math.sin((k - s) * (2 * Math.PI) / p) * 0.5 + 1;
     }
     elastic.easeInOut = easeInOut;
-})(elastic || (elastic = {}));
-exports.default = Object.freeze(elastic);
+})(elastic = exports.elastic || (exports.elastic = {}));
+Object.freeze(elastic);
+exports.default = elastic;
 //# sourceMappingURL=elastic.js.map

@@ -5,6 +5,7 @@
  * @module easing
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.cubic = void 0;
 var cubic;
 (function (cubic) {
     function easeIn(k) {
@@ -21,6 +22,7 @@ var cubic;
         return 0.5 * ((k -= 2) * k * k + 2);
     }
     cubic.easeInOut = easeInOut;
-})(cubic || (cubic = {}));
-exports.default = Object.freeze(cubic);
+})(cubic = exports.cubic || (exports.cubic = {}));
+Object.freeze(cubic);
+exports.default = cubic;
 //# sourceMappingURL=cubic.js.map

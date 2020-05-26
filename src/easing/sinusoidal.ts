@@ -4,7 +4,7 @@
  * @module easing
  */
 
-namespace sinusoidal
+export namespace sinusoidal
 {
 	export function easeIn (k: number): number
 	{
@@ -22,4 +22,5 @@ namespace sinusoidal
 	}
 
 }
-export default Object.freeze(sinusoidal);
+Object.freeze(sinusoidal);
+export default sinusoidal;

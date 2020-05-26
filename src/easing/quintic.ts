@@ -4,7 +4,7 @@
  * @module easing
  */
 
-namespace quintic
+export namespace quintic
 {
 	export function easeIn (k: number): number
 	{
@@ -23,4 +23,5 @@ namespace quintic
 	}
 }
 
-export default Object.freeze(quintic);
+Object.freeze(quintic);
+export default quintic;

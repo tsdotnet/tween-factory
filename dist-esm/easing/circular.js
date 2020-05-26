@@ -3,7 +3,7 @@
  * @packageDocumentation
  * @module easing
  */
-var circular;
+export var circular;
 (function (circular) {
     function easeIn(k) {
         return 1 - Math.sqrt(1 - k * k);
@@ -20,5 +20,6 @@ var circular;
     }
     circular.easeInOut = easeInOut;
 })(circular || (circular = {}));
-export default Object.freeze(circular);
+Object.freeze(circular);
+export default circular;
 //# sourceMappingURL=circular.js.map

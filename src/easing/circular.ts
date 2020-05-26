@@ -4,7 +4,7 @@
  * @module easing
  */
 
-namespace circular
+export namespace circular
 {
 	export function easeIn (k: number): number
 	{
@@ -23,4 +23,5 @@ namespace circular
 	}
 }
 
-export default Object.freeze(circular);
+Object.freeze(circular);
+export default circular;

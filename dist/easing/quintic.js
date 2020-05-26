@@ -5,6 +5,7 @@
  * @module easing
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.quintic = void 0;
 var quintic;
 (function (quintic) {
     function easeIn(k) {
@@ -21,6 +22,7 @@ var quintic;
         return 0.5 * ((k -= 2) * k * k * k * k + 2);
     }
     quintic.easeInOut = easeInOut;
-})(quintic || (quintic = {}));
-exports.default = Object.freeze(quintic);
+})(quintic = exports.quintic || (exports.quintic = {}));
+Object.freeze(quintic);
+exports.default = quintic;
 //# sourceMappingURL=quintic.js.map

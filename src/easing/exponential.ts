@@ -4,7 +4,7 @@
  * @module easing
  */
 
-namespace exponential
+export namespace exponential
 {
 	export function easeIn (k: number): number
 	{
@@ -24,4 +24,5 @@ namespace exponential
 	}
 }
 
-export default Object.freeze(exponential);
+Object.freeze(exponential);
+export default exponential;

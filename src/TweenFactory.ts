@@ -5,6 +5,7 @@
 
 import {Event} from '@tsdotnet/event-factory/dist/Event';
 import EventPublisher from '@tsdotnet/event-factory/dist/EventPublisher';
+import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
 import {OrderedAutoRegistry} from '@tsdotnet/ordered-registry';
 import PropertyRange, {NumericValues} from './PropertyRange';
 import TimeFrame from './TimeFrame';
@@ -14,14 +15,23 @@ export interface EasingFunction
 	(value: number): number;
 }
 
+/**
+ * A class for configuring groups of tweens and signaling their updates.
+ */
 export default class TweenFactory
 {
-	private _activeTweens = new OrderedAutoRegistry<tweening.ActiveTween>();
+	private _activeTweens = new OrderedAutoRegistry<Tween>();
 
 	constructor (public defaultEasing?: EasingFunction)
 	{
 	}
 
+	/**
+	 * Initializes a tweening behavior for further configuration.
+	 * @param {number} duration
+	 * @param {EasingFunction | undefined} easing
+	 * @return {tweening.Behavior}
+	 */
 	behavior (
 		duration: number,
 		easing: EasingFunction | undefined = this.defaultEasing): tweening.Behavior
@@ -29,7 +39,13 @@ export default class TweenFactory
 		return new tweening.Behavior(this, duration, easing);
 	}
 
-	addActive (factory: (id: number) => tweening.ActiveTween): tweening.ActiveTween
+	/**
+	 * Adds an active tween using a factory function.
+	 * @ignore
+	 * @param {(id: number) => Tween} factory
+	 * @return {Tween}
+	 */
+	addActive (factory: (id: number) => Tween): Tween
 	{
 		const tweens = this._activeTweens;
 		return tweens.addEntry(id => {
@@ -41,6 +57,9 @@ export default class TweenFactory
 		});
 	}
 
+	/**
+	 * Triggers updates for all active tweens.
+	 */
 	update (): void
 	{
 		for(const tween of this._activeTweens.values.toArray())
@@ -60,17 +79,6 @@ export namespace tweening
 		readonly disposed: Event<boolean>;
 	}
 
-	export interface ActiveTween
-	{
-		readonly events: tweening.Events;
-
-		update (): number;
-
-		complete (): void;
-
-		dispose (): void;
-	}
-
 	export class Behavior
 	{
 		/**
@@ -83,6 +91,7 @@ export namespace tweening
 			public duration: number,
 			public easing?: EasingFunction)
 		{
+			if(isNaN(duration)) throw new ArgumentException('duration', 'Is not a number value. Should be the number of desired milliseconds.');
 			Object.freeze(this);
 		}
 
@@ -91,7 +100,7 @@ export namespace tweening
 		 * @param o
 		 * @param endValues
 		 */
-		add (o: object, endValues: NumericValues): Config
+		add<T extends object> (o: T, endValues: Partial<NumericValues<T>>): Config
 		{
 			const starter = new Config(this);
 			starter.add(o, endValues);
@@ -110,17 +119,31 @@ export namespace tweening
 		{
 		}
 
+		/**
+		 * Events that will be triggered during the tween lifecycle.
+		 * @return {tweening.Events}
+		 */
 		get events (): Events
 		{
 			return this._triggers.events;
 		}
 
-		add<T extends object> (o: T, endValues: NumericValues<T>): this
+		/**
+		 * Adds an object to the behavior.
+		 * @param o
+		 * @param endValues
+		 */
+		add<T extends object> (o: T, endValues: Partial<NumericValues<T>>): this
 		{
 			this._ranges.push(new PropertyRange<T>(o, endValues));
 			return this;
 		}
 
+		/**
+		 * Allows for tweens to occur in sequence.
+		 * @param {tweening.Behavior} behavior
+		 * @return {tweening.Config}
+		 */
 		chain (behavior?: Behavior): Config
 		{
 			const config = new Config(behavior || this._behavior);
@@ -128,13 +151,18 @@ export namespace tweening
 			return config;
 		}
 
-		start (): ActiveTween
+		/**
+		 * Starts the tween.
+		 * @return {Tween}
+		 */
+		start (): Tween
 		{
 			const
 				_        = this,
 				behavior = _._behavior,
 				triggers = _._triggers;
 
+			for(const r of _._ranges) r.init();
 			triggers.started.publish();
 			return behavior.factory.addActive((id: number) => {
 				const tween = new Tween(id, behavior, _._ranges, triggers);
@@ -195,7 +223,6 @@ class TimeFrameEvents
 		protected readonly _triggers: Triggers)
 	{
 		super(duration);
-		Object.freeze(this);
 	}
 
 	get events (): Events
@@ -205,7 +232,7 @@ class TimeFrameEvents
 
 	update (): number
 	{
-		const _ = this, value = _.getProgress(), e = _._triggers, u = e.updated;
+		const _ = this, value = _.progress, e = _._triggers, u = e.updated;
 		u.publish(value);
 		if(value==1)
 		{
@@ -227,13 +254,12 @@ class TimeFrameEvents
 
 	dispose (): void
 	{
-		this._triggers.disposed.publish(this.getProgress()==1);
+		this._triggers.disposed.publish(this.progress==1);
 	}
 }
 
-class Tween
+export class Tween
 	extends TimeFrameEvents
-	implements tweening.ActiveTween
 {
 	constructor (
 		public readonly id: number,

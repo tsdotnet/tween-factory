@@ -3,9 +3,6 @@
  * @module easing
  */
 
-export function noEasing (k: number): number
-{
+export default function noEasing (k: number): number {
 	return k;
 }
-
-export default noEasing;

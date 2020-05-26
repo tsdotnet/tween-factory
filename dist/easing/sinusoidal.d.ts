@@ -3,10 +3,9 @@
  * @packageDocumentation
  * @module easing
  */
-declare namespace sinusoidal {
+export declare namespace sinusoidal {
     function easeIn(k: number): number;
     function easeOut(k: number): number;
     function easeInOut(k: number): number;
 }
-declare const _default: Readonly<typeof sinusoidal>;
-export default _default;
+export default sinusoidal;

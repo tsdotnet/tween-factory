@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module interpolation
  */
-export default function (v, k) {
+export default function catmullRom(v, k) {
     const m = v.length - 1;
     let f = m * k, i = Math.floor(f);
     if (v[0] === v[m]) {

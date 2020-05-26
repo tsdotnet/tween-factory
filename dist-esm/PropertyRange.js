@@ -4,6 +4,9 @@
  */
 import ArgumentNullException from '@tsdotnet/exceptions/dist/ArgumentNullException';
 const ITEM = 'item', END_VALUES = 'endValues';
+/**
+ * A class for modifying a set of properties across a range.
+ */
 export default class PropertyRange {
     constructor(item, endValues) {
         if (item == null)
@@ -12,8 +15,12 @@ export default class PropertyRange {
             throw new ArgumentNullException(END_VALUES);
         const keys = Object.keys(endValues);
         const values = {};
-        for (const key of keys)
-            values[key] = assertNumber(END_VALUES, endValues, key);
+        for (const key of keys) {
+            const value = assertNumber(END_VALUES, endValues, key);
+            if (isNaN(value))
+                continue; // NaN = ignore.
+            values[key] = value;
+        }
         this._item = item;
         this._keys = Object.freeze(keys);
         this._endValues = Object.freeze(values);
@@ -24,6 +31,10 @@ export default class PropertyRange {
         this._startValues = undefined;
         this._deltaValues = undefined;
     }
+    /**
+     * Snapshots the start values.
+     * Must be called before calling update.
+     */
     init() {
         const keys = this._keys;
         if (!keys)
@@ -38,6 +49,10 @@ export default class PropertyRange {
         this._startValues = Object.freeze(startValues);
         this._deltaValues = Object.freeze(deltaValues);
     }
+    /**
+     * Updates the properties of the item interpolated by the range value.
+     * @param {number} range Any decimal value from 0 to 1.
+     */
     update(range) {
         const keys = this._keys;
         if (!keys)
@@ -54,7 +69,7 @@ export default class PropertyRange {
 }
 function assertNumber(name, item, property) {
     const value = item[property];
-    if (typeof value != 'number' || isNaN(value))
+    if (typeof value != 'number')
         throw `'${name}.${property}' must be a number value.`;
     return value;
 }

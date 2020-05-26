@@ -3,7 +3,7 @@
  * @packageDocumentation
  * @module easing
  */
-var exponential;
+export var exponential;
 (function (exponential) {
     function easeIn(k) {
         return k === 0 ? 0 : Math.pow(1024, k - 1);
@@ -22,5 +22,6 @@ var exponential;
     }
     exponential.easeInOut = easeInOut;
 })(exponential || (exponential = {}));
-export default Object.freeze(exponential);
+Object.freeze(exponential);
+export default exponential;
 //# sourceMappingURL=exponential.js.map

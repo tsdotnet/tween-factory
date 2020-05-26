@@ -8,5 +8,4 @@ declare namespace back {
     function easeOut(k: number): number;
     function easeInOut(k: number): number;
 }
-declare const _default: Readonly<typeof back>;
-export default _default;
+export default back;

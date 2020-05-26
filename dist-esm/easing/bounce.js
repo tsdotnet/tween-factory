@@ -3,7 +3,7 @@
  * @packageDocumentation
  * @module easing
  */
-var bounce;
+export var bounce;
 (function (bounce) {
     function easeIn(k) {
         return 1 - easeOut(1 - k);
@@ -31,5 +31,6 @@ var bounce;
     }
     bounce.easeInOut = easeInOut;
 })(bounce || (bounce = {}));
-export default Object.freeze(bounce);
+Object.freeze(bounce);
+export default bounce;
 //# sourceMappingURL=bounce.js.map

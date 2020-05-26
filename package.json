@@ -15,7 +15,7 @@
     "bump": "npm run precommit && npm version patch",
     "docs": "rimraf docs/* && rimraf docs/.nojekyll && typedoc --options typedoc.json --readme none",
     "lint": "eslint src/**/*.ts",
-    "precommit": "pnpm i && run-p lint test && run-p build:* && npm run validate",
+    "precommit": "pnpm i && run-p lint test && run-p build:* && npm run validate && git status -s",
     "prepublishOnly": "npm run build && run-p validate test",
     "preversion": "run-p lint test",
     "postversion": "git push && git push --tags && npm run docs && git commit -m \"Updated docs.\" docs && git push",
@@ -54,9 +54,9 @@
   },
   "dependencies": {
     "@tsdotnet/disposable": "^1.1.19",
-    "@tsdotnet/event-factory": "^1.0.1",
+    "@tsdotnet/event-factory": "^1.1.0",
     "@tsdotnet/exceptions": "^1.0.16",
-    "@tsdotnet/ordered-registry": "^1.0.13",
+    "@tsdotnet/ordered-registry": "^1.0.16",
     "tslib": "^2.0.0"
   }
 }

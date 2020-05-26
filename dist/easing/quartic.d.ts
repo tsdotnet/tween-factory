@@ -3,10 +3,9 @@
  * @packageDocumentation
  * @module easing
  */
-declare namespace quartic {
+export declare namespace quartic {
     function easeIn(k: number): number;
     function easeOut(k: number): number;
     function easeInOut(k: number): number;
 }
-declare const _default: Readonly<typeof quartic>;
-export default _default;
+export default quartic;

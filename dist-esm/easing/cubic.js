@@ -3,7 +3,7 @@
  * @packageDocumentation
  * @module easing
  */
-var cubic;
+export var cubic;
 (function (cubic) {
     function easeIn(k) {
         return k * k * k;
@@ -20,5 +20,6 @@ var cubic;
     }
     cubic.easeInOut = easeInOut;
 })(cubic || (cubic = {}));
-export default Object.freeze(cubic);
+Object.freeze(cubic);
+export default cubic;
 //# sourceMappingURL=cubic.js.map

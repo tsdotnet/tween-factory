@@ -3,17 +3,33 @@
  * @license MIT
  */
 import EventPublisher from '@tsdotnet/event-factory/dist/EventPublisher';
+import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
 import { OrderedAutoRegistry } from '@tsdotnet/ordered-registry';
 import PropertyRange from './PropertyRange';
 import TimeFrame from './TimeFrame';
+/**
+ * A class for configuring groups of tweens and signaling their updates.
+ */
 export default class TweenFactory {
     constructor(defaultEasing) {
         this.defaultEasing = defaultEasing;
         this._activeTweens = new OrderedAutoRegistry();
     }
+    /**
+     * Initializes a tweening behavior for further configuration.
+     * @param {number} duration
+     * @param {EasingFunction | undefined} easing
+     * @return {tweening.Behavior}
+     */
     behavior(duration, easing = this.defaultEasing) {
         return new tweening.Behavior(this, duration, easing);
     }
+    /**
+     * Adds an active tween using a factory function.
+     * @ignore
+     * @param {(id: number) => Tween} factory
+     * @return {Tween}
+     */
     addActive(factory) {
         const tweens = this._activeTweens;
         return tweens.addEntry(id => {
@@ -24,6 +40,9 @@ export default class TweenFactory {
             return tween;
         });
     }
+    /**
+     * Triggers updates for all active tweens.
+     */
     update() {
         for (const tween of this._activeTweens.values.toArray()) {
             tween.update();
@@ -42,6 +61,8 @@ export var tweening;
             this.factory = factory;
             this.duration = duration;
             this.easing = easing;
+            if (isNaN(duration))
+                throw new ArgumentException('duration', 'Is not a number value. Should be the number of desired milliseconds.');
             Object.freeze(this);
         }
         /**
@@ -63,20 +84,40 @@ export var tweening;
             this._triggers = new Triggers();
             this._chained = [];
         }
+        /**
+         * Events that will be triggered during the tween lifecycle.
+         * @return {tweening.Events}
+         */
         get events() {
             return this._triggers.events;
         }
+        /**
+         * Adds an object to the behavior.
+         * @param o
+         * @param endValues
+         */
         add(o, endValues) {
             this._ranges.push(new PropertyRange(o, endValues));
             return this;
         }
+        /**
+         * Allows for tweens to occur in sequence.
+         * @param {tweening.Behavior} behavior
+         * @return {tweening.Config}
+         */
         chain(behavior) {
             const config = new Config(behavior || this._behavior);
             this._chained.push(config);
             return config;
         }
+        /**
+         * Starts the tween.
+         * @return {Tween}
+         */
         start() {
             const _ = this, behavior = _._behavior, triggers = _._triggers;
+            for (const r of _._ranges)
+                r.init();
             triggers.started.publish();
             return behavior.factory.addActive((id) => {
                 const tween = new Tween(id, behavior, _._ranges, triggers);
@@ -115,13 +156,12 @@ class TimeFrameEvents extends TimeFrame {
     constructor(duration, _triggers) {
         super(duration);
         this._triggers = _triggers;
-        Object.freeze(this);
     }
     get events() {
         return this._triggers.events;
     }
     update() {
-        const _ = this, value = _.getProgress(), e = _._triggers, u = e.updated;
+        const _ = this, value = _.progress, e = _._triggers, u = e.updated;
         u.publish(value);
         if (value == 1) {
             u.remaining = 0;
@@ -138,10 +178,10 @@ class TimeFrameEvents extends TimeFrame {
         e.disposed.publish(true);
     }
     dispose() {
-        this._triggers.disposed.publish(this.getProgress() == 1);
+        this._triggers.disposed.publish(this.progress == 1);
     }
 }
-class Tween extends TimeFrameEvents {
+export class Tween extends TimeFrameEvents {
     constructor(id, behavior, ranges, triggers) {
         super(behavior.duration, triggers);
         this.id = id;

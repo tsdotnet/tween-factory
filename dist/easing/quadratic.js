@@ -5,6 +5,7 @@
  * @module easing
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.quadratic = void 0;
 var quadratic;
 (function (quadratic) {
     function easeIn(k) {
@@ -21,6 +22,7 @@ var quadratic;
         return -0.5 * (--k * (k - 2) - 1);
     }
     quadratic.easeInOut = easeInOut;
-})(quadratic || (quadratic = {}));
-exports.default = Object.freeze(quadratic);
+})(quadratic = exports.quadratic || (exports.quadratic = {}));
+Object.freeze(quadratic);
+exports.default = quadratic;
 //# sourceMappingURL=quadratic.js.map

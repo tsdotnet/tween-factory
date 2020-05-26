@@ -2,4 +2,4 @@
  * @packageDocumentation
  * @module interpolation
  */
-export default function (v: number[], k: number): number;
+export default function linear(v: number[], k: number): number;

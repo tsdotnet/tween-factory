@@ -5,6 +5,7 @@
  * @module easing
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bounce = void 0;
 var bounce;
 (function (bounce) {
     function easeIn(k) {
@@ -32,6 +33,7 @@ var bounce;
         return easeOut(k * 2 - 1) * 0.5 + 0.5;
     }
     bounce.easeInOut = easeInOut;
-})(bounce || (bounce = {}));
-exports.default = Object.freeze(bounce);
+})(bounce = exports.bounce || (exports.bounce = {}));
+Object.freeze(bounce);
+exports.default = bounce;
 //# sourceMappingURL=bounce.js.map

@@ -13,7 +13,7 @@ if(!a || a<1)
 }
 else s = p*Math.asin(1/a)/(2*Math.PI);
 
-namespace elastic
+export namespace elastic
 {
 	export function easeIn (k: number): number
 	{
@@ -35,4 +35,5 @@ namespace elastic
 	}
 }
 
-export default Object.freeze(elastic);
+Object.freeze(elastic);
+export default elastic;

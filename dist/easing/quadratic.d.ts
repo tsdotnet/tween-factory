@@ -3,10 +3,9 @@
  * @packageDocumentation
  * @module easing
  */
-declare namespace quadratic {
+export declare namespace quadratic {
     function easeIn(k: number): number;
     function easeOut(k: number): number;
     function easeInOut(k: number): number;
 }
-declare const _default: Readonly<typeof quadratic>;
-export default _default;
+export default quadratic;

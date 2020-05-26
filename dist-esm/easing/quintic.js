@@ -3,7 +3,7 @@
  * @packageDocumentation
  * @module easing
  */
-var quintic;
+export var quintic;
 (function (quintic) {
     function easeIn(k) {
         return k * k * k * k * k;
@@ -20,5 +20,6 @@ var quintic;
     }
     quintic.easeInOut = easeInOut;
 })(quintic || (quintic = {}));
-export default Object.freeze(quintic);
+Object.freeze(quintic);
+export default quintic;
 //# sourceMappingURL=quintic.js.map

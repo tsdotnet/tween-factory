@@ -1,8 +1,8 @@
 dependencies:
   '@tsdotnet/disposable': 1.1.19
-  '@tsdotnet/event-factory': 1.0.1
+  '@tsdotnet/event-factory': 1.1.0
   '@tsdotnet/exceptions': 1.0.16
-  '@tsdotnet/ordered-registry': 1.0.13
+  '@tsdotnet/ordered-registry': 1.0.16
   tslib: 2.0.0
 devDependencies:
   '@types/chai': 4.2.11
@@ -206,7 +206,7 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
-  /@tsdotnet/collection-base/2.0.4:
+  /@tsdotnet/collection-base/2.0.6:
     dependencies:
       '@tsdotnet/common-interfaces': 1.0.4
       '@tsdotnet/compare': 1.3.13
@@ -214,7 +214,7 @@ packages:
       tslib: 2.0.0
     dev: false
     resolution:
-      integrity: sha512-LtF0n47dztwFAKRznTCoWwa0dFWThVvQsYRghdX/lgIbw6b/tbv85dKgYGEWc/FQrg5npHbYkBpP/9YFQZBoWw==
+      integrity: sha512-iSAPS8Wsk3/a11U2DX6iMuCCtB3IpfmFvoI3yjH7l7rDnqD0Liyq3bSSZNAqlqdvEulTi9yJFZjDX1THT//Vkw==
   /@tsdotnet/common-interfaces/1.0.4:
     dev: false
     resolution:
@@ -233,17 +233,17 @@ packages:
     dev: false
     resolution:
       integrity: sha512-2DGtUvkiR1/h2mmES97BLb2zBgRaYQbUnk/YcYG5rmdKjHgZVKcPwd+exMZTxY5mLi4mQCbsS/BmSxEKqg2Uag==
-  /@tsdotnet/event-factory/1.0.1:
+  /@tsdotnet/event-factory/1.1.0:
     dependencies:
-      '@tsdotnet/collection-base': 2.0.4
+      '@tsdotnet/collection-base': 2.0.6
       '@tsdotnet/disposable': 1.1.19
       '@tsdotnet/exceptions': 1.0.16
       '@tsdotnet/lazy': 1.0.19
-      '@tsdotnet/ordered-registry': 1.0.13
+      '@tsdotnet/ordered-registry': 1.0.16
       tslib: 2.0.0
     dev: false
     resolution:
-      integrity: sha512-9TtjLlCtUWGsrfBmqLkcY2+MK8QJhYjhYnAwgx4vySAVsLSCtr+YSuFrZaLAhMCdUH7/nidhoZ01LXNtxJFzHA==
+      integrity: sha512-LtISTbkel0yS3Thnx4uBYfpezBSAsRzqHeXr5fm9Z9xVCjpuNCJX4N3avIj2GmAlpAwvBMbxcZp+H65l2Zdrkw==
   /@tsdotnet/exceptions/1.0.16:
     dependencies:
       tslib: 2.0.0
@@ -257,26 +257,26 @@ packages:
     dev: false
     resolution:
       integrity: sha512-755p0CDhfwnBViO8i7SOp6vbflZ9ip4B8ULRGz6ucx1O7OIF5FFOA3Yrz4/zYCJw1mewfBkhM1cCk1ByQlGBEw==
-  /@tsdotnet/linked-node-list/1.3.11:
+  /@tsdotnet/linked-node-list/1.3.13:
     dependencies:
-      '@tsdotnet/collection-base': 2.0.4
+      '@tsdotnet/collection-base': 2.0.6
       '@tsdotnet/common-interfaces': 1.0.4
       '@tsdotnet/exceptions': 1.0.16
       tslib: 2.0.0
     dev: false
     resolution:
-      integrity: sha512-xZhIUFJ01CbKguJQOT6TlMmVZzYQKD2xkhjsOi69lCrus8IKPWz41i8qzWnXMX00MfAnt6R8Ib/5OMtyNeMkpQ==
-  /@tsdotnet/ordered-registry/1.0.13:
+      integrity: sha512-KBJhR1hstJnNXi4AwNuRUs6XhjNbUfOVk+ZL7lH+/XkctNO8i+7Wfch/XGFmdmBsPpFrR427Cqv0lRW5WUUV/w==
+  /@tsdotnet/ordered-registry/1.0.16:
     dependencies:
-      '@tsdotnet/collection-base': 2.0.4
+      '@tsdotnet/collection-base': 2.0.6
       '@tsdotnet/common-interfaces': 1.0.4
       '@tsdotnet/compare': 1.3.13
       '@tsdotnet/exceptions': 1.0.16
-      '@tsdotnet/linked-node-list': 1.3.11
+      '@tsdotnet/linked-node-list': 1.3.13
       tslib: 2.0.0
     dev: false
     resolution:
-      integrity: sha512-0NQX2hrcFXv0ezOnvcibcNltn+2WBhiAkH3VQlEkYsFwmW5mJAS5BKAbLN+RRHjgLRHkkd+gGBuo6eV5fcJ2jA==
+      integrity: sha512-Or5S6kyJWS3MpWyFgn2uyE5ZNcVCJ49UIGipnzvNn0KG2k+tfx2LrWCDG1R6LIpi1vqTb1LQDqtm99FB5AQbkw==
   /@tsdotnet/type/1.0.8:
     dependencies:
       '@tsdotnet/common-interfaces': 1.0.4
@@ -3094,9 +3094,9 @@ packages:
       integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
 specifiers:
   '@tsdotnet/disposable': ^1.1.19
-  '@tsdotnet/event-factory': ^1.0.1
+  '@tsdotnet/event-factory': ^1.1.0
   '@tsdotnet/exceptions': ^1.0.16
-  '@tsdotnet/ordered-registry': ^1.0.13
+  '@tsdotnet/ordered-registry': ^1.0.16
   '@types/chai': ^4.2.11
   '@types/mocha': ^7.0.2
   '@typescript-eslint/eslint-plugin': ^3.0.1

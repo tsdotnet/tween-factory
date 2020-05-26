@@ -4,7 +4,7 @@
  * @module easing
  */
 
-namespace cubic
+export namespace cubic
 {
 	export function easeIn (k: number): number
 	{
@@ -23,4 +23,5 @@ namespace cubic
 	}
 }
 
-export default Object.freeze(cubic);
+Object.freeze(cubic);
+export default cubic;

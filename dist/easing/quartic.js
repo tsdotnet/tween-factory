@@ -5,6 +5,7 @@
  * @module easing
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.quartic = void 0;
 var quartic;
 (function (quartic) {
     function easeIn(k) {
@@ -21,6 +22,7 @@ var quartic;
         return -0.5 * ((k -= 2) * k * k * k - 2);
     }
     quartic.easeInOut = easeInOut;
-})(quartic || (quartic = {}));
-exports.default = Object.freeze(quartic);
+})(quartic = exports.quartic || (exports.quartic = {}));
+Object.freeze(quartic);
+exports.default = quartic;
 //# sourceMappingURL=quartic.js.map

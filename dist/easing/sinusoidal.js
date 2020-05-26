@@ -5,6 +5,7 @@
  * @module easing
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.sinusoidal = void 0;
 var sinusoidal;
 (function (sinusoidal) {
     function easeIn(k) {
@@ -19,6 +20,7 @@ var sinusoidal;
         return 0.5 * (1 - Math.cos(Math.PI * k));
     }
     sinusoidal.easeInOut = easeInOut;
-})(sinusoidal || (sinusoidal = {}));
-exports.default = Object.freeze(sinusoidal);
+})(sinusoidal = exports.sinusoidal || (exports.sinusoidal = {}));
+Object.freeze(sinusoidal);
+exports.default = sinusoidal;
 //# sourceMappingURL=sinusoidal.js.map

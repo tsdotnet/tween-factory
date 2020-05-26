@@ -3,7 +3,7 @@
  * @packageDocumentation
  * @module easing
  */
-var sinusoidal;
+export var sinusoidal;
 (function (sinusoidal) {
     function easeIn(k) {
         return 1 - Math.cos(k * Math.PI / 2);
@@ -18,5 +18,6 @@ var sinusoidal;
     }
     sinusoidal.easeInOut = easeInOut;
 })(sinusoidal || (sinusoidal = {}));
-export default Object.freeze(sinusoidal);
+Object.freeze(sinusoidal);
+export default sinusoidal;
 //# sourceMappingURL=sinusoidal.js.map

@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module interpolation
  */
-export default function (v, k) {
+export default function bezier(v, k) {
     const n = v.length - 1, pw = Math.pow;
     let b = 0;
     for (let i = 0; i <= n; i++) {

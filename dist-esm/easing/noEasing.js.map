@@ -1,1 +1,1 @@
-{"version":3,"file":"noEasing.js","sourceRoot":"","sources":["../../src/easing/noEasing.ts"],"names":[],"mappings":"AAAA;;;GAGG;AAEH,MAAM,UAAU,QAAQ,CAAE,CAAS;IAElC,OAAO,CAAC,CAAC;AACV,CAAC;AAED,eAAe,QAAQ,CAAC"}
+{"version":3,"file":"noEasing.js","sourceRoot":"","sources":["../../src/easing/noEasing.ts"],"names":[],"mappings":"AAAA;;;GAGG;AAEH,MAAM,CAAC,OAAO,UAAU,QAAQ,CAAE,CAAS;IAE1C,OAAO,CAAC,CAAC;AACV,CAAC"}
