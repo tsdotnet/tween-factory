@@ -2,6 +2,7 @@
  * @author electricessence / https://github.com/electricessence/
  * @license MIT
  */
+import { DisposableBase } from '@tsdotnet/disposable';
 import { Event } from '@tsdotnet/event-factory/dist/Event';
 import EventPublisher from '@tsdotnet/event-factory/dist/EventPublisher';
 import PropertyRange, { NumericValues } from './PropertyRange';
@@ -14,7 +15,7 @@ export interface EasingFunction {
  */
 export default class TweenFactory {
     defaultEasing?: EasingFunction | undefined;
-    private _activeTweens;
+    private readonly _activeTweens;
     constructor(defaultEasing?: EasingFunction | undefined);
     /**
      * Initializes a tweening behavior for further configuration.
@@ -34,6 +35,10 @@ export default class TweenFactory {
      * Triggers updates for all active tweens.
      */
     update(): void;
+    /**
+     * Cancels (disposes) all active tweens.
+     */
+    cancelActive(): void;
 }
 export declare namespace tweening {
     interface Events {
@@ -54,16 +59,17 @@ export declare namespace tweening {
         constructor(factory: TweenFactory, duration: number, easing?: EasingFunction | undefined);
         /**
          * Adds an object to the behavior.
-         * @param o
+         * @param target
          * @param endValues
          */
-        add<T extends object>(o: T, endValues: Partial<NumericValues<T>>): Config;
+        add<T extends object>(target: T, endValues: Partial<NumericValues<T>>): Config;
     }
-    class Config {
+    class Config extends DisposableBase {
         protected readonly _behavior: Behavior;
-        protected readonly _ranges: PropertyRange<any>[];
+        protected _ranges?: PropertyRange<any>[];
         protected readonly _triggers: Triggers;
-        protected readonly _chained: Config[];
+        protected _chained?: Config[];
+        protected _active?: Tween;
         constructor(_behavior: Behavior);
         /**
          * Events that will be triggered during the tween lifecycle.
@@ -72,12 +78,14 @@ export declare namespace tweening {
         get events(): Events;
         /**
          * Adds an object to the behavior.
-         * @param o
+         * @throws `InvalidOperationException` if the tween has already been started.
+         * @param target
          * @param endValues
          */
-        add<T extends object>(o: T, endValues: Partial<NumericValues<T>>): this;
+        add<T extends object>(target: T, endValues: Partial<NumericValues<T>>): this;
         /**
          * Allows for tweens to occur in sequence.
+         * @throws `InvalidOperationException` if the tween has already been started.
          * @param {tweening.Behavior} behavior
          * @return {tweening.Config}
          */
@@ -87,6 +95,7 @@ export declare namespace tweening {
          * @return {Tween}
          */
         start(): Tween;
+        protected _onDispose(): void;
     }
 }
 declare class Events implements tweening.Events {
@@ -103,13 +112,30 @@ declare class Triggers {
     readonly disposed: EventPublisher<boolean>;
     readonly events: Events;
     constructor();
+    dispose(): void;
 }
 declare class TimeFrameEvents extends TimeFrame {
     protected readonly _triggers: Triggers;
     constructor(duration: number, _triggers: Triggers);
     get events(): Events;
+    private _lastUpdate;
+    /**
+     * The last time an update() was called (triggered).  NaN if never called.
+     * @return {number}
+     */
+    get lastUpdate(): number;
+    /**
+     * Updates the state and triggers events accordingly.
+     * @return {number}
+     */
     update(): number;
+    /**
+     * Forces completion and calls dispose(true).
+     */
     complete(): void;
+    /**
+     * Disposes the tween.  All updates are arrested and dispose will signal completion progress.
+     */
     dispose(): void;
 }
 export declare class Tween extends TimeFrameEvents {
