@@ -87,7 +87,7 @@ type EventState = {
 async function test (tweenFactory: TweenFactory)
 {
 	const point1 = {x: 0, y: 0}, point2 = {x: 0, y: 0};
-	const tween1 = tweenFactory.behavior(100).add(point1, {x: 10, y: 8});
+	const tween1 = tweenFactory.duration(100).add(point1, {x: 10, y: 8});
 	const state1 = initState(tween1);
 	const tween2 = tween1.chain().add(point2, {x: 10});
 	const state2 = initState(tween2);
@@ -98,15 +98,15 @@ async function test (tweenFactory: TweenFactory)
 	expect(state1.started, 'state1.started').to.be.true;
 	expect(isNaN(a.lastUpdate)).to.be.true;
 	await delay(10);
-	expect(a.progress).not.equal(0);
+	expect(a.timeFrame.progress).not.equal(0);
 	await delay(100);
 	expect(isNaN(a.lastUpdate)).to.be.true;
-	expect(a.startTime, 'startTime').to.be.greaterThan(0);
-	expect(a.duration, 'duration').equal(100);
-	expect(a.endTime, 'endTime').equal(a.startTime + 100);
+	expect(a.timeFrame.startTime, 'startTime').to.be.greaterThan(0);
+	expect(a.timeFrame.duration, 'duration').equal(100);
+	expect(a.timeFrame.endTime, 'endTime').equal(a.timeFrame.startTime + 100);
 	tweenFactory.update();
 	expect(isNaN(a.lastUpdate), 'lastUpdate').not.to.be.true;
-	expect(a.progress, 'progress').equal(1);
+	expect(a.timeFrame.progress, 'progress').equal(1);
 	expect(state1.completed, 'state1.completed').to.be.true;
 	expect(state1.disposed, 'state1.disposed').equal(1);
 
@@ -120,7 +120,7 @@ async function test (tweenFactory: TweenFactory)
 
 function initTween (tf: TweenFactory): tweening.Config
 {
-	return tf.behavior(100).add({
+	return tf.duration(100).add({
 		x: 0,
 		y: 0
 	}, {

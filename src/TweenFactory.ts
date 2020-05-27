@@ -17,47 +17,86 @@ export interface EasingFunction
 	(value: number): number;
 }
 
+export type TweenSettings = {
+	delay?: number;
+	duration?: number
+	easing?: EasingFunction;
+}
+
+abstract class TweenConfigBase
+{
+	constructor (
+		public settings: TweenSettings = {},
+		protected _addActive: (factory: (id: number) => Tween) => Tween)
+	{}
+
+	configure (settings: TweenSettings): tweening.Behavior
+	{
+		return new tweening.Behavior({
+			delay: settings.delay ?? this.settings.delay,
+			duration: settings.duration ?? this.settings.duration,
+			easing: settings.easing ?? this.settings.easing
+		}, this._addActive);
+	}
+
+	/**
+	 * Configures a tween behavior with the specified delay.
+	 * @param {number} milliSeconds
+	 * @return {tweening.Behavior}
+	 */
+	delay (milliSeconds: number): tweening.Behavior
+	{
+		return this.configure({delay: milliSeconds});
+	}
+
+	/**
+	 * Configures a tween behavior with the specified duration.
+	 * @param {number} milliSeconds
+	 * @return {tweening.Behavior}
+	 */
+	duration (milliSeconds: number): tweening.Behavior
+	{
+		return this.configure({duration: milliSeconds});
+	}
+
+	/**
+	 * Configures a tween behavior with the specified easing function.
+	 * @param {EasingFunction} fn
+	 * @return {tweening.Behavior}
+	 */
+	easing (fn: EasingFunction): tweening.Behavior
+	{
+		return this.configure({easing: fn});
+	}
+
+}
+
 /**
  * A class for configuring groups of tweens and signaling their updates.
  */
 export default class TweenFactory
+	extends TweenConfigBase
 {
 	private readonly _activeTweens = new OrderedAutoRegistry<Tween>();
 
-	constructor (public defaultEasing?: EasingFunction)
+	constructor (defaultEasing: EasingFunction);
+	constructor (settings?: TweenSettings);
+	constructor (settings: EasingFunction | TweenSettings = {})
 	{
-	}
-
-	/**
-	 * Initializes a tweening behavior for further configuration.
-	 * @param {number} duration
-	 * @param {EasingFunction | undefined} easing
-	 * @return {tweening.Behavior}
-	 */
-	behavior (
-		duration: number,
-		easing: EasingFunction | undefined = this.defaultEasing): tweening.Behavior
-	{
-		return new tweening.Behavior(this, duration, easing);
-	}
-
-	/**
-	 * Adds an active tween using a factory function.
-	 * @ignore
-	 * @param {(id: number) => Tween} factory
-	 * @return {Tween}
-	 */
-	addActive (factory: (id: number) => Tween): Tween
-	{
-		const tweens = this._activeTweens;
-		return tweens.addEntry(id => {
-			const tween = factory(id);
-			tween.events.disposed(() => {
-				tweens.remove(id);
+		super(
+			typeof settings=='function' ? {easing: settings} : settings,
+			(factory: (id: number) => Tween) => {
+				const tweens = this._activeTweens;
+				return tweens.addEntry(id => {
+					const tween = factory(id);
+					tween.events.disposed(() => {
+						tweens.remove(id);
+					});
+					return tween;
+				});
 			});
-			return tween;
-		});
 	}
+
 
 	/**
 	 * Triggers updates for all active tweens.
@@ -91,18 +130,13 @@ export namespace tweening
 	}
 
 	export class Behavior
+		extends TweenConfigBase
 	{
-		/**
-		 * @param factory The tween factory to manage the tweens with.
-		 * @param duration Number of milliseconds a tween should be active.
-		 * @param easing The optional easing function.
-		 */
 		constructor (
-			public factory: TweenFactory,
-			public duration: number,
-			public easing?: EasingFunction)
+			settings: TweenSettings,
+			addActive: (factory: (id: number) => Tween) => Tween)
 		{
-			if(isNaN(duration)) throw new ArgumentException('duration', 'Is not a number value. Should be the number of desired milliseconds.');
+			super(settings, addActive);
 			Object.freeze(this);
 		}
 
@@ -113,7 +147,7 @@ export namespace tweening
 		 */
 		add<T extends object> (target: T, endValues: Partial<NumericValues<T>>): Config
 		{
-			const starter = new Config(this);
+			const starter = new Config(this, this._addActive);
 			starter.add(target, endValues);
 			return starter;
 		}
@@ -128,7 +162,8 @@ export namespace tweening
 		protected _active?: Tween;
 
 		constructor (
-			protected readonly _behavior: Behavior)
+			protected readonly _behavior: Behavior,
+			protected _addActive: (factory: (id: number) => Tween) => Tween)
 		{
 			super('tweening.Config');
 		}
@@ -167,7 +202,7 @@ export namespace tweening
 		{
 			this.throwIfDisposed();
 			if(!this._chained) throw new InvalidOperationException('Adding more targets to an active tween is not supported.');
-			const config = new Config(behavior || this._behavior);
+			const config = new Config(behavior || this._behavior, this._addActive);
 			this._chained.push(config);
 			return config;
 		}
@@ -176,10 +211,24 @@ export namespace tweening
 		 * Starts the tween.
 		 * @return {Tween}
 		 */
-		start (): Tween
+
+		/**
+		 * Starts the tween.
+		 * @param {TimeFrame} timeFrame
+		 * @return {Tween}
+		 */
+		start (timeFrame?: TimeFrame): Tween
 		{
 			this.throwIfDisposed();
 			if(this._active) throw new InvalidOperationException('Starting a tween more than once is not supported.');
+
+			if(!timeFrame)
+			{
+				const duration = this._behavior.settings.duration;
+				if(typeof duration!='number' || isNaN(duration)) throw new ArgumentException('duration', 'Is not a number value. Should be the number of desired milliseconds.');
+				const delay = this._behavior.settings.delay ?? 0;
+				timeFrame = new TimeFrame(duration, delay + Date.now());
+			}
 
 			const
 				_        = this,
@@ -188,11 +237,12 @@ export namespace tweening
 				ranges   = _._ranges!,
 				chained  = _._chained!;
 			_._chained = _._ranges = undefined;
-			for(const r of ranges) r.init();
 
+			for(const r of ranges) r.init();
 			triggers.started.publish();
-			return this._active = behavior.factory.addActive((id: number) => {
-				const tween = new Tween(id, behavior, ranges, triggers);
+
+			return this._active = this._addActive((id: number) => {
+				const tween = new Tween(id, timeFrame!, behavior, ranges, triggers);
 				triggers.completed.addPost().dispatcher.add(() => {
 					for(const next of chained) next.start();
 					chained.length = 0;
@@ -259,14 +309,14 @@ class Triggers
 }
 
 class TimeFrameEvents
-	extends TimeFrame
 {
 	constructor (
-		duration: number,
+		private readonly _timeFrame: TimeFrame,
 		protected readonly _triggers: Triggers)
 	{
-		super(duration);
 	}
+
+	get timeFrame (): TimeFrame { return this._timeFrame; }
 
 	get events (): Events
 	{
@@ -291,7 +341,7 @@ class TimeFrameEvents
 	update (): number
 	{
 		this._lastUpdate = Date.now();
-		const value = this.progress, e = this._triggers, u = e.updated;
+		const value = this._timeFrame.progress, e = this._triggers, u = e.updated;
 		u.publish(value);
 		if(value==1)
 		{
@@ -319,7 +369,7 @@ class TimeFrameEvents
 	 */
 	dispose (): void
 	{
-		this._triggers.disposed.publish(this.progress==1);
+		this._triggers.disposed.publish(this._timeFrame.progress==1);
 	}
 }
 
@@ -328,18 +378,19 @@ export class Tween
 {
 	constructor (
 		public readonly id: number,
+		timeFrame: TimeFrame,
 		behavior: tweening.Behavior,
 		ranges: PropertyRange[],
 		triggers: Triggers)
 	{
-		super(behavior.duration, triggers);
+		super(timeFrame, triggers);
 
 		/*
 		 * We use the 'pre update' to actually do the work
 		 * so that listeners of the actual event can react to changed values.
 		 */
 		const updated = triggers.updated.addPre().dispatcher;
-		const easing = behavior.easing;
+		const easing = behavior.settings.easing;
 		if(easing) updated.add(value => {
 			const v = easing(value);
 			for(const r of ranges) r.update(v);
