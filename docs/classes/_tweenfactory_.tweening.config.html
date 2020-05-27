@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Config | @tsdotnet/tween-factory - v1.0.1</title>
-	<meta name="description" content="Documentation for @tsdotnet/tween-factory - v1.0.1">
+	<title>Config | @tsdotnet/tween-factory - v1.1.0</title>
+	<meta name="description" content="Documentation for @tsdotnet/tween-factory - v1.1.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@tsdotnet/tween-factory - v1.0.1</a>
+					<a href="../index.html" class="title">@tsdotnet/tween-factory - v1.1.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -101,6 +101,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_tweenfactory_.tweening.config.html#_active" class="tsd-kind-icon">_active</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_tweenfactory_.tweening.config.html#_addactive" class="tsd-kind-icon">_add<wbr>Active</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_tweenfactory_.tweening.config.html#_behavior" class="tsd-kind-icon">_behavior</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_tweenfactory_.tweening.config.html#_chained" class="tsd-kind-icon">_chained</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_tweenfactory_.tweening.config.html#_disposableobjectname" class="tsd-kind-icon">_disposable<wbr>Object<wbr>Name</a></li>
@@ -135,20 +136,59 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Config<span class="tsd-signature-symbol">(</span>_behavior<span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tweening.config.html" class="tsd-signature-type">Config</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Config<span class="tsd-signature-symbol">(</span>_behavior<span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a>, _addActive<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>factory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tweening.config.html" class="tsd-signature-type">Config</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides DisposableBase.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L128">src/TweenFactory.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L162">src/TweenFactory.ts:162</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>_behavior: <a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></h5>
+								</li>
+								<li>
+									<h5>_addActive: <span class="tsd-signature-symbol">(</span>factory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>factory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>factory: <span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h5>
+															<ul class="tsd-parameters">
+																<li class="tsd-parameter-signature">
+																	<ul class="tsd-signatures tsd-kind-type-literal">
+																		<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></li>
+																	</ul>
+																	<ul class="tsd-descriptions">
+																		<li class="tsd-description">
+																			<h4 class="tsd-parameters-title">Parameters</h4>
+																			<ul class="tsd-parameters">
+																				<li>
+																					<h5>id: <span class="tsd-signature-type">number</span></h5>
+																				</li>
+																			</ul>
+																			<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h4>
+																		</li>
+																	</ul>
+																</li>
+															</ul>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tweening.config.html" class="tsd-signature-type">Config</a></h4>
@@ -164,9 +204,58 @@
 					<div class="tsd-signature tsd-kind-icon">_active<span class="tsd-signature-symbol">:</span> <a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L128">src/TweenFactory.ts:128</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L162">src/TweenFactory.ts:162</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="_addactive" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _add<wbr>Active</h3>
+					<div class="tsd-signature tsd-kind-icon">_add<wbr>Active<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>factory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L166">src/TweenFactory.ts:166</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>factory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>factory: <span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter-signature">
+														<ul class="tsd-signatures tsd-kind-type-literal">
+															<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></li>
+														</ul>
+														<ul class="tsd-descriptions">
+															<li class="tsd-description">
+																<h4 class="tsd-parameters-title">Parameters</h4>
+																<ul class="tsd-parameters">
+																	<li>
+																		<h5>id: <span class="tsd-signature-type">number</span></h5>
+																	</li>
+																</ul>
+																<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h4>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 					<a name="_behavior" class="tsd-anchor"></a>
@@ -174,7 +263,7 @@
 					<div class="tsd-signature tsd-kind-icon">_behavior<span class="tsd-signature-symbol">:</span> <a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L131">src/TweenFactory.ts:131</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L165">src/TweenFactory.ts:165</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -184,7 +273,7 @@
 					<div class="tsd-signature tsd-kind-icon">_chained<span class="tsd-signature-symbol">:</span> <a href="_tweenfactory_.tweening.config.html" class="tsd-signature-type">Config</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L127">src/TweenFactory.ts:127</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L161">src/TweenFactory.ts:161</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -205,7 +294,7 @@
 					<div class="tsd-signature tsd-kind-icon">_ranges<span class="tsd-signature-symbol">:</span> <a href="_propertyrange_.propertyrange.html" class="tsd-signature-type">PropertyRange</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L125">src/TweenFactory.ts:125</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L159">src/TweenFactory.ts:159</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -215,7 +304,7 @@
 					<div class="tsd-signature tsd-kind-icon">_triggers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Triggers</span><span class="tsd-signature-symbol"> = new Triggers()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L126">src/TweenFactory.ts:126</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L160">src/TweenFactory.ts:160</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -232,7 +321,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L140">src/TweenFactory.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L175">src/TweenFactory.ts:175</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -276,7 +365,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides DisposableBase._onDispose</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L204">src/TweenFactory.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L254">src/TweenFactory.ts:254</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -293,7 +382,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L152">src/TweenFactory.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L187">src/TweenFactory.ts:187</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -337,7 +426,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L166">src/TweenFactory.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L201">src/TweenFactory.ts:201</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -382,13 +471,13 @@
 					<a name="start" class="tsd-anchor"></a>
 					<h3>start</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></li>
+						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span>timeFrame<span class="tsd-signature-symbol">?: </span><a href="_timeframe_.timeframe.html" class="tsd-signature-type">TimeFrame</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L179">src/TweenFactory.ts:179</a></li>
+									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L220">src/TweenFactory.ts:220</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -396,6 +485,12 @@
 									<p>Starts the tween.</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> timeFrame: <a href="_timeframe_.timeframe.html" class="tsd-signature-type">TimeFrame</a></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h4>
 						</li>
 					</ul>
@@ -462,6 +557,9 @@
 								<a href="_tweenfactory_.tweening.config.html#_active" class="tsd-kind-icon">_active</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="_tweenfactory_.tweening.config.html#_addactive" class="tsd-kind-icon">_add<wbr>Active</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="_tweenfactory_.tweening.config.html#_behavior" class="tsd-kind-icon">_behavior</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
@@ -517,15 +615,16 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>

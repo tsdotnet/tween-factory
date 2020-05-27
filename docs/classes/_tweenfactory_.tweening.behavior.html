@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Behavior | @tsdotnet/tween-factory - v1.0.1</title>
-	<meta name="description" content="Documentation for @tsdotnet/tween-factory - v1.0.1">
+	<title>Behavior | @tsdotnet/tween-factory - v1.1.0</title>
+	<meta name="description" content="Documentation for @tsdotnet/tween-factory - v1.1.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@tsdotnet/tween-factory - v1.0.1</a>
+					<a href="../index.html" class="title">@tsdotnet/tween-factory - v1.1.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -72,7 +72,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Behavior</span>
+						<span class="tsd-signature-type">TweenConfigBase</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">Behavior</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -83,21 +88,24 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_tweenfactory_.tweening.behavior.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_tweenfactory_.tweening.behavior.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_tweenfactory_.tweening.behavior.html#duration" class="tsd-kind-icon">duration</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_tweenfactory_.tweening.behavior.html#easing" class="tsd-kind-icon">easing</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_tweenfactory_.tweening.behavior.html#factory" class="tsd-kind-icon">factory</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_tweenfactory_.tweening.behavior.html#_addactive" class="tsd-kind-icon">_add<wbr>Active</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_tweenfactory_.tweening.behavior.html#settings" class="tsd-kind-icon">settings</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_tweenfactory_.tweening.behavior.html#add" class="tsd-kind-icon">add</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_tweenfactory_.tweening.behavior.html#configure" class="tsd-kind-icon">configure</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_tweenfactory_.tweening.behavior.html#delay" class="tsd-kind-icon">delay</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_tweenfactory_.tweening.behavior.html#duration" class="tsd-kind-icon">duration</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_tweenfactory_.tweening.behavior.html#easing" class="tsd-kind-icon">easing</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,46 +113,63 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Behavior<span class="tsd-signature-symbol">(</span>factory<span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tweenfactory.html" class="tsd-signature-type">TweenFactory</a>, duration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, easing<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_tweenfactory_.easingfunction.html" class="tsd-signature-type">EasingFunction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Behavior<span class="tsd-signature-symbol">(</span>settings<span class="tsd-signature-symbol">: </span><a href="../modules/_tweenfactory_.html#tweensettings" class="tsd-signature-type">TweenSettings</a>, addActive<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>factory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides TweenConfigBase.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L94">src/TweenFactory.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L134">src/TweenFactory.ts:134</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>factory: <a href="_tweenfactory_.tweenfactory.html" class="tsd-signature-type">TweenFactory</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>The tween factory to manage the tweens with.</p>
-										</div>
-									</div>
+									<h5>settings: <a href="../modules/_tweenfactory_.html#tweensettings" class="tsd-signature-type">TweenSettings</a></h5>
 								</li>
 								<li>
-									<h5>duration: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>Number of milliseconds a tween should be active.</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> easing: <a href="../interfaces/_tweenfactory_.easingfunction.html" class="tsd-signature-type">EasingFunction</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>The optional easing function.</p>
-										</div>
-									</div>
+									<h5>addActive: <span class="tsd-signature-symbol">(</span>factory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>factory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>factory: <span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h5>
+															<ul class="tsd-parameters">
+																<li class="tsd-parameter-signature">
+																	<ul class="tsd-signatures tsd-kind-type-literal">
+																		<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></li>
+																	</ul>
+																	<ul class="tsd-descriptions">
+																		<li class="tsd-description">
+																			<h4 class="tsd-parameters-title">Parameters</h4>
+																			<ul class="tsd-parameters">
+																				<li>
+																					<h5>id: <span class="tsd-signature-type">number</span></h5>
+																				</li>
+																			</ul>
+																			<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h4>
+																		</li>
+																	</ul>
+																</li>
+															</ul>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></h4>
@@ -152,52 +177,68 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="duration" class="tsd-anchor"></a>
-					<h3>duration</h3>
-					<div class="tsd-signature tsd-kind-icon">duration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="_addactive" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _add<wbr>Active</h3>
+					<div class="tsd-signature tsd-kind-icon">_add<wbr>Active<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>factory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="_tweenfactory_.tweenfactory.html">TweenFactory</a>.<a href="_tweenfactory_.tweenfactory.html#_addactive">_addActive</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L102">src/TweenFactory.ts:102</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L30">src/TweenFactory.ts:30</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Number of milliseconds a tween should be active.</p>
-						</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>factory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>factory: <span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter-signature">
+														<ul class="tsd-signatures tsd-kind-type-literal">
+															<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></li>
+														</ul>
+														<ul class="tsd-descriptions">
+															<li class="tsd-description">
+																<h4 class="tsd-parameters-title">Parameters</h4>
+																<ul class="tsd-parameters">
+																	<li>
+																		<h5>id: <span class="tsd-signature-type">number</span></h5>
+																	</li>
+																</ul>
+																<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h4>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tween.html" class="tsd-signature-type">Tween</a></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="easing" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> easing</h3>
-					<div class="tsd-signature tsd-kind-icon">easing<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_tweenfactory_.easingfunction.html" class="tsd-signature-type">EasingFunction</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="settings" class="tsd-anchor"></a>
+					<h3>settings</h3>
+					<div class="tsd-signature tsd-kind-icon">settings<span class="tsd-signature-symbol">:</span> <a href="../modules/_tweenfactory_.html#tweensettings" class="tsd-signature-type">TweenSettings</a></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="_tweenfactory_.tweenfactory.html">TweenFactory</a>.<a href="_tweenfactory_.tweenfactory.html#settings">settings</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L103">src/TweenFactory.ts:103</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L29">src/TweenFactory.ts:29</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The optional easing function.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="factory" class="tsd-anchor"></a>
-					<h3>factory</h3>
-					<div class="tsd-signature tsd-kind-icon">factory<span class="tsd-signature-symbol">:</span> <a href="_tweenfactory_.tweenfactory.html" class="tsd-signature-type">TweenFactory</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L101">src/TweenFactory.ts:101</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The tween factory to manage the tweens with.</p>
-						</div>
-					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -212,7 +253,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/892f51c/src/TweenFactory.ts#L114">src/TweenFactory.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L148">src/TweenFactory.ts:148</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -241,6 +282,117 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="configure" class="tsd-anchor"></a>
+					<h3>configure</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">configure<span class="tsd-signature-symbol">(</span>settings<span class="tsd-signature-symbol">: </span><a href="../modules/_tweenfactory_.html#tweensettings" class="tsd-signature-type">TweenSettings</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_tweenfactory_.tweenfactory.html">TweenFactory</a>.<a href="_tweenfactory_.tweenfactory.html#configure">configure</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L33">src/TweenFactory.ts:33</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>settings: <a href="../modules/_tweenfactory_.html#tweensettings" class="tsd-signature-type">TweenSettings</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="delay" class="tsd-anchor"></a>
+					<h3>delay</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">delay<span class="tsd-signature-symbol">(</span>milliSeconds<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_tweenfactory_.tweenfactory.html">TweenFactory</a>.<a href="_tweenfactory_.tweenfactory.html#delay">delay</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L47">src/TweenFactory.ts:47</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Configures a tween behavior with the specified delay.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>milliSeconds: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="duration" class="tsd-anchor"></a>
+					<h3>duration</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">duration<span class="tsd-signature-symbol">(</span>milliSeconds<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_tweenfactory_.tweenfactory.html">TweenFactory</a>.<a href="_tweenfactory_.tweenfactory.html#duration">duration</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L57">src/TweenFactory.ts:57</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Configures a tween behavior with the specified duration.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>milliSeconds: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="easing" class="tsd-anchor"></a>
+					<h3>easing</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">easing<span class="tsd-signature-symbol">(</span>fn<span class="tsd-signature-symbol">: </span><a href="../interfaces/_tweenfactory_.easingfunction.html" class="tsd-signature-type">EasingFunction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_tweenfactory_.tweenfactory.html">TweenFactory</a>.<a href="_tweenfactory_.tweenfactory.html#easing">easing</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/f264750/src/TweenFactory.ts#L67">src/TweenFactory.ts:67</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Configures a tween behavior with the specified easing function.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>fn: <a href="../interfaces/_tweenfactory_.easingfunction.html" class="tsd-signature-type">EasingFunction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_tweenfactory_.tweening.behavior.html" class="tsd-signature-type">Behavior</a></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -258,20 +410,29 @@
 					<li class="current tsd-kind-class tsd-parent-kind-namespace">
 						<a href="_tweenfactory_.tweening.behavior.html" class="tsd-kind-icon">Behavior</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="_tweenfactory_.tweening.behavior.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_tweenfactory_.tweening.behavior.html#duration" class="tsd-kind-icon">duration</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_tweenfactory_.tweening.behavior.html#_addactive" class="tsd-kind-icon">_add<wbr>Active</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_tweenfactory_.tweening.behavior.html#easing" class="tsd-kind-icon">easing</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_tweenfactory_.tweening.behavior.html#factory" class="tsd-kind-icon">factory</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_tweenfactory_.tweening.behavior.html#settings" class="tsd-kind-icon">settings</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="_tweenfactory_.tweening.behavior.html#add" class="tsd-kind-icon">add</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_tweenfactory_.tweening.behavior.html#configure" class="tsd-kind-icon">configure</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_tweenfactory_.tweening.behavior.html#delay" class="tsd-kind-icon">delay</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_tweenfactory_.tweening.behavior.html#duration" class="tsd-kind-icon">duration</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_tweenfactory_.tweening.behavior.html#easing" class="tsd-kind-icon">easing</a>
 							</li>
 						</ul>
 					</li>
@@ -293,15 +454,19 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
