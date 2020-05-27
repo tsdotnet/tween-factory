@@ -5,7 +5,7 @@
 
 import {expect} from 'chai';
 import back from '../src/easing/back';
-import TweenFactory, {tweening} from '../src/TweenFactory';
+import TweenFactory, {tween} from '../src/TweenFactory';
 
 describe('TweenFactory', () => {
 
@@ -30,6 +30,7 @@ describe('TweenFactory', () => {
 		a.complete();
 		expect(state.completed, 'completed').to.be.true;
 		expect(state.disposed, 'disposed').equal(1);
+		expect(() => a.dispose()).not.to.throw();
 	});
 
 	it('should react to manually calling dispose', async () => {
@@ -118,7 +119,7 @@ async function test (tweenFactory: TweenFactory)
 }
 
 
-function initTween (tf: TweenFactory): tweening.Config
+function initTween (tf: TweenFactory): tween.Config
 {
 	return tf.duration(100).add({
 		x: 0,
@@ -129,7 +130,7 @@ function initTween (tf: TweenFactory): tweening.Config
 	});
 }
 
-function initState (t: tweening.Config): EventState
+function initState (t: tween.Config): EventState
 {
 	const state = {
 		started: false,
