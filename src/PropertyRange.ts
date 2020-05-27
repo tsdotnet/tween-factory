@@ -42,7 +42,7 @@ export default class PropertyRange<T extends object = object>
 
 	dispose (): void
 	{
-		this._keys = undefined!;
+		this._keys = undefined;
 		this._item = undefined!;
 		this._startValues = undefined;
 		this._deltaValues = undefined;

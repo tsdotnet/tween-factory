@@ -3,9 +3,11 @@
  * @license MIT
  */
 
+import {DisposableBase} from '@tsdotnet/disposable';
 import {Event} from '@tsdotnet/event-factory/dist/Event';
 import EventPublisher from '@tsdotnet/event-factory/dist/EventPublisher';
 import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
+import InvalidOperationException from '@tsdotnet/exceptions/dist/InvalidOperationException';
 import {OrderedAutoRegistry} from '@tsdotnet/ordered-registry';
 import PropertyRange, {NumericValues} from './PropertyRange';
 import TimeFrame from './TimeFrame';
@@ -20,7 +22,7 @@ export interface EasingFunction
  */
 export default class TweenFactory
 {
-	private _activeTweens = new OrderedAutoRegistry<Tween>();
+	private readonly _activeTweens = new OrderedAutoRegistry<Tween>();
 
 	constructor (public defaultEasing?: EasingFunction)
 	{
@@ -67,6 +69,15 @@ export default class TweenFactory
 			tween.update();
 		}
 	}
+
+	/**
+	 * Cancels (disposes) all active tweens.
+	 */
+	cancelActive (): void
+	{
+		for(const d of this._activeTweens.values.toArray()) d.dispose();
+		this._activeTweens.clear();
+	}
 }
 
 export namespace tweening
@@ -97,26 +108,29 @@ export namespace tweening
 
 		/**
 		 * Adds an object to the behavior.
-		 * @param o
+		 * @param target
 		 * @param endValues
 		 */
-		add<T extends object> (o: T, endValues: Partial<NumericValues<T>>): Config
+		add<T extends object> (target: T, endValues: Partial<NumericValues<T>>): Config
 		{
 			const starter = new Config(this);
-			starter.add(o, endValues);
+			starter.add(target, endValues);
 			return starter;
 		}
 	}
 
 	export class Config
+		extends DisposableBase
 	{
-		protected readonly _ranges: PropertyRange<any>[] = [];
+		protected _ranges?: PropertyRange<any>[] = [];
 		protected readonly _triggers: Triggers = new Triggers();
-		protected readonly _chained: Config[] = [];
+		protected _chained?: Config[] = [];
+		protected _active?: Tween;
 
 		constructor (
 			protected readonly _behavior: Behavior)
 		{
+			super('tweening.Config');
 		}
 
 		/**
@@ -125,27 +139,34 @@ export namespace tweening
 		 */
 		get events (): Events
 		{
+			this.throwIfDisposed();
 			return this._triggers.events;
 		}
 
 		/**
 		 * Adds an object to the behavior.
-		 * @param o
+		 * @throws `InvalidOperationException` if the tween has already been started.
+		 * @param target
 		 * @param endValues
 		 */
-		add<T extends object> (o: T, endValues: Partial<NumericValues<T>>): this
+		add<T extends object> (target: T, endValues: Partial<NumericValues<T>>): this
 		{
-			this._ranges.push(new PropertyRange<T>(o, endValues));
+			this.throwIfDisposed();
+			if(this._ranges) this._ranges.push(new PropertyRange<T>(target, endValues));
+			else throw new InvalidOperationException('Adding more targets to an active tween is not supported.');
 			return this;
 		}
 
 		/**
 		 * Allows for tweens to occur in sequence.
+		 * @throws `InvalidOperationException` if the tween has already been started.
 		 * @param {tweening.Behavior} behavior
 		 * @return {tweening.Config}
 		 */
 		chain (behavior?: Behavior): Config
 		{
+			this.throwIfDisposed();
+			if(!this._chained) throw new InvalidOperationException('Adding more targets to an active tween is not supported.');
 			const config = new Config(behavior || this._behavior);
 			this._chained.push(config);
 			return config;
@@ -157,23 +178,37 @@ export namespace tweening
 		 */
 		start (): Tween
 		{
+			this.throwIfDisposed();
+			if(this._active) throw new InvalidOperationException('Starting a tween more than once is not supported.');
+
 			const
 				_        = this,
 				behavior = _._behavior,
-				triggers = _._triggers;
+				triggers = _._triggers,
+				ranges   = _._ranges!,
+				chained  = _._chained!;
+			_._chained = _._ranges = undefined;
+			for(const r of ranges) r.init();
 
-			for(const r of _._ranges) r.init();
 			triggers.started.publish();
-			return behavior.factory.addActive((id: number) => {
-				const tween = new Tween(id, behavior, _._ranges, triggers);
+			return this._active = behavior.factory.addActive((id: number) => {
+				const tween = new Tween(id, behavior, ranges, triggers);
 				triggers.completed.addPost().dispatcher.add(() => {
-					for(const next of _._chained)
-					{
-						next.start();
-					}
+					for(const next of chained) next.start();
+					chained.length = 0;
 				});
 				return tween;
 			});
+		}
+
+		protected _onDispose (): void
+		{
+			this._triggers.disposed.publish(false); // This event can only fire once.
+			this._triggers.dispose();
+			const c = this._chained, r = this._ranges;
+			this._chained = this._ranges = undefined;
+			if(c) for(const d of c) d.dispose();
+			if(r) for(const d of r) d.dispose();
 		}
 	}
 }
@@ -213,6 +248,14 @@ class Triggers
 
 		Object.freeze(_);
 	}
+
+	dispose (): void
+	{
+		this.started.dispose();
+		this.updated.dispose();
+		this.completed.dispose();
+		this.disposed.dispose();
+	}
 }
 
 class TimeFrameEvents
@@ -230,9 +273,25 @@ class TimeFrameEvents
 		return this._triggers.events;
 	}
 
+	private _lastUpdate: number = NaN;
+
+	/**
+	 * The last time an update() was called (triggered).  NaN if never called.
+	 * @return {number}
+	 */
+	get lastUpdate (): number
+	{
+		return this._lastUpdate;
+	}
+
+	/**
+	 * Updates the state and triggers events accordingly.
+	 * @return {number}
+	 */
 	update (): number
 	{
-		const _ = this, value = _.progress, e = _._triggers, u = e.updated;
+		this._lastUpdate = Date.now();
+		const value = this.progress, e = this._triggers, u = e.updated;
 		u.publish(value);
 		if(value==1)
 		{
@@ -243,15 +302,21 @@ class TimeFrameEvents
 		return value;
 	}
 
+	/**
+	 * Forces completion and calls dispose(true).
+	 */
 	complete (): void
 	{
-		const _ = this, e = _._triggers, u = e.updated;
+		const e = this._triggers, u = e.updated;
 		u.publish(1);
 		u.remaining = 0;
 		e.completed.publish();
 		e.disposed.publish(true);
 	}
 
+	/**
+	 * Disposes the tween.  All updates are arrested and dispose will signal completion progress.
+	 */
 	dispose (): void
 	{
 		this._triggers.disposed.publish(this.progress==1);
@@ -281,6 +346,10 @@ export class Tween
 		});
 		else updated.add(value => {
 			for(const r of ranges) r.update(value);
+		});
+		triggers.disposed.dispatcher.add(() => {
+			for(const r of ranges) r.dispose();
+			ranges.length = 0;
 		});
 	}
 }

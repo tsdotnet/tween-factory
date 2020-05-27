@@ -37,6 +37,14 @@ describe('PropertyRange', () => {
 		}).to.throw();
 	});
 
+	it('should throw if updated before init', () => {
+
+		const r = new PropertyRange({x: 0, y: 0}, {x: 10});
+		expect(() => {
+			r.update(0.5);
+		}).to.throw();
+	});
+
 	it('should change values to expected', () => {
 		const point = {
 			x: 0,
