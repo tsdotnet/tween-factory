@@ -11,6 +11,12 @@ export default class TimeFrame {
     get duration(): number;
     get endTime(): number;
     /**
+     * An unbound ratio representing where now is in relation to the time-frame where:
+     * Less than zero is before start, and greater than 1 is after start.
+     * @return {number}
+     */
+    get position(): number;
+    /**
      * A number from 0 to 1 representing the progress of the time frame.
      * @return {number}
      */

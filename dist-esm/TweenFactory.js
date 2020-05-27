@@ -9,38 +9,60 @@ import InvalidOperationException from '@tsdotnet/exceptions/dist/InvalidOperatio
 import { OrderedAutoRegistry } from '@tsdotnet/ordered-registry';
 import PropertyRange from './PropertyRange';
 import TimeFrame from './TimeFrame';
+class TweenConfigBase {
+    constructor(settings = {}, _addActive) {
+        this.settings = settings;
+        this._addActive = _addActive;
+    }
+    configure(settings) {
+        var _a, _b, _c;
+        return new tweening.Behavior({
+            delay: (_a = settings.delay) !== null && _a !== void 0 ? _a : this.settings.delay,
+            duration: (_b = settings.duration) !== null && _b !== void 0 ? _b : this.settings.duration,
+            easing: (_c = settings.easing) !== null && _c !== void 0 ? _c : this.settings.easing
+        }, this._addActive);
+    }
+    /**
+     * Configures a tween behavior with the specified delay.
+     * @param {number} milliSeconds
+     * @return {tweening.Behavior}
+     */
+    delay(milliSeconds) {
+        return this.configure({ delay: milliSeconds });
+    }
+    /**
+     * Configures a tween behavior with the specified duration.
+     * @param {number} milliSeconds
+     * @return {tweening.Behavior}
+     */
+    duration(milliSeconds) {
+        return this.configure({ duration: milliSeconds });
+    }
+    /**
+     * Configures a tween behavior with the specified easing function.
+     * @param {EasingFunction} fn
+     * @return {tweening.Behavior}
+     */
+    easing(fn) {
+        return this.configure({ easing: fn });
+    }
+}
 /**
  * A class for configuring groups of tweens and signaling their updates.
  */
-export default class TweenFactory {
-    constructor(defaultEasing) {
-        this.defaultEasing = defaultEasing;
-        this._activeTweens = new OrderedAutoRegistry();
-    }
-    /**
-     * Initializes a tweening behavior for further configuration.
-     * @param {number} duration
-     * @param {EasingFunction | undefined} easing
-     * @return {tweening.Behavior}
-     */
-    behavior(duration, easing = this.defaultEasing) {
-        return new tweening.Behavior(this, duration, easing);
-    }
-    /**
-     * Adds an active tween using a factory function.
-     * @ignore
-     * @param {(id: number) => Tween} factory
-     * @return {Tween}
-     */
-    addActive(factory) {
-        const tweens = this._activeTweens;
-        return tweens.addEntry(id => {
-            const tween = factory(id);
-            tween.events.disposed(() => {
-                tweens.remove(id);
+export default class TweenFactory extends TweenConfigBase {
+    constructor(settings = {}) {
+        super(typeof settings == 'function' ? { easing: settings } : settings, (factory) => {
+            const tweens = this._activeTweens;
+            return tweens.addEntry(id => {
+                const tween = factory(id);
+                tween.events.disposed(() => {
+                    tweens.remove(id);
+                });
+                return tween;
             });
-            return tween;
         });
+        this._activeTweens = new OrderedAutoRegistry();
     }
     /**
      * Triggers updates for all active tweens.
@@ -61,18 +83,9 @@ export default class TweenFactory {
 }
 export var tweening;
 (function (tweening) {
-    class Behavior {
-        /**
-         * @param factory The tween factory to manage the tweens with.
-         * @param duration Number of milliseconds a tween should be active.
-         * @param easing The optional easing function.
-         */
-        constructor(factory, duration, easing) {
-            this.factory = factory;
-            this.duration = duration;
-            this.easing = easing;
-            if (isNaN(duration))
-                throw new ArgumentException('duration', 'Is not a number value. Should be the number of desired milliseconds.');
+    class Behavior extends TweenConfigBase {
+        constructor(settings, addActive) {
+            super(settings, addActive);
             Object.freeze(this);
         }
         /**
@@ -81,16 +94,17 @@ export var tweening;
          * @param endValues
          */
         add(target, endValues) {
-            const starter = new Config(this);
+            const starter = new Config(this, this._addActive);
             starter.add(target, endValues);
             return starter;
         }
     }
     tweening.Behavior = Behavior;
     class Config extends DisposableBase {
-        constructor(_behavior) {
+        constructor(_behavior, _addActive) {
             super('tweening.Config');
             this._behavior = _behavior;
+            this._addActive = _addActive;
             this._ranges = [];
             this._triggers = new Triggers();
             this._chained = [];
@@ -127,7 +141,7 @@ export var tweening;
             this.throwIfDisposed();
             if (!this._chained)
                 throw new InvalidOperationException('Adding more targets to an active tween is not supported.');
-            const config = new Config(behavior || this._behavior);
+            const config = new Config(behavior || this._behavior, this._addActive);
             this._chained.push(config);
             return config;
         }
@@ -135,17 +149,30 @@ export var tweening;
          * Starts the tween.
          * @return {Tween}
          */
-        start() {
+        /**
+         * Starts the tween.
+         * @param {TimeFrame} timeFrame
+         * @return {Tween}
+         */
+        start(timeFrame) {
+            var _a;
             this.throwIfDisposed();
             if (this._active)
                 throw new InvalidOperationException('Starting a tween more than once is not supported.');
+            if (!timeFrame) {
+                const duration = this._behavior.settings.duration;
+                if (typeof duration != 'number' || isNaN(duration))
+                    throw new ArgumentException('duration', 'Is not a number value. Should be the number of desired milliseconds.');
+                const delay = (_a = this._behavior.settings.delay) !== null && _a !== void 0 ? _a : 0;
+                timeFrame = new TimeFrame(duration, delay + Date.now());
+            }
             const _ = this, behavior = _._behavior, triggers = _._triggers, ranges = _._ranges, chained = _._chained;
             _._chained = _._ranges = undefined;
             for (const r of ranges)
                 r.init();
             triggers.started.publish();
-            return this._active = behavior.factory.addActive((id) => {
-                const tween = new Tween(id, behavior, ranges, triggers);
+            return this._active = this._addActive((id) => {
+                const tween = new Tween(id, timeFrame, behavior, ranges, triggers);
                 triggers.completed.addPost().dispatcher.add(() => {
                     for (const next of chained)
                         next.start();
@@ -195,12 +222,13 @@ class Triggers {
         this.disposed.dispose();
     }
 }
-class TimeFrameEvents extends TimeFrame {
-    constructor(duration, _triggers) {
-        super(duration);
+class TimeFrameEvents {
+    constructor(_timeFrame, _triggers) {
+        this._timeFrame = _timeFrame;
         this._triggers = _triggers;
         this._lastUpdate = NaN;
     }
+    get timeFrame() { return this._timeFrame; }
     get events() {
         return this._triggers.events;
     }
@@ -217,7 +245,7 @@ class TimeFrameEvents extends TimeFrame {
      */
     update() {
         this._lastUpdate = Date.now();
-        const value = this.progress, e = this._triggers, u = e.updated;
+        const value = this._timeFrame.progress, e = this._triggers, u = e.updated;
         u.publish(value);
         if (value == 1) {
             u.remaining = 0;
@@ -240,19 +268,19 @@ class TimeFrameEvents extends TimeFrame {
      * Disposes the tween.  All updates are arrested and dispose will signal completion progress.
      */
     dispose() {
-        this._triggers.disposed.publish(this.progress == 1);
+        this._triggers.disposed.publish(this._timeFrame.progress == 1);
     }
 }
 export class Tween extends TimeFrameEvents {
-    constructor(id, behavior, ranges, triggers) {
-        super(behavior.duration, triggers);
+    constructor(id, timeFrame, behavior, ranges, triggers) {
+        super(timeFrame, triggers);
         this.id = id;
         /*
          * We use the 'pre update' to actually do the work
          * so that listeners of the actual event can react to changed values.
          */
         const updated = triggers.updated.addPre().dispatcher;
-        const easing = behavior.easing;
+        const easing = behavior.settings.easing;
         if (easing)
             updated.add(value => {
                 const v = easing(value);

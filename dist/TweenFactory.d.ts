@@ -10,27 +10,42 @@ import TimeFrame from './TimeFrame';
 export interface EasingFunction {
     (value: number): number;
 }
+export declare type TweenSettings = {
+    delay?: number;
+    duration?: number;
+    easing?: EasingFunction;
+};
+declare abstract class TweenConfigBase {
+    settings: TweenSettings;
+    protected _addActive: (factory: (id: number) => Tween) => Tween;
+    constructor(settings: TweenSettings, _addActive: (factory: (id: number) => Tween) => Tween);
+    configure(settings: TweenSettings): tweening.Behavior;
+    /**
+     * Configures a tween behavior with the specified delay.
+     * @param {number} milliSeconds
+     * @return {tweening.Behavior}
+     */
+    delay(milliSeconds: number): tweening.Behavior;
+    /**
+     * Configures a tween behavior with the specified duration.
+     * @param {number} milliSeconds
+     * @return {tweening.Behavior}
+     */
+    duration(milliSeconds: number): tweening.Behavior;
+    /**
+     * Configures a tween behavior with the specified easing function.
+     * @param {EasingFunction} fn
+     * @return {tweening.Behavior}
+     */
+    easing(fn: EasingFunction): tweening.Behavior;
+}
 /**
  * A class for configuring groups of tweens and signaling their updates.
  */
-export default class TweenFactory {
-    defaultEasing?: EasingFunction | undefined;
+export default class TweenFactory extends TweenConfigBase {
     private readonly _activeTweens;
-    constructor(defaultEasing?: EasingFunction | undefined);
-    /**
-     * Initializes a tweening behavior for further configuration.
-     * @param {number} duration
-     * @param {EasingFunction | undefined} easing
-     * @return {tweening.Behavior}
-     */
-    behavior(duration: number, easing?: EasingFunction | undefined): tweening.Behavior;
-    /**
-     * Adds an active tween using a factory function.
-     * @ignore
-     * @param {(id: number) => Tween} factory
-     * @return {Tween}
-     */
-    addActive(factory: (id: number) => Tween): Tween;
+    constructor(defaultEasing: EasingFunction);
+    constructor(settings?: TweenSettings);
     /**
      * Triggers updates for all active tweens.
      */
@@ -47,16 +62,8 @@ export declare namespace tweening {
         readonly completed: Event<void>;
         readonly disposed: Event<boolean>;
     }
-    class Behavior {
-        factory: TweenFactory;
-        duration: number;
-        easing?: EasingFunction | undefined;
-        /**
-         * @param factory The tween factory to manage the tweens with.
-         * @param duration Number of milliseconds a tween should be active.
-         * @param easing The optional easing function.
-         */
-        constructor(factory: TweenFactory, duration: number, easing?: EasingFunction | undefined);
+    class Behavior extends TweenConfigBase {
+        constructor(settings: TweenSettings, addActive: (factory: (id: number) => Tween) => Tween);
         /**
          * Adds an object to the behavior.
          * @param target
@@ -66,11 +73,12 @@ export declare namespace tweening {
     }
     class Config extends DisposableBase {
         protected readonly _behavior: Behavior;
+        protected _addActive: (factory: (id: number) => Tween) => Tween;
         protected _ranges?: PropertyRange<any>[];
         protected readonly _triggers: Triggers;
         protected _chained?: Config[];
         protected _active?: Tween;
-        constructor(_behavior: Behavior);
+        constructor(_behavior: Behavior, _addActive: (factory: (id: number) => Tween) => Tween);
         /**
          * Events that will be triggered during the tween lifecycle.
          * @return {tweening.Events}
@@ -94,7 +102,12 @@ export declare namespace tweening {
          * Starts the tween.
          * @return {Tween}
          */
-        start(): Tween;
+        /**
+         * Starts the tween.
+         * @param {TimeFrame} timeFrame
+         * @return {Tween}
+         */
+        start(timeFrame?: TimeFrame): Tween;
         protected _onDispose(): void;
     }
 }
@@ -114,9 +127,11 @@ declare class Triggers {
     constructor();
     dispose(): void;
 }
-declare class TimeFrameEvents extends TimeFrame {
+declare class TimeFrameEvents {
+    private readonly _timeFrame;
     protected readonly _triggers: Triggers;
-    constructor(duration: number, _triggers: Triggers);
+    constructor(_timeFrame: TimeFrame, _triggers: Triggers);
+    get timeFrame(): TimeFrame;
     get events(): Events;
     private _lastUpdate;
     /**
@@ -140,6 +155,6 @@ declare class TimeFrameEvents extends TimeFrame {
 }
 export declare class Tween extends TimeFrameEvents {
     readonly id: number;
-    constructor(id: number, behavior: tweening.Behavior, ranges: PropertyRange[], triggers: Triggers);
+    constructor(id: number, timeFrame: TimeFrame, behavior: tweening.Behavior, ranges: PropertyRange[], triggers: Triggers);
 }
 export {};
