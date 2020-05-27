@@ -3,26 +3,78 @@
  * @license MIT
  */
 
+import {DisposableBase} from '@tsdotnet/disposable';
+import {EventDispatcher} from '@tsdotnet/event-factory';
+import {Event} from '@tsdotnet/event-factory/dist/Event';
 import ArgumentNullException from '@tsdotnet/exceptions/dist/ArgumentNullException';
+import {Range} from './Range';
 
 export type StringKeyOf<T> = string & keyof T;
 export type NumericValues<T extends object = object> = Record<StringKeyOf<T>, number>;
 
 const ITEM = 'item', END_VALUES = 'endValues';
 
+type ActivePropertyRangeMap<T extends object = any>
+	= Map<StringKeyOf<T>, ActivePropertyRange<T, StringKeyOf<T>>>;
+
+// Tracks all object properties actively being ranged in order to override or interrupt.
+const activeRanges = new WeakMap<object, ActivePropertyRangeMap>();
+
+class ActivePropertyRange<T extends object, K extends StringKeyOf<T> = StringKeyOf<T>>
+	extends DisposableBase
+{
+	readonly item: Record<K, number>;
+	readonly disposed: Event<void>;
+
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	constructor (
+		item: T,
+		public readonly property: K,
+		public readonly range: Readonly<Range>)
+	{
+		if(!item) throw new ArgumentNullException('item');
+		const d = new EventDispatcher<void>();
+		super('ActivePropertyRange', () => {
+			const ar = activeRanges.get(item);
+			const a = ar?.get(property);
+			if(a===this) ar!.delete(property);
+			(this as any).item = undefined;
+			d.dispatch();
+			d.dispose();
+		});
+		this.disposed = d.event;
+		this.item = item as Record<K, number>;
+
+		// Constructing a new one is an override (interrupt).
+		let ar = activeRanges.get(item);
+		if(ar) ar.get(property)?.dispose();
+		else activeRanges.set(item, ar = new Map<string, ActivePropertyRange<any, string>>());
+		ar.set(property, this);
+	}
+
+	update (rangeValue: number): void
+	{
+		this.throwIfDisposed();
+		const range = this.range;
+		this.item[this.property] = range.start + range.delta*rangeValue;
+	}
+}
+
 /**
  * A class for modifying a set of properties across a range.
  */
 export default class PropertyRange<T extends object = object>
+	extends DisposableBase
 {
-	private _item: NumericValues<T>;
-	private _keys?: Readonly<StringKeyOf<T>[]>;
-	private _startValues?: Readonly<NumericValues<T>>;
-	private _deltaValues?: Readonly<NumericValues<T>>;
-	private _endValues: Readonly<NumericValues<T>>;
+	private _item?: NumericValues<T>;
+	private _keys?: StringKeyOf<T>[];
+	private _activeRanges?: ActivePropertyRangeMap<T>;
+	private _endValues?: Readonly<NumericValues<T>>;
 
 	constructor (item: T, endValues: Partial<NumericValues<T>>)
 	{
+		super('PropertyRange');
 		if(item==null) throw new ArgumentNullException(ITEM);
 		if(endValues==null) throw new ArgumentNullException(END_VALUES);
 		const keys = Object.keys(endValues) as StringKeyOf<T>[];
@@ -36,42 +88,36 @@ export default class PropertyRange<T extends object = object>
 		}
 
 		this._item = item as NumericValues<T>;
-		this._keys = Object.freeze(keys);
 		this._endValues = Object.freeze(values);
-	}
-
-	dispose (): void
-	{
-		this._keys = undefined;
-		this._item = undefined!;
-		this._startValues = undefined;
-		this._deltaValues = undefined;
+		this._keys = keys;
 	}
 
 	/**
 	 * Snapshots the start values.
 	 * Must be called before calling update.
+	 * @param {Partial<NumericValues<T>>} startValues Optional values to initialize with.  Properties not intersecting with end values will be ignored.
 	 */
-	init (): void
+	init (startValues?: Partial<NumericValues<T>>): void
 	{
-		const keys = this._keys;
-		if(!keys) return; // disposed.
+		this.throwIfDisposed();
 		const
-			item        = this._item,
-			startValues = {} as NumericValues<T>,
-			deltaValues = {} as NumericValues<T>,
-			endValues   = this._endValues;
+			item      = this._item!,
+			endValues = this._endValues!,
+			ranges    = new Map() as ActivePropertyRangeMap<T>;
 
-		for(const key of keys)
+		for(const property of Object.keys(endValues) as StringKeyOf<T>[])
 		{
-			const start = assertNumber(ITEM, item, key);
-			const end = endValues[key];
-			startValues[key] = start;
-			deltaValues[key] = end - start;
+			const start = startValues && property in startValues
+				? assertNumber('startValues', startValues, property)
+				: assertNumber(ITEM, item, property);
+			const end = endValues[property];
+			const delta = end - start;
+			const apr = new ActivePropertyRange(item, property, Object.freeze({start, delta, end}));
+			apr.disposed.add(() => ranges.delete(property));
+			ranges.set(property, apr);
 		}
 
-		this._startValues = Object.freeze(startValues);
-		this._deltaValues = Object.freeze(deltaValues);
+		this._activeRanges = ranges;
 	}
 
 	/**
@@ -80,22 +126,45 @@ export default class PropertyRange<T extends object = object>
 	 */
 	update (range: number): void
 	{
+		this.throwIfDisposed();
+		const ranges = this._activeRanges;
+		if(!ranges) throw 'PropertyRange was not initialized.  Call .init() before updating.';
+
 		const keys = this._keys;
-		if(!keys) return; // disposed.
-		const
-			item        = this._item,
-			startValues = this._startValues,
-			deltaValues = this._deltaValues;
+		if(!keys || !keys.length) return;
 
-		if(!startValues || !deltaValues)
-			throw 'PropertyRange was not initialized.  Call .init() before updating.';
-
+		let keysShifted = false;
 		for(const key of keys)
 		{
-			// noinspection UnnecessaryLocalVariableJS
-			const value = startValues[key] + deltaValues[key]*range;
-			item[key] = value;
+			const r = ranges.get(key);
+			if(r) r.update(range);
+			else keysShifted = true;
 		}
+
+		if(keysShifted)
+		{
+			this._keys = keys.filter(k => ranges.has(k));
+			if(!this._keys.length) this._keys = undefined;
+		}
+	}
+
+	protected _onDispose (): void
+	{
+		this._item = undefined;
+		const ar = this._activeRanges;
+		this._activeRanges = undefined;
+		if(ar)
+		{
+			const ranges = [] as ActivePropertyRange<T>[];
+			for(const r of ar.values()) ranges.push(r);
+			for(const r of ranges) r.dispose();
+			if(ar.size) // should be zero.
+			{
+				console.warn('Disposal of ActivePropertyRange did not clean as expected.');
+				ar.clear();
+			}
+		}
+		this._endValues = undefined;
 	}
 }
 

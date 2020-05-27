@@ -19,40 +19,60 @@ class TimeFrame {
             throw new ArgumentOutOfRangeException_1.default('duration', duration, 'Must be a finite number.');
         if (!isFinite(startTime))
             throw new ArgumentOutOfRangeException_1.default('startTime', startTime, 'Must be a finite number.');
-        this._duration = duration;
-        this._startTime = startTime;
-        this._endTime = startTime + duration;
+        this.range = Object.freeze({ start: startTime, delta: duration, end: startTime + duration });
         Object.freeze(this);
     }
-    get startTime() { return this._startTime; }
-    get duration() { return this._duration; }
-    get endTime() { return this._endTime; }
+    /**
+     * An unbound ratio representing where the `time` value is in relation to the time-frame where:
+     * Less than zero is before start, and greater than 1 is after start.
+     * @param {number} time
+     * @return {number}
+     */
+    getPositionOf(time) {
+        const _ = this.range;
+        return (time - _.start) / _.delta;
+    }
     /**
      * An unbound ratio representing where now is in relation to the time-frame where:
      * Less than zero is before start, and greater than 1 is after start.
      * @return {number}
      */
     get position() {
-        const _ = this, now = Date.now();
-        return (now - _._startTime) / _._duration;
+        return this.getPositionOf(Date.now());
     }
     /**
-     * A number from 0 to 1 representing the progress of the time frame.
+     * A number from 0 to 1 representing where the `time` value is in relation to the time frame.
+     * @param {number} time
      * @return {number}
      */
-    get progress() {
-        const _ = this, now = Date.now();
-        if (now < _._startTime)
+    getProgressOf(time) {
+        const _ = this.range;
+        if (time < _.start)
             return 0;
-        if (now > _._endTime)
+        if (time > _.end)
             return 1;
-        const progress = now - _._startTime, range = progress / _._duration;
+        const progress = time - _.start, range = progress / _.delta;
         // Beware precision issues.
         if (range < 0)
             return 0;
         if (range > 1)
             return 1;
         return range;
+    }
+    /**
+     * A number from 0 to 1 representing the progress of the time frame.
+     * @return {number}
+     */
+    get progress() {
+        return this.getProgressOf(Date.now());
+    }
+    /**
+     * The time value based up on the range value provided.
+     * @param {number} range Less than zero is before start, and greater than 1 is after start.
+     * @return {number} The `time` at which the provided range value represents.
+     */
+    getValueOf(range) {
+        return this.range.start + this.range.delta * range;
     }
 }
 exports.default = TimeFrame;

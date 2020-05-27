@@ -102,9 +102,9 @@ async function test (tweenFactory: TweenFactory)
 	expect(a.timeFrame.progress).not.equal(0);
 	await delay(100);
 	expect(isNaN(a.lastUpdate)).to.be.true;
-	expect(a.timeFrame.startTime, 'startTime').to.be.greaterThan(0);
-	expect(a.timeFrame.duration, 'duration').equal(100);
-	expect(a.timeFrame.endTime, 'endTime').equal(a.timeFrame.startTime + 100);
+	expect(a.timeFrame.range.start, 'timeFrame.range.start').to.be.greaterThan(0);
+	expect(a.timeFrame.range.delta, 'timeFrame.range.delta').equal(100);
+	expect(a.timeFrame.range.end, 'timeFrame.range.end').equal(a.timeFrame.range.start + 100);
 	tweenFactory.update();
 	expect(isNaN(a.lastUpdate), 'lastUpdate').not.to.be.true;
 	expect(a.timeFrame.progress, 'progress').equal(1);
