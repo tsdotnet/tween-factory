@@ -68,24 +68,6 @@ class PropertyRange extends disposable_1.DisposableBase {
         this._endValues = Object.freeze(values);
         this._keys = keys;
     }
-    _onDispose() {
-        this._item = undefined;
-        const ar = this._activeRanges;
-        this._activeRanges = undefined;
-        if (ar) {
-            const ranges = [];
-            for (const r of ar.values())
-                ranges.push(r);
-            for (const r of ranges)
-                r.dispose();
-            if (ar.size) // should be zero.
-             {
-                console.warn('Disposal of ActivePropertyRange did not clean as expected.');
-                ar.clear();
-            }
-        }
-        this._endValues = undefined;
-    }
     /**
      * Snapshots the start values.
      * Must be called before calling update.
@@ -131,6 +113,24 @@ class PropertyRange extends disposable_1.DisposableBase {
             if (!this._keys.length)
                 this._keys = undefined;
         }
+    }
+    _onDispose() {
+        this._item = undefined;
+        const ar = this._activeRanges;
+        this._activeRanges = undefined;
+        if (ar) {
+            const ranges = [];
+            for (const r of ar.values())
+                ranges.push(r);
+            for (const r of ranges)
+                r.dispose();
+            if (ar.size) // should be zero.
+             {
+                console.warn('Disposal of ActivePropertyRange did not clean as expected.');
+                ar.clear();
+            }
+        }
+        this._endValues = undefined;
     }
 }
 exports.default = PropertyRange;

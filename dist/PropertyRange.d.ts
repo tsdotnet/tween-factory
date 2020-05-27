@@ -14,7 +14,6 @@ export default class PropertyRange<T extends object = object> extends Disposable
     private _activeRanges?;
     private _endValues?;
     constructor(item: T, endValues: Partial<NumericValues<T>>);
-    protected _onDispose(): void;
     /**
      * Snapshots the start values.
      * Must be called before calling update.
@@ -26,4 +25,5 @@ export default class PropertyRange<T extends object = object> extends Disposable
      * @param {number} range Any decimal value from 0 to 1.
      */
     update(range: number): void;
+    protected _onDispose(): void;
 }

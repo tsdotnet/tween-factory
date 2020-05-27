@@ -7,6 +7,17 @@ export default class TimeFrame {
     readonly range: Readonly<Range>;
     constructor(duration: number, startTime?: number);
     /**
+     * An unbound ratio representing where now is in relation to the time-frame where:
+     * Less than zero is before start, and greater than 1 is after start.
+     * @return {number}
+     */
+    get position(): number;
+    /**
+     * A number from 0 to 1 representing the progress of the time frame.
+     * @return {number}
+     */
+    get progress(): number;
+    /**
      * An unbound ratio representing where the `time` value is in relation to the time-frame where:
      * Less than zero is before start, and greater than 1 is after start.
      * @param {number} time
@@ -14,22 +25,11 @@ export default class TimeFrame {
      */
     getPositionOf(time: number): number;
     /**
-     * An unbound ratio representing where now is in relation to the time-frame where:
-     * Less than zero is before start, and greater than 1 is after start.
-     * @return {number}
-     */
-    get position(): number;
-    /**
      * A number from 0 to 1 representing where the `time` value is in relation to the time frame.
      * @param {number} time
      * @return {number}
      */
     getProgressOf(time: number): number;
-    /**
-     * A number from 0 to 1 representing the progress of the time frame.
-     * @return {number}
-     */
-    get progress(): number;
     /**
      * The time value based up on the range value provided.
      * @param {number} range Less than zero is before start, and greater than 1 is after start.

@@ -23,6 +23,21 @@ class TimeFrame {
         Object.freeze(this);
     }
     /**
+     * An unbound ratio representing where now is in relation to the time-frame where:
+     * Less than zero is before start, and greater than 1 is after start.
+     * @return {number}
+     */
+    get position() {
+        return this.getPositionOf(Date.now());
+    }
+    /**
+     * A number from 0 to 1 representing the progress of the time frame.
+     * @return {number}
+     */
+    get progress() {
+        return this.getProgressOf(Date.now());
+    }
+    /**
      * An unbound ratio representing where the `time` value is in relation to the time-frame where:
      * Less than zero is before start, and greater than 1 is after start.
      * @param {number} time
@@ -31,14 +46,6 @@ class TimeFrame {
     getPositionOf(time) {
         const _ = this.range;
         return (time - _.start) / _.delta;
-    }
-    /**
-     * An unbound ratio representing where now is in relation to the time-frame where:
-     * Less than zero is before start, and greater than 1 is after start.
-     * @return {number}
-     */
-    get position() {
-        return this.getPositionOf(Date.now());
     }
     /**
      * A number from 0 to 1 representing where the `time` value is in relation to the time frame.
@@ -58,13 +65,6 @@ class TimeFrame {
         if (range > 1)
             return 1;
         return range;
-    }
-    /**
-     * A number from 0 to 1 representing the progress of the time frame.
-     * @return {number}
-     */
-    get progress() {
-        return this.getProgressOf(Date.now());
     }
     /**
      * The time value based up on the range value provided.
