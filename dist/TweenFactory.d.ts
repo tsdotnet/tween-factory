@@ -26,10 +26,10 @@ declare class Triggers {
 declare class TimeFrameEvents extends DisposableBase {
     private readonly _timeFrame;
     protected readonly _triggers: Triggers;
+    private readonly _state;
     constructor(_timeFrame: TimeFrame, _triggers: Triggers);
     get timeFrame(): TimeFrame;
     get events(): Events;
-    private readonly _state;
     /**
      * The last time an update() was called (triggered).  NaN if never called.
      * @return {number}
