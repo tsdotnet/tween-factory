@@ -249,7 +249,8 @@ export namespace tweening
 	/**
 	 * Controller for active tweens.
 	 */
-	export interface ActiveTweenManager extends ActiveTweenUpdater
+	export interface ActiveTweenManager
+		extends ActiveTweenUpdater
 	{
 		/**
 		 * Triggers updates for all active tweens.
