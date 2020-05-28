@@ -105,15 +105,18 @@ export declare namespace tween {
         constructor(settings: Settings, addActive: (factory: (id: number) => Active) => Active);
         /**
          * Adds an object to the behavior.
-         * @param target
-         * @param endValues
+         * @throws `InvalidOperationException` if the tween has already been started.
+         * @param {T} target
+         * @param {Partial<NumericValues<T>>} endValues
+         * @param {tween.EasingFunction | undefined} easing
+         * @return {this}
          */
-        add<T extends object>(target: T, endValues: Partial<NumericValues<T>>): Config;
+        add<T extends object>(target: T, endValues: Partial<NumericValues<T>>, easing?: EasingFunction | undefined): Config;
     }
     export class Config extends DisposableBase {
         protected readonly _behavior: Behavior;
         protected _addActive: (factory: (id: number) => Active) => Active;
-        protected _ranges?: PropertyRange<any>[];
+        protected _ranges?: Map<EasingFunction | undefined, PropertyRange[]>;
         protected readonly _triggers: Triggers;
         protected _chained?: Config[];
         protected _active?: Active;
@@ -126,10 +129,12 @@ export declare namespace tween {
         /**
          * Adds an object to the behavior.
          * @throws `InvalidOperationException` if the tween has already been started.
-         * @param target
-         * @param endValues
+         * @param {T} target
+         * @param {Partial<NumericValues<T>>} endValues
+         * @param {tween.EasingFunction | undefined} easing
+         * @return {this}
          */
-        add<T extends object>(target: T, endValues: Partial<NumericValues<T>>): this;
+        add<T extends object>(target: T, endValues: Partial<NumericValues<T>>, easing?: EasingFunction | undefined): this;
         /**
          * Allows for tweens to occur in sequence.
          * @throws `InvalidOperationException` if the tween has already been started.
@@ -147,7 +152,7 @@ export declare namespace tween {
     }
     export class Active extends TimeFrameEvents {
         readonly id: number;
-        constructor(id: number, timeFrame: TimeFrame, ranges: PropertyRange[] | Map<EasingFunction, PropertyRange[]>, triggers: Triggers);
+        constructor(id: number, timeFrame: TimeFrame, ranges: Map<EasingFunction | undefined, PropertyRange[]>, triggers: Triggers);
     }
     export {};
 }

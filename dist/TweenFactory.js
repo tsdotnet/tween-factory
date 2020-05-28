@@ -176,12 +176,15 @@ var tween;
         }
         /**
          * Adds an object to the behavior.
-         * @param target
-         * @param endValues
+         * @throws `InvalidOperationException` if the tween has already been started.
+         * @param {T} target
+         * @param {Partial<NumericValues<T>>} endValues
+         * @param {tween.EasingFunction | undefined} easing
+         * @return {this}
          */
-        add(target, endValues) {
+        add(target, endValues, easing = this.settings.easing) {
             const starter = new Config(this, this._addActive);
-            starter.add(target, endValues);
+            starter.add(target, endValues, easing);
             return starter;
         }
     }
@@ -191,7 +194,7 @@ var tween;
             super('tween.Config');
             this._behavior = _behavior;
             this._addActive = _addActive;
-            this._ranges = [];
+            this._ranges = new Map();
             this._triggers = new Triggers();
             this._chained = [];
         }
@@ -206,13 +209,20 @@ var tween;
         /**
          * Adds an object to the behavior.
          * @throws `InvalidOperationException` if the tween has already been started.
-         * @param target
-         * @param endValues
+         * @param {T} target
+         * @param {Partial<NumericValues<T>>} endValues
+         * @param {tween.EasingFunction | undefined} easing
+         * @return {this}
          */
-        add(target, endValues) {
+        add(target, endValues, easing = this._behavior.settings.easing) {
             this.throwIfDisposed();
-            if (this._ranges)
-                this._ranges.push(new PropertyRange_1.default(target, endValues));
+            const ranges = this._ranges;
+            if (ranges) {
+                let pr = ranges.get(easing);
+                if (!pr)
+                    ranges.set(easing, pr = []);
+                pr.push(new PropertyRange_1.default(target, endValues));
+            }
             else
                 throw new InvalidOperationException_1.default('Adding more targets to an active tween is not supported.');
             return this;
@@ -248,13 +258,14 @@ var tween;
                 const delay = (_a = this._behavior.settings.delay) !== null && _a !== void 0 ? _a : 0;
                 timeFrame = new TimeFrame_1.default(duration, delay + Date.now());
             }
-            const _ = this, easing = _._behavior.settings.easing, triggers = _._triggers, ranges = _._ranges, chained = _._chained;
+            const _ = this, triggers = _._triggers, ranges = _._ranges, chained = _._chained;
             _._chained = _._ranges = undefined;
-            for (const r of ranges)
-                r.init();
+            for (const r of ranges.values())
+                for (const p of r)
+                    p.init();
             triggers.started.publish();
             return this._active = this._addActive((id) => {
-                const tween = new Active(id, timeFrame, easing ? new Map([[easing, ranges]]) : ranges, triggers);
+                const tween = new Active(id, timeFrame, ranges, triggers);
                 triggers.completed.addPost().dispatcher.add(() => {
                     for (const next of chained)
                         next.start();
@@ -272,8 +283,9 @@ var tween;
                 for (const d of c)
                     d.dispose();
             if (r)
-                for (const d of r)
-                    d.dispose();
+                for (const d of r.values())
+                    for (const p of d)
+                        p.dispose();
         }
     }
     tween_1.Config = Config;
@@ -283,54 +295,30 @@ var tween;
             this.id = id;
             this._disposableObjectName = 'tween.Active';
             Object.freeze(this);
-            if (ranges instanceof Map) {
-                if (!ranges.size)
-                    return;
-                else if (ranges.size === 1)
-                    ranges.forEach((v, k) => {
-                        if (!k)
-                            ranges = v;
-                    });
-            }
+            const easedRanges = [];
+            ranges.forEach((v, k) => easedRanges.push([k, v]));
             /*
              * We use the 'pre update' to actually do the work
              * so that listeners of the actual event can react to changed values.
              */
-            if (ranges instanceof Array) {
-                if (!ranges.length)
-                    return;
-                const updated = triggers.updated.addPre().dispatcher;
-                updated.add(value => {
-                    for (const r of ranges)
-                        r.update(value);
-                });
-                triggers.disposed.dispatcher.add(() => {
-                    for (const r of ranges)
+            const updated = triggers.updated.addPre().dispatcher;
+            updated.add(value => {
+                for (const e of easedRanges) {
+                    const f = e[0];
+                    const v = f ? f(value) : value, p = e[1];
+                    for (const r of p)
+                        r.update(v);
+                }
+            });
+            triggers.disposed.dispatcher.add(() => {
+                for (const e of easedRanges) {
+                    const p = e[1];
+                    for (const r of p)
                         r.dispose();
-                    ranges.length = 0;
-                });
-            }
-            else {
-                const easedRanges = [];
-                ranges.forEach((v, k) => easedRanges.push([k, v]));
-                const updated = triggers.updated.addPre().dispatcher;
-                updated.add(value => {
-                    for (const e of easedRanges) {
-                        const v = e[0](value), p = e[1];
-                        for (const r of p)
-                            r.update(v);
-                    }
-                });
-                triggers.disposed.dispatcher.add(() => {
-                    for (const e of easedRanges) {
-                        const p = e[1];
-                        for (const r of p)
-                            r.dispose();
-                        p.length = 0;
-                    }
-                    easedRanges.length = 0;
-                });
-            }
+                    p.length = 0;
+                }
+                easedRanges.length = 0;
+            });
         }
     }
     tween_1.Active = Active;

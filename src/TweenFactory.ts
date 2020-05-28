@@ -251,13 +251,18 @@ export namespace tween
 
 		/**
 		 * Adds an object to the behavior.
-		 * @param target
-		 * @param endValues
+		 * @throws `InvalidOperationException` if the tween has already been started.
+		 * @param {T} target
+		 * @param {Partial<NumericValues<T>>} endValues
+		 * @param {tween.EasingFunction | undefined} easing
+		 * @return {this}
 		 */
-		add<T extends object> (target: T, endValues: Partial<NumericValues<T>>): Config
+		add<T extends object> (
+			target: T, endValues: Partial<NumericValues<T>>,
+			easing: EasingFunction | undefined = this.settings.easing): Config
 		{
 			const starter = new Config(this, this._addActive);
-			starter.add(target, endValues);
+			starter.add(target, endValues, easing);
 			return starter;
 		}
 	}
@@ -265,7 +270,7 @@ export namespace tween
 	export class Config
 		extends DisposableBase
 	{
-		protected _ranges?: PropertyRange<any>[] = [];
+		protected _ranges?: Map<EasingFunction | undefined, PropertyRange[]> = new Map();
 		protected readonly _triggers: Triggers = new Triggers();
 		protected _chained?: Config[] = [];
 		protected _active?: Active;
@@ -290,13 +295,23 @@ export namespace tween
 		/**
 		 * Adds an object to the behavior.
 		 * @throws `InvalidOperationException` if the tween has already been started.
-		 * @param target
-		 * @param endValues
+		 * @param {T} target
+		 * @param {Partial<NumericValues<T>>} endValues
+		 * @param {tween.EasingFunction | undefined} easing
+		 * @return {this}
 		 */
-		add<T extends object> (target: T, endValues: Partial<NumericValues<T>>): this
+		add<T extends object> (
+			target: T, endValues: Partial<NumericValues<T>>,
+			easing: EasingFunction | undefined = this._behavior.settings.easing): this
 		{
 			this.throwIfDisposed();
-			if(this._ranges) this._ranges.push(new PropertyRange<T>(target, endValues));
+			const ranges = this._ranges;
+			if(ranges)
+			{
+				let pr = ranges.get(easing);
+				if(!pr) ranges.set(easing, pr = []);
+				pr.push(new PropertyRange<any>(target, endValues));
+			}
 			else throw new InvalidOperationException('Adding more targets to an active tween is not supported.');
 			return this;
 		}
@@ -336,18 +351,16 @@ export namespace tween
 
 			const
 				_        = this,
-				easing   = _._behavior.settings.easing,
 				triggers = _._triggers,
 				ranges   = _._ranges!,
 				chained  = _._chained!;
 			_._chained = _._ranges = undefined;
 
-			for(const r of ranges) r.init();
+			for(const r of ranges.values()) for(const p of r) p.init();
 			triggers.started.publish();
 
 			return this._active = this._addActive((id: number) => {
-				const tween = new Active(id, timeFrame!,
-					easing ? new Map([[easing!, ranges]]) : ranges, triggers);
+				const tween = new Active(id, timeFrame!, ranges, triggers);
 				triggers.completed.addPost().dispatcher.add(() => {
 					for(const next of chained) next.start();
 					chained.length = 0;
@@ -363,7 +376,7 @@ export namespace tween
 			const c = this._chained, r = this._ranges;
 			this._chained = this._ranges = undefined;
 			if(c) for(const d of c) d.dispose();
-			if(r) for(const d of r) d.dispose();
+			if(r) for(const d of r.values()) for(const p of d) p.dispose();
 		}
 	}
 
@@ -373,62 +386,37 @@ export namespace tween
 		constructor (
 			public readonly id: number,
 			timeFrame: TimeFrame,
-			ranges: PropertyRange[] | Map<EasingFunction, PropertyRange[]>,
+			ranges: Map<EasingFunction | undefined, PropertyRange[]>,
 			triggers: Triggers)
 		{
 			super(timeFrame, triggers);
 			this._disposableObjectName = 'tween.Active';
 			Object.freeze(this);
 
-
-			if(ranges instanceof Map)
-			{
-				if(!ranges.size) return;
-				else if(ranges.size===1) ranges.forEach((v, k) => {
-					if(!k) ranges = v;
-				});
-			}
-
+			const easedRanges = [] as [EasingFunction | undefined, PropertyRange[]][];
+			ranges.forEach((v, k) => easedRanges.push([k, v]));
 			/*
 			 * We use the 'pre update' to actually do the work
 			 * so that listeners of the actual event can react to changed values.
 			 */
-
-			if(ranges instanceof Array)
-			{
-				if(!ranges.length) return;
-				const updated = triggers.updated.addPre().dispatcher;
-				updated.add(value => {
-					for(const r of ranges as PropertyRange[]) r.update(value);
-				});
-				triggers.disposed.dispatcher.add(() => {
-					for(const r of ranges as PropertyRange[]) r.dispose();
-					(ranges as PropertyRange[]).length = 0;
-				});
-			}
-			else
-			{
-				const easedRanges = [] as [EasingFunction, PropertyRange[]][];
-				ranges.forEach((v, k) => easedRanges.push([k, v]));
-				const updated = triggers.updated.addPre().dispatcher;
-				updated.add(value => {
-					for(const e of easedRanges)
-					{
-						const v = e[0](value), p = e[1];
-						for(const r of p) r.update(v);
-					}
-				});
-				triggers.disposed.dispatcher.add(() => {
-					for(const e of easedRanges)
-					{
-						const p = e[1];
-						for(const r of p) r.dispose();
-						p.length = 0;
-					}
-					easedRanges.length = 0;
-				});
-			}
-
+			const updated = triggers.updated.addPre().dispatcher;
+			updated.add(value => {
+				for(const e of easedRanges)
+				{
+					const f = e[0];
+					const v = f ? f(value) : value, p = e[1];
+					for(const r of p) r.update(v);
+				}
+			});
+			triggers.disposed.dispatcher.add(() => {
+				for(const e of easedRanges)
+				{
+					const p = e[1];
+					for(const r of p) r.dispose();
+					p.length = 0;
+				}
+				easedRanges.length = 0;
+			});
 		}
 	}
 
