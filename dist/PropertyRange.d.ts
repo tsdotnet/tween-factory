@@ -25,5 +25,9 @@ export default class PropertyRange<T extends object = object> extends Disposable
      * @param {number} range Any decimal value from 0 to 1.
      */
     update(range: number): void;
+    /**
+     * Triggered by `dispose()` in super class (`DisposableBase`).
+     * @private
+     */
     protected _onDispose(): void;
 }

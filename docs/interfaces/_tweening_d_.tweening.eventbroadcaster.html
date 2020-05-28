@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StartAndEnd | @tsdotnet/tween-factory - v1.3.0</title>
+	<title>EventBroadcaster | @tsdotnet/tween-factory - v1.3.0</title>
 	<meta name="description" content="Documentation for @tsdotnet/tween-factory - v1.3.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,35 +52,40 @@
 					<a href="../index.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_range_d_.html">&quot;Range.d&quot;</a>
+					<a href="../modules/_tweening_d_.html">&quot;Tweening.d&quot;</a>
 				</li>
 				<li>
-					<a href="_range_d_.startandend.html">StartAndEnd</a>
+					<a href="../modules/_tweening_d_.tweening.html">tweening</a>
+				</li>
+				<li>
+					<a href="_tweening_d_.tweening.eventbroadcaster.html">EventBroadcaster</a>
 				</li>
 			</ul>
-			<h1>Interface StartAndEnd&lt;T&gt;</h1>
+			<h1>Interface EventBroadcaster</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-type-parameters">
-				<h3>Type parameters</h3>
-				<ul class="tsd-type-parameters">
-					<li>
-						<h4>T</h4>
-					</li>
-				</ul>
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>An entity that broadcasts tween life-cycle events.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">StartAndEnd</span>
+						<span class="target">EventBroadcaster</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="_range_d_.range.html" class="tsd-signature-type">Range</a>
+								<a href="_tweening_d_.tweening.tween.html" class="tsd-signature-type">Tween</a>
+							</li>
+							<li>
+								<a href="_tweening_d_.tweening.activetween.html" class="tsd-signature-type">ActiveTween</a>
 							</li>
 						</ul>
 					</li>
@@ -93,8 +98,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_range_d_.startandend.html#end" class="tsd-kind-icon">end</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_range_d_.startandend.html#start" class="tsd-kind-icon">start</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_tweening_d_.tweening.eventbroadcaster.html#events" class="tsd-kind-icon">events</a></li>
 							</ul>
 						</section>
 					</div>
@@ -103,24 +107,19 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="end" class="tsd-anchor"></a>
-					<h3>end</h3>
-					<div class="tsd-signature tsd-kind-icon">end<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span></div>
+					<a name="events" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> events</h3>
+					<div class="tsd-signature tsd-kind-icon">events<span class="tsd-signature-symbol">:</span> <a href="_tweening_d_.tweening.events.html" class="tsd-signature-type">Events</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/253765d/src/Range.d.ts#L9">src/Range.d.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/253765d/src/Tweening.d.ts#L172">src/Tweening.d.ts:172</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="start" class="tsd-anchor"></a>
-					<h3>start</h3>
-					<div class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/253765d/src/Range.d.ts#L8">src/Range.d.ts:8</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>For listening to life-cycle events.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -130,49 +129,70 @@
 					<li class="globals  ">
 						<a href="../index.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_propertyrange_.html">&quot;<wbr>Property<wbr>Range&quot;</a>
-					</li>
-					<li class="current tsd-kind-module">
-						<a href="../modules/_range_d_.html">&quot;<wbr>Range.d&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_timeframe_.html">&quot;<wbr>Time<wbr>Frame&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_tweenfactory_.html">&quot;<wbr>Tween<wbr>Factory&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_tweening_d_.html">&quot;<wbr>Tweening.d&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/easing.html">easing</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/interpolation.html">interpolation</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_range_d_.range.html" class="tsd-kind-icon">Range</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.activetween.html" class="tsd-kind-icon">Active<wbr>Tween</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.activetweenmanager.html" class="tsd-kind-icon">Active<wbr>Tween<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.activetweenupdater.html" class="tsd-kind-icon">Active<wbr>Tween<wbr>Updater</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.activetweenable.html" class="tsd-kind-icon">Active<wbr>Tweenable</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.behavior.html" class="tsd-kind-icon">Behavior</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.behaviorbuilder.html" class="tsd-kind-icon">Behavior<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.builderwithduration.html" class="tsd-kind-icon">Builder<wbr>With<wbr>Duration</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.easingfunction.html" class="tsd-kind-icon">Easing<wbr>Function</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_range_d_.startandend.html" class="tsd-kind-icon">Start<wbr>And<wbr>End</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.eventbroadcaster.html" class="tsd-kind-icon">Event<wbr>Broadcaster</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_range_d_.startandend.html#end" class="tsd-kind-icon">end</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_range_d_.startandend.html#start" class="tsd-kind-icon">start</a>
+								<a href="_tweening_d_.tweening.eventbroadcaster.html#events" class="tsd-kind-icon">events</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.events.html" class="tsd-kind-icon">Events</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.manager.html" class="tsd-kind-icon">Manager</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.tween.html" class="tsd-kind-icon">Tween</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.tweenable.html" class="tsd-kind-icon">Tweenable</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/_tweening_d_.tweening.html#factory" class="tsd-kind-icon">Factory</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/_tweening_d_.tweening.html#factorybuilder" class="tsd-kind-icon">Factory<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/_tweening_d_.tweening.html#optionalsettings" class="tsd-kind-icon">Optional<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/_tweening_d_.tweening.html#settings" class="tsd-kind-icon">Settings</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

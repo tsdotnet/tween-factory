@@ -52,13 +52,13 @@
 					<a href="../index.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_tweenfactory_.html">&quot;TweenFactory&quot;</a>
+					<a href="../modules/_tweening_d_.html">&quot;Tweening.d&quot;</a>
 				</li>
 				<li>
-					<a href="../modules/_tweenfactory_.tween.html">tween</a>
+					<a href="../modules/_tweening_d_.tweening.html">tweening</a>
 				</li>
 				<li>
-					<a href="_tweenfactory_.tween.events.html">Events</a>
+					<a href="_tweening_d_.tweening.events.html">Events</a>
 				</li>
 			</ul>
 			<h1>Interface Events</h1>
@@ -68,6 +68,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Tween life-cycle events.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -83,10 +90,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_tweenfactory_.tween.events.html#completed" class="tsd-kind-icon">completed</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_tweenfactory_.tween.events.html#disposed" class="tsd-kind-icon">disposed</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_tweenfactory_.tween.events.html#started" class="tsd-kind-icon">started</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_tweenfactory_.tween.events.html#updated" class="tsd-kind-icon">updated</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_tweening_d_.tweening.events.html#completed" class="tsd-kind-icon">completed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_tweening_d_.tweening.events.html#disposed" class="tsd-kind-icon">disposed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_tweening_d_.tweening.events.html#started" class="tsd-kind-icon">started</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_tweening_d_.tweening.events.html#updated" class="tsd-kind-icon">updated</a></li>
 							</ul>
 						</section>
 					</div>
@@ -100,7 +107,7 @@
 					<div class="tsd-signature tsd-kind-icon">completed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/1606060/src/TweenFactory.ts#L237">src/TweenFactory.ts:237</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/253765d/src/Tweening.d.ts#L21">src/Tweening.d.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -110,7 +117,7 @@
 					<div class="tsd-signature tsd-kind-icon">disposed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/1606060/src/TweenFactory.ts#L238">src/TweenFactory.ts:238</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/253765d/src/Tweening.d.ts#L22">src/Tweening.d.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -120,7 +127,7 @@
 					<div class="tsd-signature tsd-kind-icon">started<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/1606060/src/TweenFactory.ts#L235">src/TweenFactory.ts:235</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/253765d/src/Tweening.d.ts#L19">src/Tweening.d.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -130,7 +137,7 @@
 					<div class="tsd-signature tsd-kind-icon">updated<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/1606060/src/TweenFactory.ts#L236">src/TweenFactory.ts:236</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/tween-factory/blob/253765d/src/Tweening.d.ts#L20">src/Tweening.d.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -146,44 +153,74 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-namespace">
-						<a href="../classes/_tweenfactory_.tween.active.html" class="tsd-kind-icon">Active</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-namespace">
-						<a href="../classes/_tweenfactory_.tween.behavior.html" class="tsd-kind-icon">Behavior</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-namespace">
-						<a href="../classes/_tweenfactory_.tween.config.html" class="tsd-kind-icon">Config</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-namespace">
-						<a href="../classes/_tweenfactory_.tween.factory.html" class="tsd-kind-icon">Factory</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.activetween.html" class="tsd-kind-icon">Active<wbr>Tween</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="_tweenfactory_.tween.easingfunction.html" class="tsd-kind-icon">Easing<wbr>Function</a>
+						<a href="_tweening_d_.tweening.activetweenmanager.html" class="tsd-kind-icon">Active<wbr>Tween<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.activetweenupdater.html" class="tsd-kind-icon">Active<wbr>Tween<wbr>Updater</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.activetweenable.html" class="tsd-kind-icon">Active<wbr>Tweenable</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.behavior.html" class="tsd-kind-icon">Behavior</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.behaviorbuilder.html" class="tsd-kind-icon">Behavior<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.builderwithduration.html" class="tsd-kind-icon">Builder<wbr>With<wbr>Duration</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.easingfunction.html" class="tsd-kind-icon">Easing<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.eventbroadcaster.html" class="tsd-kind-icon">Event<wbr>Broadcaster</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="_tweenfactory_.tween.events.html" class="tsd-kind-icon">Events</a>
+						<a href="_tweening_d_.tweening.events.html" class="tsd-kind-icon">Events</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_tweenfactory_.tween.events.html#completed" class="tsd-kind-icon">completed</a>
+								<a href="_tweening_d_.tweening.events.html#completed" class="tsd-kind-icon">completed</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_tweenfactory_.tween.events.html#disposed" class="tsd-kind-icon">disposed</a>
+								<a href="_tweening_d_.tweening.events.html#disposed" class="tsd-kind-icon">disposed</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_tweenfactory_.tween.events.html#started" class="tsd-kind-icon">started</a>
+								<a href="_tweening_d_.tweening.events.html#started" class="tsd-kind-icon">started</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_tweenfactory_.tween.events.html#updated" class="tsd-kind-icon">updated</a>
+								<a href="_tweening_d_.tweening.events.html#updated" class="tsd-kind-icon">updated</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.manager.html" class="tsd-kind-icon">Manager</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.tween.html" class="tsd-kind-icon">Tween</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="_tweening_d_.tweening.tweenable.html" class="tsd-kind-icon">Tweenable</a>
+					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
-						<a href="../modules/_tweenfactory_.tween.html#settings" class="tsd-kind-icon">Settings</a>
+						<a href="../modules/_tweening_d_.tweening.html#factory" class="tsd-kind-icon">Factory</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/_tweening_d_.tweening.html#factorybuilder" class="tsd-kind-icon">Factory<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/_tweening_d_.tweening.html#optionalsettings" class="tsd-kind-icon">Optional<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/_tweening_d_.tweening.html#settings" class="tsd-kind-icon">Settings</a>
 					</li>
 				</ul>
 			</nav>

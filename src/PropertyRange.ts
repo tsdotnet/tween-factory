@@ -148,6 +148,10 @@ export default class PropertyRange<T extends object = object>
 		}
 	}
 
+	/**
+	 * Triggered by `dispose()` in super class (`DisposableBase`).
+	 * @private
+	 */
 	protected _onDispose (): void
 	{
 		this._item = undefined;
@@ -158,11 +162,6 @@ export default class PropertyRange<T extends object = object>
 			const ranges = [] as ActivePropertyRange<T>[];
 			for(const r of ar.values()) ranges.push(r);
 			for(const r of ranges) r.dispose();
-			if(ar.size) // should be zero.
-			{
-				console.warn('Disposal of ActivePropertyRange did not clean as expected.');
-				ar.clear();
-			}
 		}
 		this._endValues = undefined;
 	}

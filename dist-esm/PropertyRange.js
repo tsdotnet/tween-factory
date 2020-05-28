@@ -111,6 +111,10 @@ export default class PropertyRange extends DisposableBase {
                 this._keys = undefined;
         }
     }
+    /**
+     * Triggered by `dispose()` in super class (`DisposableBase`).
+     * @private
+     */
     _onDispose() {
         this._item = undefined;
         const ar = this._activeRanges;
@@ -121,11 +125,6 @@ export default class PropertyRange extends DisposableBase {
                 ranges.push(r);
             for (const r of ranges)
                 r.dispose();
-            if (ar.size) // should be zero.
-             {
-                console.warn('Disposal of ActivePropertyRange did not clean as expected.');
-                ar.clear();
-            }
         }
         this._endValues = undefined;
     }
