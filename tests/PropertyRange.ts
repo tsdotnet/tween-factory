@@ -54,10 +54,29 @@ describe('PropertyRange', () => {
 		expect(point.x).equal(0);
 		expect(point.y).equal(0);
 		expect(() => pr.update(1)).to.throw();
-		pr.init({x: 1});
+		expect(pr.init({x: 1})).equal(2);
 		expect(point.x).equal(0);
 		pr.update(0);
 		expect(point.x).equal(1);
+	});
+
+	it('init should property count ranged values', () => {
+		const point = {
+			x: 0,
+			y: 0
+		};
+		{
+			const pr = new PropertyRange(point, {x: 10, y: 0});
+			expect(pr.init()).equal(1);
+		}
+		{
+			const pr = new PropertyRange(point, {x: 10});
+			expect(pr.init()).equal(1);
+		}
+		{
+			const pr = new PropertyRange(point, {x: 0});
+			expect(pr.init()).equal(0);
+		}
 	});
 
 	it('should change values to expected', () => {

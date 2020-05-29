@@ -96,8 +96,10 @@ export default class PropertyRange<T extends object = object>
 	 * Snapshots the start values.
 	 * Must be called before calling update.
 	 * @param {Partial<NumericValues<T>>} startValues Optional values to initialize with.  Properties not intersecting with end values will be ignored.
+	 * @param {Partial<NumericValues<T>>} startValues
+	 * @return {number} Number of properties that are ranged.
 	 */
-	init (startValues?: Partial<NumericValues<T>>): void
+	init (startValues?: Partial<NumericValues<T>>): number
 	{
 		this.throwIfDisposed();
 		const
@@ -111,6 +113,7 @@ export default class PropertyRange<T extends object = object>
 				? assertNumber('startValues', startValues, property)
 				: assertNumber(ITEM, item, property);
 			const end = endValues[property];
+			if(start===end) continue;
 			const delta = end - start;
 			const apr = new ActivePropertyRange(item, property, Object.freeze({start, delta, end}));
 			apr.disposed.add(() => ranges.delete(property));
@@ -118,6 +121,7 @@ export default class PropertyRange<T extends object = object>
 		}
 
 		this._activeRanges = ranges;
+		return ranges.size;
 	}
 
 	/**

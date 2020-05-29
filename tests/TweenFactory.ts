@@ -186,6 +186,35 @@ describe('TweenFactory', () => {
 		tweenFactory.active.update();
 		expect(a.lastUpdate, 'lastUpdate').equal(last);
 	});
+
+	describe('.tweenDeltas', () => {
+		const config = tweener().duration(100);
+		it('should tween changes', () => {
+			expect(config.tweenDeltas({
+				x: 0,
+				y: 0
+			}, {
+				x: 10,
+				y: 8
+			})).not.to.be.undefined;
+		});
+		it('should not tween unchanged', () => {
+			expect(config.tweenDeltas({
+				x: 0,
+				y: 0
+			}, {
+				x: 0,
+				y: 0
+			})).to.be.undefined;
+			expect(config.tweenDeltas({
+				x: 1,
+				y: 0
+			}, {
+				x: 1
+			})).to.be.undefined;
+		});
+	});
+
 });
 
 type EventState = {

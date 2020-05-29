@@ -93,6 +93,18 @@ export namespace tweening
 		tween<T extends object> (
 			target: T, endValues: Partial<NumericValues<T>>,
 			easing?: EasingFunction): ActiveTween
+
+		/**
+		 * Configures a tween and starts it.
+		 * Returns undefined if nothing to tween.
+		 * @param {T} target
+		 * @param {Partial<NumericValues<T>>} endValues
+		 * @param {tweening.EasingFunction} easing
+		 * @return {tweening.ActiveTween | undefined}
+		 */
+		tweenDeltas<T extends object> (
+			target: T, endValues: Partial<NumericValues<T>>,
+			easing?: EasingFunction): ActiveTween | undefined
 	}
 
 	/**

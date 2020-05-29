@@ -72,6 +72,8 @@ class PropertyRange extends disposable_1.DisposableBase {
      * Snapshots the start values.
      * Must be called before calling update.
      * @param {Partial<NumericValues<T>>} startValues Optional values to initialize with.  Properties not intersecting with end values will be ignored.
+     * @param {Partial<NumericValues<T>>} startValues
+     * @return {number} Number of properties that are ranged.
      */
     init(startValues) {
         this.throwIfDisposed();
@@ -81,12 +83,15 @@ class PropertyRange extends disposable_1.DisposableBase {
                 ? assertNumber('startValues', startValues, property)
                 : assertNumber(ITEM, item, property);
             const end = endValues[property];
+            if (start === end)
+                continue;
             const delta = end - start;
             const apr = new ActivePropertyRange(item, property, Object.freeze({ start, delta, end }));
             apr.disposed.add(() => ranges.delete(property));
             ranges.set(property, apr);
         }
         this._activeRanges = ranges;
+        return ranges.size;
     }
     /**
      * Updates the properties of the item interpolated by the range value.

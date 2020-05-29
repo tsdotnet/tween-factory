@@ -210,6 +210,17 @@ class Behavior extends BehaviorBuilder {
     tween(target, endValues, easing) {
         return this.add(target, endValues, easing).start();
     }
+    /**
+     * Configures a tween and starts it.
+     * Returns undefined if nothing to tween.
+     * @param {T} target
+     * @param {Partial<NumericValues<T>>} endValues
+     * @param {tweening.EasingFunction} easing
+     * @return {tweening.ActiveTween | undefined}
+     */
+    tweenDeltas(target, endValues, easing) {
+        return this.add(target, endValues, easing).start(undefined, true);
+    }
 }
 class Manager {
     constructor(_activeTweens) {
@@ -353,6 +364,17 @@ class TweenableFactory extends Factory {
     tween(target, endValues, easing) {
         return this.add(target, endValues, easing).start();
     }
+    /**
+     * Configures a tween and starts it.
+     * Returns undefined if nothing to tween.
+     * @param {T} target
+     * @param {Partial<NumericValues<T>>} endValues
+     * @param {tweening.EasingFunction} easing
+     * @return {tweening.ActiveTween | undefined}
+     */
+    tweenDeltas(target, endValues, easing) {
+        return this.add(target, endValues, easing).start(undefined, true);
+    }
 }
 class Tween extends DisposableBase {
     constructor(_settings, _addActive) {
@@ -411,9 +433,10 @@ class Tween extends DisposableBase {
     /**
      * Starts the tween.
      * @param {TimeFrame} timeFrame
-     * @return {tweening.ActiveTween}
+     * @param {boolean} deltasOnly If true, will return undefined if start values match end values.
+     * @return {ActiveTween}
      */
-    start(timeFrame) {
+    start(timeFrame, deltasOnly = false) {
         this.throwIfDisposed();
         if (this._active)
             throw new InvalidOperationException('Starting a tween more than once is not supported.');
@@ -423,13 +446,23 @@ class Tween extends DisposableBase {
             timeFrame = new TimeFrame(duration, (isNaN(delay) ? 0 : delay) + Date.now());
         }
         const _ = this, triggers = _._triggers, ranges = _._ranges, chained = _._chained;
+        const filteredRanges = [];
+        ranges.forEach((v, k) => {
+            const prs = [];
+            for (const p of v)
+                if (p.init())
+                    prs.push(p);
+            if (prs.length)
+                filteredRanges.push([k, prs]);
+            v.length = 0;
+        });
+        if (deltasOnly && !filteredRanges.length)
+            return undefined;
         _._chained = _._ranges = undefined;
-        for (const r of ranges.values())
-            for (const p of r)
-                p.init();
+        ranges.clear();
         triggers.started.publish();
         return this._active = this._addActive((id) => {
-            const tween = new ActiveTween(id, timeFrame, ranges, triggers);
+            const tween = new ActiveTween(id, timeFrame, filteredRanges, triggers);
             triggers.completed.addPost().dispatcher.add(() => {
                 for (const next of chained)
                     next.start();
@@ -460,31 +493,49 @@ class ActiveTween extends TimeFrameEvents {
     constructor(id, timeFrame, ranges, triggers) {
         super(timeFrame, triggers);
         this.id = id;
-        this._disposableObjectName = 'tween.Active';
+        this._disposableObjectName = 'ActiveTween';
         Object.freeze(this);
-        const easedRanges = [];
-        ranges.forEach((v, k) => easedRanges.push([k, v]));
         /*
          * We use the 'pre update' to actually do the work
          * so that listeners of the actual event can react to changed values.
          */
         const updated = triggers.updated.addPre().dispatcher;
-        updated.add(value => {
-            for (const e of easedRanges) {
-                const f = e[0];
-                const v = f ? f(value) : value, p = e[1];
-                for (const r of p)
-                    r.update(v);
+        if (ranges.length) {
+            const [fn, prs] = ranges[0];
+            if (ranges.length == 1) {
+                if (fn) {
+                    updated.add(value => {
+                        const v = fn(value);
+                        for (const r of prs)
+                            r.update(v);
+                    });
+                }
+                else {
+                    updated.add(value => {
+                        for (const r of prs)
+                            r.update(value);
+                    });
+                }
             }
-        });
+            else {
+                updated.add(value => {
+                    for (const e of ranges) {
+                        const fn = e[0];
+                        const v = fn ? fn(value) : value, p = e[1];
+                        for (const r of p)
+                            r.update(v);
+                    }
+                });
+            }
+        }
         triggers.disposed.dispatcher.add(() => {
-            for (const e of easedRanges) {
+            for (const e of ranges) {
                 const p = e[1];
                 for (const r of p)
                     r.dispose();
                 p.length = 0;
             }
-            easedRanges.length = 0;
+            ranges.length = 0;
         });
     }
 }
