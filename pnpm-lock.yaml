@@ -1,6 +1,6 @@
 dependencies:
   '@tsdotnet/disposable': 1.1.20
-  '@tsdotnet/event-factory': 1.1.0
+  '@tsdotnet/event-factory': 1.1.1
   '@tsdotnet/exceptions': 1.0.16
   '@tsdotnet/ordered-registry': 1.0.16
   tslib: 2.0.0
@@ -227,42 +227,36 @@ packages:
     dev: false
     resolution:
       integrity: sha512-7cPmEDQ0v/k3CHSnvMOYf9xLgWX96JIdMpDnonvIl3y/0sAexQDtRSKxLki2l/iBgsL/npGwLDBn/wmZGxz2Tg==
-  /@tsdotnet/disposable/1.1.19:
-    dependencies:
-      tslib: 2.0.0
-    dev: false
-    resolution:
-      integrity: sha512-2DGtUvkiR1/h2mmES97BLb2zBgRaYQbUnk/YcYG5rmdKjHgZVKcPwd+exMZTxY5mLi4mQCbsS/BmSxEKqg2Uag==
   /@tsdotnet/disposable/1.1.20:
     dependencies:
       tslib: 2.0.0
     dev: false
     resolution:
       integrity: sha512-zzVzRqoDoduZM2X6sus83Cbb7BSi6mNVok/cFxVWiT9SZa2qiy/PDgLoPcePZ/gwaZnHB7YWU9NNUcWSMb6keg==
-  /@tsdotnet/event-factory/1.1.0:
+  /@tsdotnet/event-factory/1.1.1:
     dependencies:
       '@tsdotnet/collection-base': 2.0.6
-      '@tsdotnet/disposable': 1.1.19
+      '@tsdotnet/disposable': 1.1.20
       '@tsdotnet/exceptions': 1.0.16
-      '@tsdotnet/lazy': 1.0.19
+      '@tsdotnet/lazy': 1.0.20
       '@tsdotnet/ordered-registry': 1.0.16
       tslib: 2.0.0
     dev: false
     resolution:
-      integrity: sha512-LtISTbkel0yS3Thnx4uBYfpezBSAsRzqHeXr5fm9Z9xVCjpuNCJX4N3avIj2GmAlpAwvBMbxcZp+H65l2Zdrkw==
+      integrity: sha512-Y6BDGeWtrnpnUINwlwQi/zXbEUKLOsBw2ddiet+AqQ7sQZeMgernCbCPiDspcaq/m2ICyeqWlhgy+rbWy59+zA==
   /@tsdotnet/exceptions/1.0.16:
     dependencies:
       tslib: 2.0.0
     dev: false
     resolution:
       integrity: sha512-uJwSxVgTVmNOSvit1TFLgFass/VGEyEDRx8zvgtC3YaAj/KCQi1wE/uchBIFaXCWYSmOELHZjDZRv4zYguVqTQ==
-  /@tsdotnet/lazy/1.0.19:
+  /@tsdotnet/lazy/1.0.20:
     dependencies:
-      '@tsdotnet/disposable': 1.1.19
+      '@tsdotnet/disposable': 1.1.20
       tslib: 2.0.0
     dev: false
     resolution:
-      integrity: sha512-755p0CDhfwnBViO8i7SOp6vbflZ9ip4B8ULRGz6ucx1O7OIF5FFOA3Yrz4/zYCJw1mewfBkhM1cCk1ByQlGBEw==
+      integrity: sha512-prIEUUtxQ/qAkxo1aAmzpsvnMyuEPcfSeilqsx20gKOl6au4FlK0Sup4zFR3JWtUis70ONeVaF0JsPuw36dVeA==
   /@tsdotnet/linked-node-list/1.3.13:
     dependencies:
       '@tsdotnet/collection-base': 2.0.6
@@ -3107,7 +3101,7 @@ packages:
       integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
 specifiers:
   '@tsdotnet/disposable': ^1.1.20
-  '@tsdotnet/event-factory': ^1.1.0
+  '@tsdotnet/event-factory': ^1.1.1
   '@tsdotnet/exceptions': ^1.0.16
   '@tsdotnet/ordered-registry': ^1.0.16
   '@types/chai': ^4.2.11
