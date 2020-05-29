@@ -1,6 +1,6 @@
 {
   "name": "@tsdotnet/tween-factory",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A strongly-typed \"tweening\" utility for use with TypeScript and JavaScript.",
   "author": "electricessence",
   "license": "MIT",
