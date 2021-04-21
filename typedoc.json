@@ -1,15 +1,12 @@
 {
-  "inputFiles": [
+  "entryPoints": [
     "./src"
   ],
   "exclude": [
     "./src/index.ts"
   ],
-  "mode": "modules",
   "out": "docs",
   "includeVersion": true,
-  "includeDeclarations": true,
   "excludeExternals": true,
-  "excludeNotExported": true,
   "excludePrivate": true
 }
