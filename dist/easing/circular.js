@@ -1,11 +1,7 @@
 "use strict";
-/*! Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/ */
-/**
- * @packageDocumentation
- * @module easing
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.circular = void 0;
+/*! Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/ */
 var circular;
 (function (circular) {
     function easeIn(k) {

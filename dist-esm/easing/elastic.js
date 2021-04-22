@@ -1,8 +1,4 @@
 /*! Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/ */
-/**
- * @packageDocumentation
- * @module easing
- */
 const p = 0.4;
 let s, a = 0.1;
 if (!a || a < 1) {

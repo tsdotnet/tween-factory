@@ -1,7 +1,5 @@
-/**!
+/*!
  * Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/
- * @packageDocumentation
- * @module easing
  */
 import back from './easing/back';
 import bounce from './easing/bounce';

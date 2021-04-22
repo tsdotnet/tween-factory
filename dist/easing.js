@@ -1,8 +1,6 @@
 "use strict";
-/**!
+/*!
  * Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/
- * @packageDocumentation
- * @module easing
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sinusoidal = exports.quintic = exports.quartic = exports.quadratic = exports.exponential = exports.elastic = exports.cubic = exports.circular = exports.bounce = exports.back = exports.noEasing = void 0;

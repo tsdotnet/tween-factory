@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module interpolation
- */
 export default function linear(v, k) {
     const m = v.length - 1, f = m * k, i = Math.floor(f);
     if (k < 0)

@@ -1,8 +1,4 @@
 "use strict";
-/**
- * @packageDocumentation
- * @module interpolation
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 function linear(v, k) {
     const m = v.length - 1, f = m * k, i = Math.floor(f);

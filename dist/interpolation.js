@@ -1,9 +1,5 @@
 "use strict";
 /* Included for forward compatibility. */
-/**
- * @packageDocumentation
- * @module interpolation
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.catmullRom = exports.bezier = exports.linear = void 0;
 const tslib_1 = require("tslib");

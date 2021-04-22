@@ -1,8 +1,4 @@
 /*! Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/ */
-/**
- * @packageDocumentation
- * @module easing
- */
 const s = 1.70158;
 const s2 = 1.70158 * 1.525;
 var back;

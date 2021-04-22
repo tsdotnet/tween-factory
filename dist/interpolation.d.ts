@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module interpolation
- */
 import bezier from './interpolation/bezier';
 import catmullRom from './interpolation/catmullRom';
 import linear from './interpolation/linear';

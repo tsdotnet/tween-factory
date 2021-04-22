@@ -1,9 +1,5 @@
 "use strict";
 /*! Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/ */
-/**
- * @packageDocumentation
- * @module easing
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cubic = void 0;
 var cubic;

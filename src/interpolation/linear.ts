@@ -1,8 +1,3 @@
-/**
- * @packageDocumentation
- * @module interpolation
- */
-
 export default function linear (v: number[], k: number): number {
 	const m = v.length - 1, f = m*k, i = Math.floor(f);
 

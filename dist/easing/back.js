@@ -1,9 +1,5 @@
 "use strict";
 /*! Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/ */
-/**
- * @packageDocumentation
- * @module easing
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 const s = 1.70158;
 const s2 = 1.70158 * 1.525;

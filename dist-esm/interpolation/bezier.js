@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module interpolation
- */
 export default function bezier(v, k) {
     const n = v.length - 1, pw = Math.pow;
     let b = 0;

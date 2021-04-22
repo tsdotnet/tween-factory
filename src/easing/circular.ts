@@ -1,9 +1,4 @@
 /*! Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/ */
-/**
- * @packageDocumentation
- * @module easing
- */
-
 export namespace circular
 {
 	export function easeIn (k: number): number

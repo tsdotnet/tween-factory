@@ -1,8 +1,4 @@
 /*! Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/ */
-/**
- * @packageDocumentation
- * @module easing
- */
 export var exponential;
 (function (exponential) {
     function easeIn(k) {

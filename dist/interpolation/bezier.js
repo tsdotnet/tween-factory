@@ -1,8 +1,4 @@
 "use strict";
-/**
- * @packageDocumentation
- * @module interpolation
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 function bezier(v, k) {
     const n = v.length - 1, pw = Math.pow;

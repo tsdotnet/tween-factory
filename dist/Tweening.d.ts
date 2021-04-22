@@ -3,7 +3,6 @@
  * @license MIT
  */
 
-
 import Disposable from '@tsdotnet/disposable/dist/Disposable';
 import {Event} from '@tsdotnet/event-factory/dist/Event';
 import {NumericValues} from './PropertyRange';

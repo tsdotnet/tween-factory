@@ -1,8 +1,3 @@
-/**
- * @packageDocumentation
- * @module interpolation
- */
-
 export default function catmullRom (v: number[], k: number): number {
 	const m = v.length - 1;
 	let f = m*k, i = Math.floor(f);

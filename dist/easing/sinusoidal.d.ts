@@ -1,8 +1,4 @@
 /*! Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/ */
-/**
- * @packageDocumentation
- * @module easing
- */
 export declare namespace sinusoidal {
     function easeIn(k: number): number;
     function easeOut(k: number): number;
