@@ -2,7 +2,7 @@ dependencies:
   '@tsdotnet/disposable': 1.1.22
   '@tsdotnet/event-factory': 1.1.4
   '@tsdotnet/exceptions': 1.0.17
-  '@tsdotnet/ordered-registry': 1.0.18
+  '@tsdotnet/ordered-registry': 1.0.19
   tslib: 2.2.0
 devDependencies:
   '@types/chai': 4.2.18
@@ -323,6 +323,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-vqOYvisFmrPnCwHx+OiyvWU42m/Hxa40bWKZjubbEBbnzELzWJVHRla6rjYm2SoZ7+6LnPbOKFgMEZTpzIy/Cg==
+  /@tsdotnet/linked-node-list/1.3.17:
+    dependencies:
+      '@tsdotnet/collection-base': 2.0.9
+      '@tsdotnet/common-interfaces': 1.0.4
+      '@tsdotnet/exceptions': 1.0.17
+      tslib: 2.2.0
+    dev: false
+    resolution:
+      integrity: sha512-q1Dyun4OjUsp4KjUw1LAa44gRjc8qHf9HZAL1X7Y+lw1D4aXKb6kUyXl1rZTYYfALAuLJ8CmCk5Gq8zCf23gTQ==
   /@tsdotnet/ordered-registry/1.0.18:
     dependencies:
       '@tsdotnet/collection-base': 2.0.9
@@ -334,6 +343,17 @@ packages:
     dev: false
     resolution:
       integrity: sha512-rl+JXYAa5nRadCT9kvITuG271SYBG12aaAw2QGjb36uqChSjb0q0qiJ/LKgCuoGWk2uX39BVWEqYIVdcUazw9A==
+  /@tsdotnet/ordered-registry/1.0.19:
+    dependencies:
+      '@tsdotnet/collection-base': 2.0.9
+      '@tsdotnet/common-interfaces': 1.0.4
+      '@tsdotnet/compare': 1.3.17
+      '@tsdotnet/exceptions': 1.0.17
+      '@tsdotnet/linked-node-list': 1.3.17
+      tslib: 2.2.0
+    dev: false
+    resolution:
+      integrity: sha512-Ridc5fOMTmyg0jd/Pzep+yFWnQs1GGUgqho4zwM5M6bRqin8z6JG0xHmSjni7RzAtZrwcMdOZcPF1G3/3pQXfg==
   /@tsdotnet/type/1.0.11:
     dependencies:
       '@tsdotnet/common-interfaces': 1.0.4
@@ -3269,7 +3289,7 @@ specifiers:
   '@tsdotnet/disposable': ^1.1.22
   '@tsdotnet/event-factory': ^1.1.4
   '@tsdotnet/exceptions': ^1.0.17
-  '@tsdotnet/ordered-registry': ^1.0.18
+  '@tsdotnet/ordered-registry': ^1.0.19
   '@types/chai': ^4.2.18
   '@types/mocha': ^8.2.2
   '@typescript-eslint/eslint-plugin': ^4.23.0

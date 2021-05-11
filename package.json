@@ -67,7 +67,7 @@
     "@tsdotnet/disposable": "^1.1.22",
     "@tsdotnet/event-factory": "^1.1.4",
     "@tsdotnet/exceptions": "^1.0.17",
-    "@tsdotnet/ordered-registry": "^1.0.18",
+    "@tsdotnet/ordered-registry": "^1.0.19",
     "tslib": "^2.2.0"
   }
 }
