@@ -1,6 +1,8 @@
 {
   "entryPoints": [
-    "./src/TweenFactory.ts"
+    "./src/TweenFactory.ts",
+    "./src/PropertyRange.ts",
+    "./src/TimeFrame.ts"
   ],
   "out": "docs",
   "includeVersion": true,

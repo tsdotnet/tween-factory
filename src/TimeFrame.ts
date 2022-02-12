@@ -7,6 +7,8 @@ import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
 import ArgumentOutOfRangeException from '@tsdotnet/exceptions/dist/ArgumentOutOfRangeException';
 import {Range} from './Range';
 
+export {Range};
+
 export default class TimeFrame
 {
 	readonly range: Readonly<Range>;

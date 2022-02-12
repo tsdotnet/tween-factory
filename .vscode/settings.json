@@ -6,6 +6,8 @@
         "postversion",
         "precommit",
         "tsdotnet",
+        "Tweenable",
+        "tweening",
         "typedoc"
     ]
 }

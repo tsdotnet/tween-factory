@@ -17,6 +17,8 @@ import EasingFunction = tweening.EasingFunction;
 import OptionalSettings = tweening.OptionalSettings;
 import Settings = tweening.Settings;
 
+export { tweening };
+
 const MILLISECONDS_NAN = 'Is not a number value. Should be the number of desired milliseconds.';
 
 type AddActive = (factory: (id: number) => ActiveTween) => ActiveTween;
