@@ -36,14 +36,14 @@ export namespace tweening
 	export type OptionalSettings = {
 		delay?: number
 		easing?: EasingFunction
-	}
+	};
 
 	/**
 	 * Minimum settings to start a tween.
 	 */
 	export type Settings = OptionalSettings & {
 		duration: number;
-	}
+	};
 
 	/**
 	 * A factory entity that can create behaviors from a duration value.

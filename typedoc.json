@@ -1,9 +1,6 @@
 {
   "entryPoints": [
-    "./src"
-  ],
-  "exclude": [
-    "./src/index.ts"
+    "./src/TweenFactory.ts"
   ],
   "out": "docs",
   "includeVersion": true,

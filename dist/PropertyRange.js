@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const disposable_1 = require("@tsdotnet/disposable");
 const event_factory_1 = require("@tsdotnet/event-factory");
-const ArgumentNullException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
+const ArgumentNullException_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
 const ITEM = 'item', END_VALUES = 'endValues';
 // Tracks all object properties actively being ranged in order to override or interrupt.
 const activeRanges = new WeakMap();

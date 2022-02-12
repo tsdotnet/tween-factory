@@ -22,7 +22,7 @@ const MILLISECONDS_NAN = 'Is not a number value. Should be the number of desired
 type AddActive = (factory: (id: number) => ActiveTween) => ActiveTween;
 
 class Events
-	implements tweening.Events
+implements tweening.Events
 {
 	constructor (
 		public readonly started: Event<void>,
@@ -187,7 +187,7 @@ function config (settings: Partial<Settings>, addActive: AddActive): BehaviorBui
 }
 
 class BehaviorBuilder<TSettings extends OptionalSettings = OptionalSettings>
-	implements tweening.BehaviorBuilder
+implements tweening.BehaviorBuilder
 {
 	constructor (
 		public settings: Readonly<TSettings>,
@@ -196,8 +196,8 @@ class BehaviorBuilder<TSettings extends OptionalSettings = OptionalSettings>
 		Object.freeze(settings);
 	}
 
-	configure (settings: OptionalSettings): tweening.BehaviorBuilder
-	configure (settings: Settings): tweening.Behavior
+	configure (settings: OptionalSettings): tweening.BehaviorBuilder;
+	configure (settings: Settings): tweening.Behavior;
 	configure (settings: Partial<Settings>): tweening.BehaviorBuilder | Behavior
 	{
 		return Object.freeze(config({
@@ -298,7 +298,7 @@ class Behavior
 }
 
 class Manager
-	implements tweening.ActiveTweenManager
+implements tweening.ActiveTweenManager
 {
 	private _intervalCancel?: () => void;
 
@@ -558,10 +558,10 @@ class Tween
 		return tween;
 	}
 
-	start (timeFrame?: TimeFrame): ActiveTween
-	start (timeFrame?: TimeFrame, deltasOnly?: false): ActiveTween
-	start (timeFrame?: TimeFrame, deltasOnly?: true): ActiveTween | undefined
-	start (timeFrame?: TimeFrame, deltasOnly?: boolean): ActiveTween | undefined
+	start (timeFrame?: TimeFrame): ActiveTween;
+	start (timeFrame?: TimeFrame, deltasOnly?: false): ActiveTween;
+	start (timeFrame?: TimeFrame, deltasOnly?: true): ActiveTween | undefined;
+	start (timeFrame?: TimeFrame, deltasOnly?: boolean): ActiveTween | undefined;
 	/**
 	 * Starts the tween.
 	 * @param {TimeFrame} timeFrame
