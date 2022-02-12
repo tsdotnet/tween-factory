@@ -3,6 +3,7 @@
  * @license MIT
  */
 import { Range } from './Range';
+export { Range };
 export default class TimeFrame {
     readonly range: Readonly<Range>;
     constructor(duration: number, startTime?: number);

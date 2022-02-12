@@ -6,6 +6,7 @@ import tweening from './Tweening';
 import EasingFunction = tweening.EasingFunction;
 import OptionalSettings = tweening.OptionalSettings;
 import Settings = tweening.Settings;
+export { tweening };
 /**
  * Creates a `tweening.FactoryBuilder` with the specified easing function as default.
  * @param {tweening.EasingFunction} defaultEasing
