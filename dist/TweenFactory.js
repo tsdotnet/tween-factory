@@ -6,13 +6,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const disposable_1 = require("@tsdotnet/disposable");
-const EventPublisher_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/event-factory/dist/EventPublisher"));
-const ArgumentException_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/exceptions/dist/ArgumentException"));
-const ArgumentOutOfRangeException_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/exceptions/dist/ArgumentOutOfRangeException"));
-const InvalidOperationException_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/exceptions/dist/InvalidOperationException"));
+const EventPublisher_1 = tslib_1.__importDefault(require("@tsdotnet/event-factory/dist/EventPublisher"));
+const ArgumentException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentException"));
+const ArgumentOutOfRangeException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentOutOfRangeException"));
+const InvalidOperationException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/InvalidOperationException"));
 const ordered_registry_1 = require("@tsdotnet/ordered-registry");
-const PropertyRange_1 = (0, tslib_1.__importDefault)(require("./PropertyRange"));
-const TimeFrame_1 = (0, tslib_1.__importDefault)(require("./TimeFrame"));
+const PropertyRange_1 = tslib_1.__importDefault(require("./PropertyRange"));
+const TimeFrame_1 = tslib_1.__importDefault(require("./TimeFrame"));
 const MILLISECONDS_NAN = 'Is not a number value. Should be the number of desired milliseconds.';
 class Events {
     constructor(started, updated, completed, disposed) {

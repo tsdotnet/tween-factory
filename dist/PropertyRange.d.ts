@@ -3,8 +3,8 @@
  * @license MIT
  */
 import { DisposableBase } from '@tsdotnet/disposable';
-export declare type StringKeyOf<T> = string & keyof T;
-export declare type NumericValues<T extends object = object> = Record<StringKeyOf<T>, number>;
+export type StringKeyOf<T> = string & keyof T;
+export type NumericValues<T extends object = object> = Record<StringKeyOf<T>, number>;
 /**
  * A class for modifying a set of properties across a range.
  */
