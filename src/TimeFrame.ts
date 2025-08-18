@@ -3,11 +3,10 @@
  * @license MIT
  */
 
-import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
-import ArgumentOutOfRangeException from '@tsdotnet/exceptions/dist/ArgumentOutOfRangeException';
-import {Range} from './Range';
+import { ArgumentException, ArgumentOutOfRangeException } from '@tsdotnet/exceptions';
+import type Range from './Range';
 
-export {Range};
+export {type Range};
 
 export default class TimeFrame
 {

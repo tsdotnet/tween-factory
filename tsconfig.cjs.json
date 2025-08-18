@@ -2,10 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
-    "outDir": "./dist/esm",
+    "outDir": "./dist/cjs",
     "declaration": false,
     "sourceMap": true,
-    "module": "esnext",
-    "target": "es2022"
+    "module": "commonjs",
+    "target": "es2018"
   }
 }

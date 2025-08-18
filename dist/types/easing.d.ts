@@ -1,7 +1,6 @@
 /*!
  * Easing equations Copyright (c) 2001 Robert Penner http://robertpenner.com/easing/
  */
-
 export { default as noEasing } from './easing/noEasing';
 export { default as back } from './easing/back';
 export { default as bounce } from './easing/bounce';

@@ -1,18 +1,19 @@
 {
-  "compileOnSave": true,
   "compilerOptions": {
-    "declaration": true,
-    "esModuleInterop": true,
-    "target": "es2015",
-    "module": "commonjs",
+    "target": "ES2022",
     "strict": true,
-    "sourceMap": true,
-    "removeComments": false,
+    "noEmit": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "removeComments": true,
     "importHelpers": true,
-    "moduleResolution": "node",
-    "outDir": "dist"
+    "moduleResolution": "node"
+    // No outDir, module, declaration, etc.
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "tests", "**/*.test.*", "**/*.spec.*"]
 }

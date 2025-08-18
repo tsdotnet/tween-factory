@@ -4,9 +4,15 @@
   "description": "A strongly-typed \"tweening\" utility for use with TypeScript and JavaScript.",
   "author": "electricessence",
   "license": "MIT",
-  "types": "dist/TweenFactory.d.ts",
-  "main": "dist/TweenFactory.js",
-  "module": "dist-esm/TweenFactory.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types/TweenFactory.d.ts",
+      "import": "./dist/esm/TweenFactory.js",
+      "require": "./dist/cjs/TweenFactory.js"
+    }
+  },
+  "types": "./dist/types/TweenFactory.d.ts",
   "keywords": [
     "tween",
     "tween library",
@@ -19,18 +25,20 @@
     "animate"
   ],
   "scripts": {
-    "build:dist": "rimraf dist && tsc && copyfiles -u 1 src/**/*.d.ts dist",
-    "build:dist-esm": "rimraf dist-esm && tsc -p tsconfig.esm.json",
-    "build": "pnpm i && pnpm run build:dist && pnpm run build:dist-esm",
-    "bump": "npm run-script precommit && npm version patch",
-    "docs": "rimraf docs && typedoc --options typedoc.json --readme none",
+    "clean": "rimraf dist",
+    "build:types": "cpy \"src/**/*.d.ts\" dist/types --parents && tsc -p tsconfig.types.json",
+    "build:esm": "rollup -c rollup.config.js",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build": "pnpm clean && pnpm build:types && pnpm build:esm && pnpm build:cjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint src/**/*.ts",
-    "precommit": "pnpm i && run-p lint test && run-p build:* && npm run-script validate && git status -s",
-    "prepublishOnly": "npm run-script build && run-p validate test",
-    "preversion": "run-p lint test",
-    "postversion": "git push && git push --tags && npm run-script docs && git add -A && git commit -m \"Updated docs.\" docs && git push",
-    "test": "mocha -r ts-node/register tests/**/*.ts",
-    "validate": "node ./.build/validate-package.js"
+    "docs": "rimraf docs && typedoc --options typedoc.json --readme none",
+    "bump": "pnpm run precommit && pnpm version patch",
+    "precommit": "pnpm build && pnpm test && pnpm lint && git status -s",
+    "preversion": "pnpm lint && pnpm test",
+    "postversion": "git push && git push --tags && pnpm run docs && git add -A && git commit -m \"Updated docs.\" docs && git push",
+    "prepublishOnly": "pnpm build && pnpm test && pnpm lint"
   },
   "repository": {
     "type": "git",
@@ -41,32 +49,24 @@
   },
   "homepage": "https://github.com/tsdotnet/tween-factory#readme",
   "devDependencies": {
-    "@types/chai": "^5.2.2",
-    "@types/mocha": "^10.0.10",
+    "@eslint/js": "^9.33.0",
+    "@rollup/plugin-typescript": "^12.1.4",
     "@types/node": "^24.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.39.1",
-    "@typescript-eslint/parser": "^8.39.1",
-    "chai": "^5.2.1",
-    "copyfiles": "^2.4.1",
+    "cpy-cli": "^6.0.0",
     "eslint": "^9.33.0",
-    "eslint-config-typescript": "^3.0.0",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^7.2.1",
-    "mocha": "^11.7.1",
-    "npm-run-all": "^4.1.5",
-    "nyc": "^17.1.0",
     "rimraf": "^6.0.1",
-    "ts-node": "^10.9.2",
+    "rollup": "^4.46.3",
     "typedoc": "^0.28.10",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.40.0",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
-    "@tsdotnet/disposable": "^1.1.24",
-    "@tsdotnet/event-factory": "^1.1.8",
-    "@tsdotnet/exceptions": "^1.0.19",
-    "@tsdotnet/ordered-registry": "^1.0.22",
-    "tslib": "^2.4.1"
+    "@tsdotnet/disposable": "^1.3.4",
+    "@tsdotnet/event-factory": "^1.2.3",
+    "@tsdotnet/exceptions": "^1.2.4",
+    "@tsdotnet/ordered-registry": "^1.1.2",
+    "tslib": "^2.8.1"
   },
   "pnpm": {
     "overrides": {
@@ -78,7 +78,6 @@
       "json5@<1.0.2": ">=1.0.2",
       "json5@>=2.0.0 <2.2.2": ">=2.2.2",
       "minimatch@<3.0.5": ">=3.0.5",
-      "word-wrap@<1.2.4": ">=1.2.4",
       "semver@<5.7.2": ">=5.7.2",
       "semver@>=6.0.0 <6.3.1": ">=6.3.1",
       "semver@>=7.0.0 <7.5.2": ">=7.5.2",

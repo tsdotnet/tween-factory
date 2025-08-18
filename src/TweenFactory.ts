@@ -4,20 +4,16 @@
  */
 
 import {DisposableBase} from '@tsdotnet/disposable';
-import {Event} from '@tsdotnet/event-factory/dist/Event';
-import EventPublisher from '@tsdotnet/event-factory/dist/EventPublisher';
-import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
-import ArgumentOutOfRangeException from '@tsdotnet/exceptions/dist/ArgumentOutOfRangeException';
-import InvalidOperationException from '@tsdotnet/exceptions/dist/InvalidOperationException';
+import {Event} from '@tsdotnet/event-factory';
+import {EventPublisher } from '@tsdotnet/event-factory';
+import {ArgumentException, ArgumentOutOfRangeException, InvalidOperationException} from '@tsdotnet/exceptions';
 import {OrderedAutoRegistry} from '@tsdotnet/ordered-registry';
 import PropertyRange, {NumericValues} from './PropertyRange';
 import TimeFrame from './TimeFrame';
-import tweening from './Tweening';
-import EasingFunction = tweening.EasingFunction;
-import OptionalSettings = tweening.OptionalSettings;
-import Settings = tweening.Settings;
+import type tweening from './Tweening';
 
-export { tweening };
+export { type tweening };
+export { type default as Range } from './Range';
 
 const MILLISECONDS_NAN = 'Is not a number value. Should be the number of desired milliseconds.';
 
@@ -138,7 +134,7 @@ class TimeFrameEvents
 	}
 }
 
-function isTweenable (settings: Partial<Settings>): settings is Settings
+function isTweenable (settings: Partial<tweening.Settings>): settings is tweening.Settings
 {
 	const {delay, duration, easing} = settings;
 	// noinspection SuspiciousTypeOfGuard
@@ -158,13 +154,13 @@ function isTweenable (settings: Partial<Settings>): settings is Settings
 	return true;
 }
 
-function assertTweenable<TSettings extends Partial<Settings>> (settings: TSettings): TSettings
+function assertTweenable<TSettings extends Partial<tweening.Settings>> (settings: TSettings): TSettings
 {
 	isTweenable(settings);
 	return settings;
 }
 
-function copyOptionalSettings (settings: OptionalSettings): OptionalSettings
+function copyOptionalSettings (settings: tweening.OptionalSettings): tweening.OptionalSettings
 {
 	return {
 		delay: settings.delay,
@@ -172,7 +168,7 @@ function copyOptionalSettings (settings: OptionalSettings): OptionalSettings
 	};
 }
 
-function copySettings (settings: Settings): Settings
+function copySettings (settings: tweening.Settings): tweening.Settings
 {
 	return {
 		delay: settings.delay,
@@ -181,14 +177,14 @@ function copySettings (settings: Settings): Settings
 	};
 }
 
-function config (settings: Partial<Settings>, addActive: AddActive): BehaviorBuilder | Behavior
+function config (settings: Partial<tweening.Settings>, addActive: AddActive): BehaviorBuilder | Behavior
 {
 	return isTweenable(settings)
-		? new Behavior(settings as Settings, addActive)
+		? new Behavior(settings as tweening.Settings, addActive)
 		: new BehaviorBuilder(settings, addActive);
 }
 
-class BehaviorBuilder<TSettings extends OptionalSettings = OptionalSettings>
+class BehaviorBuilder<TSettings extends tweening.OptionalSettings = tweening.OptionalSettings>
 implements tweening.BehaviorBuilder
 {
 	constructor (
@@ -198,9 +194,9 @@ implements tweening.BehaviorBuilder
 		Object.freeze(settings);
 	}
 
-	configure (settings: OptionalSettings): tweening.BehaviorBuilder;
-	configure (settings: Settings): tweening.Behavior;
-	configure (settings: Partial<Settings>): tweening.BehaviorBuilder | Behavior
+	configure (settings: tweening.OptionalSettings): tweening.BehaviorBuilder;
+	configure (settings: tweening.Settings): tweening.Behavior;
+	configure (settings: Partial<tweening.Settings>): tweening.BehaviorBuilder | Behavior
 	{
 		return Object.freeze(config({
 			delay: settings.delay ?? this.settings.delay,
@@ -231,10 +227,10 @@ implements tweening.BehaviorBuilder
 
 	/**
 	 * Configures a tween behavior with the specified easing function.
-	 * @param {EasingFunction} fn
+	 * @param {tweening.EasingFunction} fn
 	 * @return {tweening.Behavior}
 	 */
-	easing (fn: EasingFunction): tweening.BehaviorBuilder
+	easing (fn: tweening.EasingFunction): tweening.BehaviorBuilder
 	{
 		return this.configure({easing: fn});
 	}
@@ -242,11 +238,11 @@ implements tweening.BehaviorBuilder
 
 
 class Behavior
-	extends BehaviorBuilder<Settings>
+	extends BehaviorBuilder<tweening.Settings>
 	implements tweening.Tweenable
 {
 	constructor (
-		settings: Settings,
+		settings: tweening.Settings,
 		addActive: AddActive)
 	{
 		super(settings, addActive);
@@ -257,12 +253,12 @@ class Behavior
 	 * @throws `InvalidOperationException` if the tween has already been started.
 	 * @param {T} target
 	 * @param {Partial<NumericValues<T>>} endValues
-	 * @param {tweening.EasingFunction | undefined} easing
+	 * @param {tweening.tweening.EasingFunction | undefined} easing
 	 * @return {this}
 	 */
 	add<T extends object> (
 		target: T, endValues: Partial<NumericValues<T>>,
-		easing: EasingFunction | undefined = this.settings.easing): Tween
+		easing: tweening.EasingFunction | undefined = this.settings.easing): Tween
 	{
 		const starter = new Tween(this.settings, this._addActive);
 		starter.add(target, endValues, easing);
@@ -273,12 +269,12 @@ class Behavior
 	 * Configures a tween and starts it.
 	 * @param {T} target
 	 * @param {Partial<NumericValues<T>>} endValues
-	 * @param {tweening.EasingFunction | undefined} easing
+	 * @param {tweening.tweening.EasingFunction | undefined} easing
 	 * @return {tweening.ActiveTween}
 	 */
 	tween<T extends object> (
 		target: T, endValues: Partial<NumericValues<T>>,
-		easing?: EasingFunction): ActiveTween
+		easing?: tweening.EasingFunction): ActiveTween
 	{
 		return this.add(target, endValues, easing).start();
 	}
@@ -288,12 +284,12 @@ class Behavior
 	 * Returns undefined if nothing to tween.
 	 * @param {T} target
 	 * @param {Partial<NumericValues<T>>} endValues
-	 * @param {tweening.EasingFunction} easing
+	 * @param {tweening.tweening.EasingFunction} easing
 	 * @return {tweening.ActiveTween | undefined}
 	 */
 	tweenDeltas<T extends object> (
 		target: T, endValues: Partial<NumericValues<T>>,
-		easing?: EasingFunction): ActiveTween | undefined
+		easing?: tweening.EasingFunction): ActiveTween | undefined
 	{
 		return this.add(target, endValues, easing).start(undefined, true);
 	}
@@ -302,7 +298,7 @@ class Behavior
 class Manager
 implements tweening.ActiveTweenManager
 {
-	private _intervalCancel?: () => void;
+	private _intervalCancel?: (() => void) | undefined;
 
 	constructor (private readonly _activeTweens: OrderedAutoRegistry<ActiveTween>)
 	{
@@ -379,7 +375,7 @@ implements tweening.ActiveTweenManager
 /**
  * A class for configuring groups of tweens and signaling their updates.
  */
-class Factory<TSettings extends OptionalSettings = OptionalSettings>
+class Factory<TSettings extends tweening.OptionalSettings = tweening.OptionalSettings>
 	extends BehaviorBuilder<TSettings>
 	implements tweening.Manager
 {
@@ -444,7 +440,7 @@ class Factory<TSettings extends OptionalSettings = OptionalSettings>
 }
 
 class TweenableFactory
-	extends Factory<Settings>
+	extends Factory<tweening.Settings>
 	implements tweening.ActiveTweenable
 {
 	/**
@@ -452,12 +448,12 @@ class TweenableFactory
 	 * @throws `InvalidOperationException` if the tween has already been started.
 	 * @param {T} target
 	 * @param {Partial<NumericValues<T>>} endValues
-	 * @param {tweening.EasingFunction | undefined} easing
+	 * @param {tweening.tweening.EasingFunction | undefined} easing
 	 * @return {this}
 	 */
 	add<T extends object> (
 		target: T, endValues: Partial<NumericValues<T>>,
-		easing: EasingFunction | undefined = this.settings.easing): Tween
+		easing: tweening.EasingFunction | undefined = this.settings.easing): Tween
 	{
 		const tween = new Tween(this.settings, this._addActive);
 		tween.add(target, endValues, easing);
@@ -468,12 +464,12 @@ class TweenableFactory
 	 * Configures a tween and starts it.
 	 * @param {T} target
 	 * @param {Partial<NumericValues<T>>} endValues
-	 * @param {tweening.EasingFunction | undefined} easing
+	 * @param {tweening.tweening.EasingFunction | undefined} easing
 	 * @return {tweening.ActiveTween}
 	 */
 	tween<T extends object> (
 		target: T, endValues: Partial<NumericValues<T>>,
-		easing?: EasingFunction): ActiveTween
+		easing?: tweening.EasingFunction): ActiveTween
 	{
 		return this.add(target, endValues, easing).start();
 	}
@@ -483,12 +479,12 @@ class TweenableFactory
 	 * Returns undefined if nothing to tween.
 	 * @param {T} target
 	 * @param {Partial<NumericValues<T>>} endValues
-	 * @param {tweening.EasingFunction} easing
+	 * @param {tweening.tweening.EasingFunction} easing
 	 * @return {tweening.ActiveTween | undefined}
 	 */
 	tweenDeltas<T extends object> (
 		target: T, endValues: Partial<NumericValues<T>>,
-		easing?: EasingFunction): ActiveTween | undefined
+		easing?: tweening.EasingFunction): ActiveTween | undefined
 	{
 		return this.add(target, endValues, easing).start(undefined, true);
 	}
@@ -498,13 +494,13 @@ class Tween
 	extends DisposableBase
 	implements tweening.Tween
 {
-	protected _ranges?: Map<EasingFunction | undefined, PropertyRange[]> = new Map();
+	protected _ranges?: Map<tweening.EasingFunction | undefined, PropertyRange[]> | undefined = new Map();
 	protected readonly _triggers: Triggers = new Triggers();
-	protected _chained?: Tween[] = [];
-	protected _active?: ActiveTween;
+	protected _chained?: Tween[]| undefined = [];
+	protected _active?: ActiveTween| undefined;
 
 	constructor (
-		protected readonly _settings: Readonly<Settings>,
+		protected readonly _settings: Readonly<tweening.Settings>,
 		protected _addActive: (factory: (id: number) => ActiveTween) => ActiveTween)
 	{
 		super('Tween');
@@ -525,12 +521,12 @@ class Tween
 	 * @throws `InvalidOperationException` if the tween has already been started.
 	 * @param {T} target
 	 * @param {Partial<NumericValues<T>>} endValues
-	 * @param {tweening.EasingFunction | undefined} easing
+	 * @param {tweening.tweening.EasingFunction | undefined} easing
 	 * @return {this}
 	 */
 	add<T extends object> (
 		target: T, endValues: Partial<NumericValues<T>>,
-		easing: EasingFunction | undefined = this._settings.easing): this
+		easing: tweening.EasingFunction | undefined = this._settings.easing): this
 	{
 		this.throwIfDisposed();
 		const ranges = this._ranges;
@@ -547,10 +543,10 @@ class Tween
 	/**
 	 * Allows for tweens to occur in sequence.
 	 * @throws `InvalidOperationException` if the tween has already been started.
-	 * @param {tweening.Settings} settings
+	 * @param {tweening.tweening.Settings} settings
 	 * @return {tweening.Tween}
 	 */
-	chain (settings?: Settings): Tween
+	chain (settings?: tweening.Settings): Tween
 	{
 		this.throwIfDisposed();
 		if(settings) isTweenable(settings); // Validate.
@@ -588,7 +584,7 @@ class Tween
 			ranges   = _._ranges!,
 			chained  = _._chained!;
 
-		const filteredRanges: [EasingFunction | undefined, PropertyRange[]][] = [];
+		const filteredRanges: [tweening.EasingFunction | undefined, PropertyRange[]][] = [];
 		ranges.forEach((v, k) => {
 			const prs: PropertyRange[] = [];
 			for(const p of v) if(p.init()) prs.push(p);
@@ -632,7 +628,7 @@ class ActiveTween
 	constructor (
 		public readonly id: number,
 		timeFrame: TimeFrame,
-		ranges: [EasingFunction | undefined, PropertyRange[]][],
+		ranges: [tweening.EasingFunction | undefined, PropertyRange[]][],
 		triggers: Triggers)
 	{
 		super(timeFrame, triggers);
@@ -646,7 +642,7 @@ class ActiveTween
 		const updated = triggers.updated.addPre().dispatcher;
 		if(ranges.length)
 		{
-			const [fn, prs] = ranges[0];
+			const [fn, prs] = ranges[0]!;
 			if(ranges.length==1)
 			{
 				if(fn)
@@ -691,46 +687,46 @@ class ActiveTween
 
 /**
  * Creates a `tweening.FactoryBuilder` with the specified easing function as default.
- * @param {tweening.EasingFunction} defaultEasing
+ * @param {tweening.tweening.EasingFunction} defaultEasing
  * @return {tweening.FactoryBuilder}
  */
-export default function tweenFactory (defaultEasing: EasingFunction)
+export default function tweenFactory (defaultEasing: tweening.EasingFunction)
 	: tweening.FactoryBuilder;
 
 /**
  * Creates a `tweening.Factory` with the specified duration and optional easing function.
  * @param {number} defaultDuration
- * @param {tweening.EasingFunction} defaultEasing
+ * @param {tweening.tweening.EasingFunction} defaultEasing
  * @return {tweening.Factory}
  */
-export default function tweenFactory (defaultDuration: number, defaultEasing?: EasingFunction)
+export default function tweenFactory (defaultDuration: number, defaultEasing?: tweening.EasingFunction)
 	: tweening.Factory;
 
 /**
  * Creates a `tweening.Factory` using the provided settings.
- * @param {tweening.Settings} defaultSettings
+ * @param {tweening.tweening.Settings} defaultSettings
  * @return {tweening.Factory}
  */
-export default function tweenFactory (defaultSettings: Settings)
+export default function tweenFactory (defaultSettings: tweening.Settings)
 	: tweening.Factory;
 
 /**
  * Creates a `tweening.FactoryBuilder` using the optional settings.
- * @param {tweening.Settings} defaultSettings
+ * @param {tweening.tweening.Settings} defaultSettings
  * @return {tweening.Factory}
  */
-export default function tweenFactory (defaultSettings?: OptionalSettings)
+export default function tweenFactory (defaultSettings?: tweening.OptionalSettings)
 	: tweening.FactoryBuilder;
 
 /**
  * If a duration is provided, creates a `tweening.Factory`, else creates a `tweening.FactoryBuilder`.
- * @param {tweening.EasingFunction | tweening.OptionalSettings | tweening.Settings | number} defaultSettings
- * @param {tweening.EasingFunction} defaultEasing
+ * @param {tweening.tweening.EasingFunction | tweening.tweening.OptionalSettings | tweening.tweening.Settings | number} defaultSettings
+ * @param {tweening.tweening.EasingFunction} defaultEasing
  * @return {tweening.FactoryBuilder | tweening.Factory}
  */
 export default function tweenFactory (
-	defaultSettings?: EasingFunction | OptionalSettings | Settings | number,
-	defaultEasing?: EasingFunction)
+	defaultSettings?: tweening.EasingFunction | tweening.OptionalSettings | tweening.Settings | number,
+	defaultEasing?: tweening.EasingFunction)
 	: tweening.FactoryBuilder | tweening.Factory {
 	switch(typeof defaultSettings)
 	{
