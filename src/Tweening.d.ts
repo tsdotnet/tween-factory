@@ -3,10 +3,10 @@
  * @license MIT
  */
 
-import Disposable from '@tsdotnet/disposable/dist/Disposable';
-import {Event} from '@tsdotnet/event-factory/dist/Event';
-import {NumericValues} from './PropertyRange';
-import TimeFrame from './TimeFrame';
+import {type Disposable } from '@tsdotnet/disposable';
+import {type Event} from '@tsdotnet/event-factory';
+import {type NumericValues} from './PropertyRange';
+import type TimeFrame from './TimeFrame';
 
 export namespace tweening
 {
