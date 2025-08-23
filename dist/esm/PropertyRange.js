@@ -17,7 +17,7 @@ class ActivePropertyRange extends DisposableBase {
         if (!item)
             throw new ArgumentNullException('item');
         const d = new EventDispatcher();
-        super('ActivePropertyRange', () => {
+        super(() => {
             const ar = activeRanges.get(item);
             const a = ar?.get(property);
             if (a === this)
@@ -38,7 +38,7 @@ class ActivePropertyRange extends DisposableBase {
         ar.set(property, this);
     }
     update(rangeValue) {
-        this.throwIfDisposed();
+        this.assertIsAlive();
         const range = this.range;
         this.item[this.property] = range.start + range.delta * rangeValue;
     }
@@ -49,7 +49,7 @@ class PropertyRange extends DisposableBase {
     _activeRanges;
     _endValues;
     constructor(item, endValues) {
-        super('PropertyRange');
+        super();
         if (item == null)
             throw new ArgumentNullException(ITEM);
         if (endValues == null)
@@ -67,7 +67,7 @@ class PropertyRange extends DisposableBase {
         this._keys = keys;
     }
     init(startValues) {
-        this.throwIfDisposed();
+        this.assertIsAlive(true);
         const item = this._item, endValues = this._endValues, ranges = new Map();
         for (const property of Object.keys(endValues)) {
             const start = startValues && property in startValues
@@ -85,7 +85,7 @@ class PropertyRange extends DisposableBase {
         return ranges.size;
     }
     update(range) {
-        this.throwIfDisposed();
+        this.assertIsAlive();
         const ranges = this._activeRanges;
         if (!ranges)
             throw 'PropertyRange was not initialized.  Call .init() before updating.';

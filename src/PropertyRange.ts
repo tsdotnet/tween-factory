@@ -33,7 +33,7 @@ class ActivePropertyRange<T extends object, K extends StringKeyOf<T> = StringKey
 		public readonly range: Readonly<Range>) {
 		if (!item) throw new ArgumentNullException('item');
 		const d = new EventDispatcher<void>();
-		super('ActivePropertyRange', () => {
+		super(() => {
 			const ar = activeRanges.get(item);
 			const a = ar?.get(property);
 			if (a === this) ar!.delete(property);
@@ -52,7 +52,7 @@ class ActivePropertyRange<T extends object, K extends StringKeyOf<T> = StringKey
 	}
 
 	update(rangeValue: number): void {
-		this.throwIfDisposed();
+		this.assertIsAlive();
 		const range = this.range;
 		this.item[this.property] = range.start + range.delta * rangeValue;
 	}
@@ -69,7 +69,7 @@ export default class PropertyRange<T extends object = object>
 	private _endValues?: Readonly<NumericValues<T>> | undefined;
 
 	constructor(item: T, endValues: Partial<NumericValues<T>>) {
-		super('PropertyRange');
+		super();
 		if (item == null) throw new ArgumentNullException(ITEM);
 		if (endValues == null) throw new ArgumentNullException(END_VALUES);
 		const keys = Object.keys(endValues) as StringKeyOf<T>[];
@@ -94,7 +94,7 @@ export default class PropertyRange<T extends object = object>
 	 * @return {number} Number of properties that are ranged.
 	 */
 	init(startValues?: Partial<NumericValues<T>>): number {
-		this.throwIfDisposed();
+		this.assertIsAlive(true);
 		const
 			item = this._item!,
 			endValues = this._endValues!,
@@ -121,7 +121,7 @@ export default class PropertyRange<T extends object = object>
 	 * @param {number} range Any decimal value from 0 to 1.
 	 */
 	update(range: number): void {
-		this.throwIfDisposed();
+		this.assertIsAlive();
 		const ranges = this._activeRanges;
 		if (!ranges) throw 'PropertyRange was not initialized.  Call .init() before updating.';
 

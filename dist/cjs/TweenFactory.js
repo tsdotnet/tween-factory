@@ -41,7 +41,7 @@ class Triggers {
 }
 class TimeFrameEvents extends disposable_1.DisposableBase {
     constructor(_timeFrame, _triggers) {
-        super('TimeFrameEvents');
+        super();
         this._timeFrame = _timeFrame;
         this._triggers = _triggers;
         this._state = { lastUpdate: NaN, complete: false };
@@ -268,7 +268,7 @@ class TweenableFactory extends Factory {
 }
 class Tween extends disposable_1.DisposableBase {
     constructor(_settings, _addActive) {
-        super('Tween');
+        super();
         this._settings = _settings;
         this._addActive = _addActive;
         this._ranges = new Map();
@@ -276,11 +276,11 @@ class Tween extends disposable_1.DisposableBase {
         this._chained = [];
     }
     get events() {
-        this.throwIfDisposed();
+        this.assertIsAlive();
         return this._triggers.events;
     }
     add(target, endValues, easing = this._settings.easing) {
-        this.throwIfDisposed();
+        this.assertIsAlive(true);
         const ranges = this._ranges;
         if (ranges) {
             let pr = ranges.get(easing);
@@ -293,7 +293,7 @@ class Tween extends disposable_1.DisposableBase {
         return this;
     }
     chain(settings) {
-        this.throwIfDisposed();
+        this.assertIsAlive(true);
         if (settings)
             isTweenable(settings);
         if (!this._chained)
@@ -303,7 +303,7 @@ class Tween extends disposable_1.DisposableBase {
         return tween;
     }
     start(timeFrame, deltasOnly = false) {
-        this.throwIfDisposed();
+        this.assertIsAlive(true);
         if (this._active)
             throw new exceptions_1.InvalidOperationException('Starting a tween more than once is not supported.');
         if (!timeFrame) {
@@ -355,7 +355,6 @@ class ActiveTween extends TimeFrameEvents {
     constructor(id, timeFrame, ranges, triggers) {
         super(timeFrame, triggers);
         this.id = id;
-        this._disposableObjectName = 'ActiveTween';
         Object.freeze(this);
         const updated = triggers.updated.addPre().dispatcher;
         if (ranges.length) {

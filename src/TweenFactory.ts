@@ -72,7 +72,7 @@ class TimeFrameEvents
 		private readonly _timeFrame: TimeFrame,
 		protected readonly _triggers: Triggers)
 	{
-		super('TimeFrameEvents');
+		super();
 		_triggers.disposed.dispatcher.add(() => {
 			_triggers.updated.remaining = 0;
 			Object.freeze(this._state);
@@ -503,7 +503,7 @@ class Tween
 		protected readonly _settings: Readonly<tweening.Settings>,
 		protected _addActive: (factory: (id: number) => ActiveTween) => ActiveTween)
 	{
-		super('Tween');
+		super();
 	}
 
 	/**
@@ -512,7 +512,7 @@ class Tween
 	 */
 	get events (): Events
 	{
-		this.throwIfDisposed();
+		this.assertIsAlive();
 		return this._triggers.events;
 	}
 
@@ -528,7 +528,7 @@ class Tween
 		target: T, endValues: Partial<NumericValues<T>>,
 		easing: tweening.EasingFunction | undefined = this._settings.easing): this
 	{
-		this.throwIfDisposed();
+		this.assertIsAlive(true);
 		const ranges = this._ranges;
 		if(ranges)
 		{
@@ -548,7 +548,7 @@ class Tween
 	 */
 	chain (settings?: tweening.Settings): Tween
 	{
-		this.throwIfDisposed();
+		this.assertIsAlive(true);
 		if(settings) isTweenable(settings); // Validate.
 		if(!this._chained) throw new InvalidOperationException('Adding more targets to an active tween is not supported.');
 		const tween = new Tween(settings && Object.freeze(copySettings(settings)) || this._settings, this._addActive);
@@ -568,7 +568,7 @@ class Tween
 	 */
 	start (timeFrame?: TimeFrame, deltasOnly: boolean = false): ActiveTween | undefined
 	{
-		this.throwIfDisposed();
+		this.assertIsAlive(true);
 		if(this._active) throw new InvalidOperationException('Starting a tween more than once is not supported.');
 
 		if(!timeFrame)
@@ -632,7 +632,6 @@ class ActiveTween
 		triggers: Triggers)
 	{
 		super(timeFrame, triggers);
-		this._disposableObjectName = 'ActiveTween';
 		Object.freeze(this);
 
 		/*
