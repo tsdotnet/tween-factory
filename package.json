@@ -65,9 +65,9 @@
   },
   "dependencies": {
     "@tsdotnet/disposable": "^2.0.1",
-    "@tsdotnet/event-factory": "^2.0.1",
+    "@tsdotnet/event-factory": "^2.0.2",
     "@tsdotnet/exceptions": "^1.2.4",
-    "@tsdotnet/ordered-registry": "^1.1.4",
+    "@tsdotnet/ordered-registry": "^1.1.5",
     "tslib": "^2.8.1"
   },
   "pnpm": {
