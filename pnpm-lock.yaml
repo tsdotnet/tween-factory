@@ -28,14 +28,14 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       '@tsdotnet/event-factory':
-        specifier: ^2.0.9
-        version: 2.0.9
+        specifier: ^2.0.10
+        version: 2.0.10
       '@tsdotnet/exceptions':
         specifier: ^1.2.5
         version: 1.2.5
       '@tsdotnet/ordered-registry':
-        specifier: ^1.1.12
-        version: 1.1.12
+        specifier: ^1.1.13
+        version: 1.1.13
       tslib:
         specifier: ^2.8.1
         version: 2.8.1
@@ -519,8 +519,8 @@ packages:
   '@tsdotnet/disposable@2.0.1':
     resolution: {integrity: sha512-MH5RC47dp/RMHpTsWUdWF8JDbPna0/FMbrjJ3VYy2tj20d/0K3+PtIvNSkI3ehG3LGyv3n4QDPFXz0Dhuj+bRA==}
 
-  '@tsdotnet/event-factory@2.0.9':
-    resolution: {integrity: sha512-Qt0u7hPFudwWCiEkxISj7eQmgmrFB9aNDi8X2RZsU/f7uWLSuI0uzNx/sLwyZE6jw482Ys07UcSQpqPLjEK+vg==}
+  '@tsdotnet/event-factory@2.0.10':
+    resolution: {integrity: sha512-biK0yCGkSijIItnXyA2lXFSIvjQ5zOw/vBcq2xDSvzLrXzJt226bTYDxrlT8j/3/BgLVQ1E3jHRR8Y7gXO6ygg==}
 
   '@tsdotnet/exceptions@1.2.5':
     resolution: {integrity: sha512-zzlm7OBkgc5EYz3Wu5oEqMisEFSPdJsgItFbnWk9OwE1k7QLj69Ub0DJ8hQJFp1Qd6qUJAx9hufHXuOD6jTshQ==}
@@ -531,8 +531,8 @@ packages:
   '@tsdotnet/linked-node-list@1.4.11':
     resolution: {integrity: sha512-UJYBfqqQXdnWdOtBaK8PYrUt7eM+eDXDf1Wbn6DbzRMUY6E0WIVfFyW1afNJFGSF/3UHDSkTTmvtaV/04Dt25A==}
 
-  '@tsdotnet/ordered-registry@1.1.12':
-    resolution: {integrity: sha512-RyP26oIJZInWFe9q7VviwkFYe0Cpmc80lhZHVsJ1Bt2FFH//I0MV3sKsQTKjGdP6Y2Cpwj61fUGk/h0RbJESjw==}
+  '@tsdotnet/ordered-registry@1.1.13':
+    resolution: {integrity: sha512-ynQK79+do8+DIrQ1HJnjHEm++Ldeg49k/ulISCmnZ7EgzboXpYtJNDgw2AAP1cgjCAHXr4x2i9PT+wLxZ4wQyA==}
 
   '@tsdotnet/type@1.2.7':
     resolution: {integrity: sha512-HQNSZRWH0KiVNN6jPoDXrL1a5KxjJ+TtWTB7mgi0212r12zF1O8lngHuvYbeMmTwuZgLmnIGA+qiOFfyDLxXkg==}
@@ -1817,13 +1817,13 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@tsdotnet/event-factory@2.0.9':
+  '@tsdotnet/event-factory@2.0.10':
     dependencies:
       '@tsdotnet/collection-base': 2.1.9
       '@tsdotnet/disposable': 2.0.1
       '@tsdotnet/exceptions': 1.2.5
       '@tsdotnet/lazy': 2.0.1
-      '@tsdotnet/ordered-registry': 1.1.12
+      '@tsdotnet/ordered-registry': 1.1.13
       tslib: 2.8.1
 
   '@tsdotnet/exceptions@1.2.5':
@@ -1842,7 +1842,7 @@ snapshots:
       '@tsdotnet/exceptions': 1.2.5
       tslib: 2.8.1
 
-  '@tsdotnet/ordered-registry@1.1.12':
+  '@tsdotnet/ordered-registry@1.1.13':
     dependencies:
       '@tsdotnet/collection-base': 2.1.9
       '@tsdotnet/common-interfaces': 1.0.6
