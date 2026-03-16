@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import PropertyRange from '../src/PropertyRange';
+import PropertyRange from '../src/PropertyRange.js';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 

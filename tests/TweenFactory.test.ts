@@ -4,9 +4,9 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import back from '../src/easing/back';
-import tweener from '../src/TweenFactory';
-import type tweening from '../src/Tweening';
+import back from '../src/easing/back.js';
+import tweener from '../src/TweenFactory.js';
+import type tweening from '../src/Tweening.js';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 

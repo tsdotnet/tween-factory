@@ -2,7 +2,7 @@
  * @author electricessence / https://github.com/electricessence/
  * @license MIT
  */
-import type Range from './Range';
+import type Range from './Range.js';
 export { type Range };
 export default class TimeFrame {
     readonly range: Readonly<Range>;

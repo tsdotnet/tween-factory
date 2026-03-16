@@ -7,7 +7,7 @@ import { DisposableBase } from '@tsdotnet/disposable';
 import { EventDispatcher } from '@tsdotnet/event-factory';
 import { Event } from '@tsdotnet/event-factory';
 import { ArgumentNullException } from '@tsdotnet/exceptions';
-import type Range from './Range';
+import type Range from './Range.js';
 
 export type StringKeyOf<T> = string & keyof T;
 export type NumericValues<T extends object = object> = Record<StringKeyOf<T>, number>;

@@ -5,8 +5,8 @@
 
 import {type Disposable } from '@tsdotnet/disposable';
 import {type Event} from '@tsdotnet/event-factory';
-import {type NumericValues} from './PropertyRange';
-import type TimeFrame from './TimeFrame';
+import {type NumericValues} from './PropertyRange.js';
+import type TimeFrame from './TimeFrame.js';
 
 export namespace tweening
 {

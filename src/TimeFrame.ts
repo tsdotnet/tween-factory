@@ -4,7 +4,7 @@
  */
 
 import { ArgumentException, ArgumentOutOfRangeException } from '@tsdotnet/exceptions';
-import type Range from './Range';
+import type Range from './Range.js';
 
 export {type Range};
 

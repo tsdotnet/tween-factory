@@ -10,8 +10,8 @@ const disposable_1 = require("@tsdotnet/disposable");
 const event_factory_1 = require("@tsdotnet/event-factory");
 const exceptions_1 = require("@tsdotnet/exceptions");
 const ordered_registry_1 = require("@tsdotnet/ordered-registry");
-const PropertyRange_1 = tslib_1.__importDefault(require("./PropertyRange"));
-const TimeFrame_1 = tslib_1.__importDefault(require("./TimeFrame"));
+const PropertyRange_js_1 = tslib_1.__importDefault(require("./PropertyRange.js"));
+const TimeFrame_js_1 = tslib_1.__importDefault(require("./TimeFrame.js"));
 const MILLISECONDS_NAN = 'Is not a number value. Should be the number of desired milliseconds.';
 class Events {
     constructor(started, updated, completed, disposed) {
@@ -286,7 +286,7 @@ class Tween extends disposable_1.DisposableBase {
             let pr = ranges.get(easing);
             if (!pr)
                 ranges.set(easing, pr = []);
-            pr.push(new PropertyRange_1.default(target, endValues));
+            pr.push(new PropertyRange_js_1.default(target, endValues));
         }
         else
             throw new exceptions_1.InvalidOperationException('Adding more targets to an active tween is not supported.');
@@ -309,7 +309,7 @@ class Tween extends disposable_1.DisposableBase {
         if (!timeFrame) {
             const duration = this._settings.duration;
             const delay = this._settings.delay || 0;
-            timeFrame = new TimeFrame_1.default(duration, (isNaN(delay) ? 0 : delay) + Date.now());
+            timeFrame = new TimeFrame_js_1.default(duration, (isNaN(delay) ? 0 : delay) + Date.now());
         }
         const _ = this, triggers = _._triggers, ranges = _._ranges, chained = _._chained;
         const filteredRanges = [];

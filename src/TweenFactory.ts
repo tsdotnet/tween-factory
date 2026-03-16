@@ -8,12 +8,12 @@ import {Event} from '@tsdotnet/event-factory';
 import {EventPublisher } from '@tsdotnet/event-factory';
 import {ArgumentException, ArgumentOutOfRangeException, InvalidOperationException} from '@tsdotnet/exceptions';
 import {OrderedAutoRegistry} from '@tsdotnet/ordered-registry';
-import PropertyRange, {NumericValues} from './PropertyRange';
-import TimeFrame from './TimeFrame';
-import type tweening from './Tweening';
+import PropertyRange, {NumericValues} from './PropertyRange.js';
+import TimeFrame from './TimeFrame.js';
+import type tweening from './Tweening.js';
 
 export { type tweening };
-export { type default as Range } from './Range';
+export { type default as Range } from './Range.js';
 
 const MILLISECONDS_NAN = 'Is not a number value. Should be the number of desired milliseconds.';
 
