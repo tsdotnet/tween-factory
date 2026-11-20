@@ -1,4 +1,4 @@
-![@tsdotnet/tween-factory: Ease it from A to B. Typed tweens for numeric properties.](https://cdn.jsdelivr.net/gh/tsdotnet/tween-factory@master/assets/banner.svg)
+<a name="banner"><img src="https://cdn.jsdelivr.net/gh/tsdotnet/tween-factory@master/assets/banner.svg" alt="@tsdotnet/tween-factory: Ease it from A to B. Typed tweens for numeric properties."></a>
 
 [![npm version](https://img.shields.io/npm/v/@tsdotnet/tween-factory.svg?style=flat-square)](https://www.npmjs.com/package/@tsdotnet/tween-factory)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/tsdotnet/tween-factory/blob/master/LICENSE)
