@@ -38,8 +38,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2
       '@tsdotnet/event-factory':
-        specifier: ^2.1.3
-        version: 2.1.3
+        specifier: ^2.1.4
+        version: 2.1.4
       '@tsdotnet/exceptions':
         specifier: ^1.3.1
         version: 1.3.1
@@ -711,8 +711,8 @@ packages:
   '@tsdotnet/disposable@2.1.2':
     resolution: {integrity: sha512-qVLeiFlW2524BLtMd4IUICQcK2l+jyR4Z64Zyt7YR7nvIorFqsFprYSTwgMcvbDToRmxNsYMO+udYoKdKj0RMQ==}
 
-  '@tsdotnet/event-factory@2.1.3':
-    resolution: {integrity: sha512-VZHMMGqCk6gv00R4fDMlmlTfRJhrLoeQSmdLoVDhopSbNv+oZHsi6gynG2fk7IX7qQwf0UAbUtkyVYZsZgKNlA==}
+  '@tsdotnet/event-factory@2.1.4':
+    resolution: {integrity: sha512-tc3TBV/zqISKCJhdR2DLnAzL8t917HWgco2WF5R1GGd1vuFFPIi2Kmf7OGCQKMKakuApTHq+KDwMrzqMLNMz3Q==}
 
   '@tsdotnet/exceptions@1.3.1':
     resolution: {integrity: sha512-ZvG5sgVoY67QzYIMSu56dvY3idS8Rx02Ju6XtnCfOWyWWtbyeoHjgTWECbzgkYtm/7aP8Y2mRtMoHEUECNldQw==}
@@ -2173,7 +2173,7 @@ snapshots:
     dependencies:
       tslib: 2.9.1
 
-  '@tsdotnet/event-factory@2.1.3':
+  '@tsdotnet/event-factory@2.1.4':
     dependencies:
       '@tsdotnet/collection-base': 2.2.2
       '@tsdotnet/disposable': 2.1.2
